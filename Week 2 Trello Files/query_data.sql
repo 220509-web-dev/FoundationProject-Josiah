@@ -12,4 +12,4 @@ select u."user_id", u."Name", up.social_sn "SSN"
 from "Users" u 
 inner join "Users_private" up 
 on u.user_id=up.user_id
-offset 40000 limit 5;
+offset 40000 limit 5; 
