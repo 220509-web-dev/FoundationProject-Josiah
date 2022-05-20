@@ -3,7 +3,7 @@ import random_address
 import string
 import random
 from datetime import datetime
-
+ 
 
 loc = ['AR', 'CA', 'VT', 'OK', 'MD', 'FL', 'AL', 'CT', 'MA', 'AZ', 'TN', 'KY', 'GA', 'CO']
 mx = len(loc)

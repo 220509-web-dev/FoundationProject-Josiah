@@ -1,4 +1,4 @@
-drop table if exists "Transactions";
+drop table if exists "Transactions"; 
 drop table if exists "Services";
 drop table if exists "Users_private";
 drop table if exists "Users";

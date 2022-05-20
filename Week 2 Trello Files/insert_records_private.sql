@@ -1,4 +1,4 @@
-insert into "Users_private" ("user_id","social_sn","password") values
+insert into "Users_private" ("user_id","social_sn","password") values 
 (1,52602647,'vtzLfxDhKBwIo53RdeN8'),
 (2,87413077,'VwJdrFkQsacwN3ROmM7G'),
 (3,42466503,'coSCy4i6dfvV36B7tdKF'),

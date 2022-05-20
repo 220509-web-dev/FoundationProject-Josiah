@@ -1,4 +1,4 @@
-insert into "Users" ("Address1","Address2","City","State","PostalCode","Name") values
+insert into "Users" ("Address1","Address2","City","State","PostalCode","Name") values 
 ('2505 Southwest 43rd Street',null,'Oklahoma City','OK','73119','Marguerite Johnson'),
 ('5309 Darling Hill Road',null,'Burke','VT','05871','Grover Jones'),
 ('38 Milford Street',null,'Medway','MA','02053','Blaine Torres'),
