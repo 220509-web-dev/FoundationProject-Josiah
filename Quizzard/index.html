@@ -3,13 +3,28 @@
 <head>
   <title>Quizzard App</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      background-image: url('images/webdev.jpg');
+      background-repeat: no-repeat;
+    }
+  </style>
   <script type="text/javascript" src="script.js">
   </script>
 </head>	
 <body>
+<header>
+<ul>
+  <li id="current_page"><a href="index.html">Main</a></li>
+  <li><a href="sql.html">SQL</a></li>
+  <li><a href="java.html">Java</a></li>
+  <li><a href="webdev.html">Web Dev</a></li>
+  <li><a href="about.html">About</a></li>
+</ul>
+</header>
 
 <h1>Quizzard App</h1>
-<p>Questions Commonly Asked in Interviews</p>
+
 <h2>To-Dos</h2>
 <ol>
   <del><li>Make answer hidden unless clicked</li></del>
@@ -31,14 +46,6 @@
     </ul>
   <li></li>
 </ol>
-
-<div id="q_control" type="button" onclick="repl_q()">
-<p id="question">Click me to display a question.</p>
-</div>
-
-<div id="a_control" type="button" onclick="repl_a()">
-<p id="answer"></p>
-</div>
 
 </body>
 </html> 
