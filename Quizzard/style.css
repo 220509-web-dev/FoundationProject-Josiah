@@ -1,9 +1,14 @@
-#q_control {
+#q_control, #a_control {
   background-color: DeepSkyBlue;
-  color: HoneyDew;
-  font-size: 30px;
   border:2px solid Indigo;
   max-width: 500px;
+  min-height: 300px;
+  margin-top: 5px;
+}
+
+#question, #answer {
+  color: HoneyDew;
+  font-size: 30px;
 }
 #block_quote {
   text-indent: 50px;
