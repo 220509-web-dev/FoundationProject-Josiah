@@ -1,7 +1,7 @@
 let data_db = '';
 const db_raw = [];
 const db_c = [];
-var sel = 0;
+var sel = -1;
 var elems = 0;
 <!-- Fetch content from another webpage -->
 let loc = 'https://raw.githubusercontent.com/220509-web-dev/FoundationProject-Josiah/main/Quizzard/db.txt';
@@ -32,10 +32,16 @@ function set_sel(val) {
   window.sel = val;
 }
 function rnd_sel() {
-  set_sel(getRandomInt(window.elems-1));
+  if (window.elems > 1) {
+    var rnd_int = getRandomInt(window.elems-1);
+    while (window.sel == rnd_int) {
+      var rnd_int = getRandomInt(window.elems-1);
+    }
+    set_sel(rnd_int);
+  } else if (window.elems == 1) {set_sel(0);}
 }
 
-function repl_with(text) {
+function repl_with() {
   rnd_sel();
   document.getElementById('question').innerHTML = window.db_c[window.sel][0];
   document.getElementById('answer').innerHTML = window.db_c[window.sel][1];
