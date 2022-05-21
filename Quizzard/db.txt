@@ -1,1 +1,37 @@
-<h3>Name some common RDBMS platforms/vendors</h3>;;;;<ol><li>Oracle</li><li>MySQL</li><li>Microsoft SQL Server</li><li>PostgreSQL</li><li>IBM Db2</li><li>Microsoft Access</li><li>SQLite</li><li>MariaDB</li><li>Microsoft Azure SQL Database</li><li>Hive</li></ol><p><a href="https://www.statista.com/statistics/1131568/worldwide-popularity-ranking-relational-database-management-systems/">(statista.com)</a></p>;;;;;;;;question2 HTML code;;;;answer2 HTML code;;;;;;;;question3 HTML code;;;;answer3 HTML code
+<h3>What is a relational database?</h3>
+;;;;
+<p>A RDB is ... </p>
+;;;;;;;;
+<h3>Name some common RDBMS platforms/vendors</h3>
+;;;;
+<ol>
+<li>Oracle</li>
+<li>MySQL</li>
+<li>Microsoft SQL Server</li>
+<li>PostgreSQL</li>
+<li>IBM Db2</li>
+<li>Microsoft Access</li>
+<li>SQLite</li>
+<li>MariaDB</li>
+<li>Microsoft Azure SQL Database</li>
+<li>Hive</li></ol>
+<p>(<a href="https://www.statista.com/statistics/1131568/worldwide-popularity-ranking-relational-database-management-systems/">statista.com</a>)</p>
+;;;;;;;;
+<h3>What is SQL?</h3>
+;;;;
+<p>SQL stands for Structured Query Language. </p>
+<p id="block_quote">“[SQL] is a standardized programming language that is used to manage relational databases and perform various operations on the data in them. … SQL became the de facto standard programming language for relational databases after they emerged in the late 1970s and early 1980s. … An official SQL standard was adopted by the American National Standards Institute (ANSI) in 1986, with the International Organization for Standardization (ISO) adopting the standard in 1987.” (<a href="https://www.techtarget.com/searchdatamanagement/definition/SQL">techtarget.com</a>)</p>
+;;;;;;;;
+<h3>What are the sub-languages of SQL?</h3>
+;;;;
+<p>There are 6 sublanguages of SQL.</p>
+<p><span id="keyword">DDL</span> – Data Definition Language.</p>
+<p><span id="keyword">DML</span> – Data Manipulation Language.</p>
+<p><span id="keyword">DRL/DQL</span> – Data Retrieval Language/Data Query Language.</p>
+<p><span id="keyword">TCL</span> – Transaction Query Language.</p>
+<p><span id="keyword">DCL</span> – Data Control Language.</p>
+<p><span id="keyword">SCL</span> – Session Control Language.</p>
+;;;;;;;;
+<h3>What keywords are associated with DML?</h3>
+;;;;
+<p>DML stands for Data Manipulation Language. DML is associated with the keywords</p>
