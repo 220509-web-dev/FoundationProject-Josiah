@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Quizzard App</title>
-	<link rel="stylesheet" href="style.css">
-	<script type="text/javascript" src="script.js">
-	</script>
+  <title>Quizzard App</title>
+  <link rel="stylesheet" href="style.css">
+  <script type="text/javascript" src="script.js">
+  </script>
 </head>	
 <body>
 
@@ -12,20 +12,31 @@
 <p>Questions Commonly Asked in Interviews</p>
 <h2>To-Dos</h2>
 <ol>
-	<del><li>Make answer hidden unless clicked</li></del>
-	<li>CSS overhaul</li>
-	<li>Java, etc tabs</li>
-	<li>Landing page</li>
-	<li>settings "on click": random, next, previous</li>
-	<li></li>
-	<li></li>
-	<li></li>
+  <del><li>Make answer hidden unless clicked</li></del>
+  <li>CSS overhaul</li>
+  <li>Java, etc tabs</li>
+  <li>Landing page</li>
+  <li>Settings "on click": random, next, previous</li>
+  <li>Optional card memory: </li>
+    <ul>
+      <li>Won't get same card for at least n iter</li>
+      <li>n can be set to 1,2,3, etc</li>
+      <li>Or implement 1 minus exponential dist</li>
+      <li>Has a memory of 6 elements</li>
+      <li>Cumulative probability of any elem in memory list</li>
+      <li>Modify random getter</li>
+      <li>Pre-set exponential-dist prob. in array: [0, 0.2, 0.5, ...]</li>
+      <li>First 6 iter = no duplicates fct, then list is full and does exp</li>
+      <li>Have to check that m=6 is appropriate compared to window.elems</li>
+    </ul>
+  <li></li>
 </ol>
-<div id="q_control" type="button"
-onclick="repl_q()">
-<p id="question">Click me to display a question.</p></div>
-<div id="a_control" type="button"
-onclick="repl_a()">
+
+<div id="q_control" type="button" onclick="repl_q()">
+<p id="question">Click me to display a question.</p>
+</div>
+
+<div id="a_control" type="button" onclick="repl_a()">
 <p id="answer"></p>
 </div>
 
