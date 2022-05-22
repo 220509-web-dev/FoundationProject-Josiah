@@ -1,7 +1,7 @@
 <h3>What is a relational database?</h3>
 ;;;;
 <p>Relational Database Management System(RDBMS) is based on a relational model of data that is stored in databases in separate tables and they are related to the use of a common column. Data can be accessed easily from the relational database using Structured Query Language (SQL). </p>
-<p>(<a href="https://www.softwaretestinghelp.com/database-interview-questions/">softwaretestinghelp.com</a>)</p>
+<p>(<a target="_blank" href="https://www.softwaretestinghelp.com/database-interview-questions/">softwaretestinghelp.com</a>)</p>
 ;;;;;;;;
 <h3>Name some common RDBMS platforms/vendors</h3>
 ;;;;
@@ -16,12 +16,12 @@
 <li>MariaDB</li>
 <li>Microsoft Azure SQL Database</li>
 <li>Hive</li></ol>
-<p>(<a href="https://www.statista.com/statistics/1131568/worldwide-popularity-ranking-relational-database-management-systems/">statista.com</a>)</p>
+<p>(<a target="_blank" href="https://www.statista.com/statistics/1131568/worldwide-popularity-ranking-relational-database-management-systems/">statista.com</a>)</p>
 ;;;;;;;;
 <h3>What is SQL?</h3>
 ;;;;
 <p>SQL stands for Structured Query Language. </p>
-<p id="block_quote">“[SQL] is a standardized programming language that is used to manage relational databases and perform various operations on the data in them. … SQL became the de facto standard programming language for relational databases after they emerged in the late 1970s and early 1980s. … An official SQL standard was adopted by the American National Standards Institute (ANSI) in 1986, with the International Organization for Standardization (ISO) adopting the standard in 1987.” (<a href="https://www.techtarget.com/searchdatamanagement/definition/SQL">techtarget.com</a>)</p>
+<p id="block_quote">“[SQL] is a standardized programming language that is used to manage relational databases and perform various operations on the data in them. … SQL became the de facto standard programming language for relational databases after they emerged in the late 1970s and early 1980s. … An official SQL standard was adopted by the American National Standards Institute (ANSI) in 1986, with the International Organization for Standardization (ISO) adopting the standard in 1987.” (<a target="_blank" href="https://www.techtarget.com/searchdatamanagement/definition/SQL">techtarget.com</a>)</p>
 ;;;;;;;;
 <h3>What are the sub-languages of SQL?</h3>
 ;;;;
@@ -34,7 +34,7 @@
 <li><span id="keyword">DCL</span> – Data Control Language.</li>
 <li><span id="keyword">SCL</span> – Session Control Language.</li>
 </ul>
-<p>(<a href="https://www.interviewsansar.com/sql-sub-languages/">interviewsansar.com</a>)</p>
+<p>(<a target="_blank" href="https://www.interviewsansar.com/sql-sub-languages/">interviewsansar.com</a>)</p>
 ;;;;;;;;
 <h3>What keywords are associated with DML?</h3>
 ;;;;
@@ -73,7 +73,7 @@
 <p>TCL stands for Transaction Control Language. TCL is associated with the keywords</p>
 <ul>
 <li><span id="keyword">commit</span>, which must be done so that the changes persist in storage, meaning that the changes become a transaction, </li>
-<li><span id="keyword">rollback</span>, which rolls back an explicit or implicit transaction to the beginning of the transaction, or to a savepoint inside the transaction (<a href="https://docs.microsoft.com/en-us/sql/t-sql/language-elements/rollback-transaction-transact-sql?view=sql-server-ver15">Microsoft</a>), and</li>
+<li><span id="keyword">rollback</span>, which rolls back an explicit or implicit transaction to the beginning of the transaction, or to a savepoint inside the transaction (<a target="_blank" href="https://docs.microsoft.com/en-us/sql/t-sql/language-elements/rollback-transaction-transact-sql?view=sql-server-ver15">Microsoft</a>), and</li>
 <li><span id="keyword">savepoint</span>, which enables rollback to a different savepoint. </li>
 </ul>
 
@@ -84,7 +84,7 @@
 <ul>
 <li><span id="keyword">select</span>, which retrieves data from the database. </li>
 </ul>
-<p>“The <span id="keyword">select</span> statement retrieves data from a database. The data is then returned to a result-set. The <span id="keyword">select</span> statement is the most frequently used action in a database.” (<a href="https://www.indeed.com/career-advice/interviewing/database-interview-questions">Indeed</a>)</p>
+<p>“The <span id="keyword">select</span> statement retrieves data from a database. The data is then returned to a result-set. The <span id="keyword">select</span> statement is the most frequently used action in a database.” (<a target="_blank" href="https://www.indeed.com/career-advice/interviewing/database-interview-questions">Indeed</a>)</p>
 
 ;;;;;;;;
 <h3>What is a result set?</h3>
@@ -94,12 +94,12 @@
 ;;;;;;;;
 <h3>What is normalization?</h3>
 ;;;;
-<p>Normalization is the process to eliminate data redundancy and enhance data integrity in the table. (<a href="https://www.simplilearn.com/tutorials/sql-tutorial/what-is-normalization-in-sql">simplilearn.com</a>)</p>
+<p>Normalization is the process to eliminate data redundancy and enhance data integrity in the table. (<a target="_blank" href="https://www.simplilearn.com/tutorials/sql-tutorial/what-is-normalization-in-sql">simplilearn.com</a>)</p>
 
 ;;;;;;;;
 <h3>What are the normal forms, and to what level do we usually comply to?</h3>
 ;;;;
-<p>Normal forms are standards for achieving normalization. We usually comply to 3NF. 1NF requires each cell in a table to have at most one value, and this means that the value of a cell cannot be any composite of values such as another table. 1NF also requires that each row or record is unique, something that can be achieved with a primary key. A candidate key can be used as a primary key. A candidate key is a set of one or more columns that can identify a record uniquely in a table. (<a href="https://www.simplilearn.com/tutorials/sql-tutorial/what-is-normalization-in-sql">simplilearn.com</a>)</p>
+<p>Normal forms are standards for achieving normalization. We usually comply to 3NF. 1NF requires each cell in a table to have at most one value, and this means that the value of a cell cannot be any composite of values such as another table. 1NF also requires that each row or record is unique, something that can be achieved with a primary key. A candidate key can be used as a primary key. A candidate key is a set of one or more columns that can identify a record uniquely in a table. (<a target="_blank" href="https://www.simplilearn.com/tutorials/sql-tutorial/what-is-normalization-in-sql">simplilearn.com</a>)</p>
 
 ;;;;;;;;
 <h3>What is multiplicity?</h3>
@@ -110,24 +110,24 @@
 <li>Zero-or-one to one</li>
 <li>Zero-or-one to many</li>
 </ul>
-<p>(<a href="https://docs.microsoft.com/en-us/openspecs/sql_data_portability/ms-ssdl/9467f022-7739-46e9-b173-e6a71351661e">Microsoft</a>)</p>
+<p>(<a target="_blank" href="https://docs.microsoft.com/en-us/openspecs/sql_data_portability/ms-ssdl/9467f022-7739-46e9-b173-e6a71351661e">Microsoft</a>)</p>
 ;;;;;;;;
 <h3>What is a primary key?</h3>
 ;;;;
 <p>The PRIMARY KEY constraint uniquely identifies each record in a table. Primary keys must contain UNIQUE values, and cannot contain NULL values. A table can have only ONE primary key; and in the table, this primary key can consist of single or multiple columns (fields).</p>
-<p>(<a href="https://www.w3schools.com/sql/sql_primarykey.ASP">w3schools.com</a>)</p>
+<p>(<a target="_blank" href="https://www.w3schools.com/sql/sql_primarykey.ASP">w3schools.com</a>)</p>
 
 ;;;;;;;;
 <h3>What is a natural key?</h3>
 ;;;;
 <p>A natural key is a column or set of columns that already exist in the table (e.g. they are attributes of the entity within the data model) and uniquely identify a record in the table.  Since these columns are attributes of the entity they obviously have business meaning.</p>
-<p>(<a href="https://www.mssqltips.com/sqlservertip/5431/surrogate-key-vs-natural-key-differences-and-when-to-use-in-sql-server/">mssqltips.com</a>)</p>
+<p>(<a target="_blank" href="https://www.mssqltips.com/sqlservertip/5431/surrogate-key-vs-natural-key-differences-and-when-to-use-in-sql-server/">mssqltips.com</a>)</p>
 
 ;;;;;;;;
 <h3>What is surrogate key?</h3>
 ;;;;
 <p>A surrogate key is a system generated (could be GUID, sequence, unique identifier, etc.) value with no business meaning that is used to uniquely identify a record in a table.  The key itself could be made up of one or multiple columns (i.e. Composite Key).</p>
-<p>(<a href="https://www.mssqltips.com/sqlservertip/5431/surrogate-key-vs-natural-key-differences-and-when-to-use-in-sql-server/">mssqltips.com</a>)</p>
+<p>(<a target="_blank" href="https://www.mssqltips.com/sqlservertip/5431/surrogate-key-vs-natural-key-differences-and-when-to-use-in-sql-server/">mssqltips.com</a>)</p>
 
 ;;;;;;;;
 <h3>What is a composite key?</h3>
@@ -138,7 +138,7 @@
 <h3>What is a foreign key?</h3>
 ;;;;
 <p>A <span id="keyword">foreign key</span> is a field (or collection of fields) in one table, that refers to the primary key in another table. The table with the <span id="keyword">foreign key</span> is called the child table, and the table with the primary key is called the referenced or parent table.</p>
-<p>(<a href="https://www.w3schools.com/sql/sql_foreignkey.asp">w3schools.com</a>)</p>
+<p>(<a target="_blank" href="https://www.w3schools.com/sql/sql_foreignkey.asp">w3schools.com</a>)</p>
 
 ;;;;;;;;
 <h3>What is referential integrity?</h3>
@@ -146,7 +146,7 @@
 <p>A <span id="keyword">referential integrity</span> is a database concept that is used to build and maintain logical relationships between tables to avoid logical corruption of data. It is a very useful and important part in RDBMS.</p>
 <p>Usually, <span id="keyword">referential integrity</span> is made up of the combination of a primary key and a foreign key.</p>
 <p>The main concept of <span id="keyword">referential integrity</span> is that it does not allow to add any record in a table that contains the foreign key unless the reference table containing a corresponding primary key. </p>
-<p>(<a href="https://www.w3resource.com/sql/joins/joining-tables-through-referential-integrity.php">w3resource.com</a>)</p>
+<p>(<a target="_blank" href="https://www.w3resource.com/sql/joins/joining-tables-through-referential-integrity.php">w3resource.com</a>)</p>
 
 ;;;;;;;;
 <h3>What is the difference between a scalar and an aggregate function?</h3>
@@ -214,7 +214,7 @@
 <h3>What is a non-repeatable read? What isolation level(s) resolve this phenomenon?</h3>
 ;;;;
 <p>A non-repeatable read is one in which data read twice inside the same transaction cannot be guaranteed to contain the same value. To eliminate this problem, the isolation level must be repeatable read or serial. </p>
-<p>(<a href="https://logicalread.com/sql-server-concurrency-nonrepeatable-reads-w01/">logicalread.com</a>)</p>
+<p>(<a target="_blank" href="https://logicalread.com/sql-server-concurrency-nonrepeatable-reads-w01/">logicalread.com</a>)</p>
 
 ;;;;;;;;
 <h3>Is SQL considered a procedural, declarative, or functional language?</h3>
