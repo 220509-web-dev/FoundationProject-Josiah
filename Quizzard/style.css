@@ -23,7 +23,7 @@ header :link, header :visited {
 
 #q_control, #a_control {
   background-color: DeepSkyBlue;
-  border:2px solid Indigo;
+  border:2px solid blue;
   max-width: 500px;
   min-height: 300px;
   margin-top: 5px;
