@@ -4,7 +4,7 @@ const db_c = [];
 var sel = -1;
 var elems = 0;
 <!-- Fetch content from another webpage -->
-let loc = 'https://raw.githubusercontent.com/220509-web-dev/FoundationProject-Josiah/main/Quizzard/db.txt';
+let loc = 'https://raw.githubusercontent.com/220509-web-dev/FoundationProject-Josiah/main/Quizzard/db.html';
 fetch(loc)
   .then(response => response.text())
   .then(data => set_db(data));
