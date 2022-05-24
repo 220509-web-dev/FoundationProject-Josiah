@@ -99,7 +99,23 @@
 ;;;;;;;;
 <h3>What are the normal forms, and to what level do we usually comply to?</h3>
 ;;;;
-<p>Normal forms are standards for achieving normalization. We usually comply to 3NF. 1NF requires each cell in a table to have at most one value, and this means that the value of a cell cannot be any composite of values such as another table. 1NF also requires that each row or record is unique, something that can be achieved with a primary key. A candidate key can be used as a primary key. A candidate key is a set of one or more columns that can identify a record uniquely in a table. (<a target="_blank" href="https://www.simplilearn.com/tutorials/sql-tutorial/what-is-normalization-in-sql">simplilearn.com</a>)</p>
+<p>Normal forms are standards for achieving normalization. We usually comply to 3NF (3rd Normal Form).
+<p>1NF</p>
+<ul>
+<li>Each cell in a table has at most one value, not a composite or table.</li>
+<li>Each row or record is unique, something achieveable with a primary key.</li>
+</ul>
+<p>2NF</p>
+<ul>
+<li>Complies with 1NF rules.</li>
+<li>Single Column Primary Key that does not functionally depend on any subset of candidate key relation(s). </li>
+</ul>
+<p>3NF</p>
+<ul>
+<li>Complies with 2NF rules.</li>
+<li>Has no transitive functional dependencies</li>
+</ul>
+<p>(<a target="_blank" href="https://www.simplilearn.com/tutorials/sql-tutorial/what-is-normalization-in-sql">simplilearn.com</a>)</p>
 
 ;;;;;;;;
 <h3>What is multiplicity?</h3>
