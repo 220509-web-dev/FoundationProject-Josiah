@@ -8,12 +8,15 @@ Add cancel button on the login screen
 */
 
 public class user_db {
+    static String users_path = "resources/users.csv";
     static String blankuser = "Username cannot be blank!";
     static String blankpass = "Password cannot be blank!";
     static String userspace = "Username cannot contain spaces!";
     static String passspace = "Password cannot contain spaces!";
     static String usernotfound = "Username not found!";
     static String wrongpass = "Password is incorrect!";
+    static String usercomma = "Username cannot contain commas!";
+    static String passcomma = "Password cannot contain commas!";
     public static void main(String[] args) {
         String menuSelection = "";
         int inputNumber = 0;
@@ -44,10 +47,11 @@ public class user_db {
             switch(inputNumber) {
                 case 1:
                     JOptionPane.showMessageDialog(null, op1);
+                    JOptionPane.showMessageDialog(null, "Your credentials have been registered, "+ Register());
                     break;
                 case 2:
                     JOptionPane.showMessageDialog(null, op2);
-                    Login();
+                    JOptionPane.showMessageDialog(null, "Welcome, "+ Login());
                     break;
                 case 3:
                     JOptionPane.showMessageDialog(null, op3);
@@ -62,15 +66,21 @@ public class user_db {
     public static Boolean validate(String arg) {
         // Checks if username is avaliable
         String[] fields;
-        try (BufferedReader fileReader = new BufferedReader(new FileReader("resources/user.csv"))) {
+        try (BufferedReader fileReader = new BufferedReader(new FileReader(users_path))) {
             fileReader.readLine(); // skips the first line of the CSV file (the header)
             String line = fileReader.readLine();
             while (line != null) {
-                System.out.println(line);
+                //System.out.println(line);
                 line = fileReader.readLine();
-                fields = line.split(",");
-                if (fields[0].equals(arg)) { return false;}
+                if (line != null && !line.trim().equals("")) {
+                    fields = line.split(",");
+                    if (fields[0].equals(arg)) {
+                        if (fields[0].equals(arg)) { return false;}
+                        break;
+                    }
+                }
             }
+
         } catch (FileNotFoundException e) {
             System.err.println("That file was not found!");
             throw new RuntimeException(e);
@@ -84,11 +94,11 @@ public class user_db {
         String[] errors = new String[5];
         int error_ind = 0;
 
-        try (BufferedReader fileReader = new BufferedReader(new FileReader("resources/users.csv"))) {
+        try (BufferedReader fileReader = new BufferedReader(new FileReader(users_path))) {
             fileReader.readLine(); // skips the first line of the CSV file (the header)
             String line = fileReader.readLine();
             while (line != null) {
-                System.out.println(line);
+                //System.out.println(line);
                 line = fileReader.readLine();
                 if (line != null && !line.trim().equals("")) {
                     fields = line.split(",");
@@ -124,7 +134,67 @@ public class user_db {
         output += args[ind];
         return output;
     }
-    public static String[] Login() {
+    public static void Store(String[] info) {
+        try (FileWriter writer = new FileWriter(users_path, true)) {
+            writer.write(String.join(",", info) + "\n");
+            System.out.println("Successfully persisted data to file!");
+        } catch (IOException e) {
+            System.err.println("Could not get access to file.");
+            System.out.println("No data persisted to file");
+            //throw new ResourcePersistenceException();
+        } catch (Exception e) {
+            System.err.println("Some unexpected exception occurred.");
+        }
+    }
+    public static String Register() {
+        String[] info = new String[2];
+
+        JPanel panel = new JPanel(new BorderLayout(5, 5));
+
+        JPanel label = new JPanel(new GridLayout(0, 1, 2, 2));
+        label.add(new JLabel("Username", SwingConstants.RIGHT));
+        label.add(new JLabel("Password", SwingConstants.RIGHT));
+        panel.add(label, BorderLayout.WEST);
+
+        JPanel controls = new JPanel(new GridLayout(0, 1, 2, 2));
+        JTextField username = new JTextField();
+        controls.add(username);
+        JPasswordField password = new JPasswordField();
+        controls.add(password);
+        panel.add(controls, BorderLayout.CENTER);
+        Boolean valid = false;
+        String login_error = "";
+        Boolean login_correct = false;
+        String[] errors = new String[10];
+        int error_count = 0;
+        while (!valid) {
+            JOptionPane.showMessageDialog(null, panel, "register", JOptionPane.QUESTION_MESSAGE);
+            info[0] = username.getText();
+            info[1] = new String(password.getPassword());
+            errors = new String[10];
+            error_count = 0;
+            if (info[0].trim().equals("")) { errors[error_count] = blankuser; error_count++; }
+            if (!info[0].trim().equals(info[0])) { errors[error_count] = userspace; error_count++; }
+            if (info[0].contains(",")) { errors[error_count] = usercomma; error_count++; }
+            if (info[1].trim().equals("")) { errors[error_count] = blankpass; error_count++; }
+            if (!info[1].trim().equals(info[1])) { errors[error_count] = passspace; error_count++; }
+            if (info[1].contains(",")) { errors[error_count] = passcomma; error_count++; }
+            if (error_count == 0) {
+                // Call function that validates login details against CSV db
+                //login_error = validate(info);
+                if (validate(info[0])) {login_error = ""; valid = true; }
+                else {
+                    login_error = "Username already registered!";
+                    JOptionPane.showMessageDialog(null, login_error);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, to_nlsv(errors, error_count-1));
+            }
+        }
+        Store(info);
+        return info[0];
+    }
+    public static String Login() {
         String[] info = new String[2];
 
         JPanel panel = new JPanel(new BorderLayout(5, 5));
@@ -166,7 +236,7 @@ public class user_db {
                 JOptionPane.showMessageDialog(null, to_nlsv(errors, error_count-1));
             }
         }
-        return info;
+        return info[0];
     }
 }
 
