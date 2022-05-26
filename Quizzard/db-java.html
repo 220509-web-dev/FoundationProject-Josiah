@@ -209,22 +209,31 @@ methods of objects that are instances of that class.</p>
 ;;;;;;;;
 <h3>What is the difference in visibility between protected and package-private access level?</h3>
 ;;;;
-<p></p>
+<p>Package-private is the <span id="keyword">default</span> access modifier. It disallows access to subclasses from different packages while <span id="keyword">protected</span> allows it.</p>
 
 ;;;;;;;;
 <h3>What are some non-access modifying keywords used in Java?</h3>
 ;;;;
-<p></p>
+<ul>
+<li>static</li>
+<li>final</li>
+<li>abstract</li>
+<li>synchronized</li>
+<li>volatile</li>
+<li>transient</li>
+</ul>
 
 ;;;;;;;;
 <h3>What is the difference between an interface and an abstract class?</h3>
 ;;;;
-<p></p>
+<p>An abstract class allows you to create functionality that subclasses can implement or override. An interface only allows you to define functionality, not implement it.</p>
+<p>(<a href="https://www.infoworld.com/article/2928719/when-to-use-an-abstract-class-vs-interface-in-csharp.html">infoworld.com</a>)</p>
 
 ;;;;;;;;
 <h3>Is multiple inheritance supported in Java?</h3>
 ;;;;
-<p></p>
+<p>Multiple inheritance in Java is possible through interfaces. A class can implement multiple interfaces.</p>
+<p><span id="keyword">public</span> <span id="keyword">class</span> my_class_name <span id="keyword">implements</span> class1,class2,class3 {...}</p>
 
 ;;;;;;;;
 <h3>Can garbage collected be forced in Java?</h3>
@@ -234,87 +243,125 @@ methods of objects that are instances of that class.</p>
 ;;;;;;;;
 <h3>What are packages used for?</h3>
 ;;;;
-<p></p>
+<p>Packages in Java, are the collection of related classes and interfaces which are bundled together. By using packages, developers can easily modularize the code and optimize its reuse. Also, the code within the packages can be imported by other classes and reused.</p>
+<ul>
+<li>Packages help in avoiding name clashes</li>
+<li>They provide easier access control on the code</li>
+<li>Packages can also contain hidden classes which are not visible to the outer classes and only used within the package</li>
+<li>Creates a proper hierarchical structure which makes it easier to locate the related classes</li>
+</ul>
+<p>(<a href="https://www.edureka.co/blog/interview-questions/java-interview-questions/">edureka.co</a>)</p>
 
 ;;;;;;;;
 <h3>What are imports?</h3>
 ;;;;
-<p></p>
+<p>Imprts allow access to a package, class, or interface specified in the import statement.</p>
+<p>java.lang is automatically imported.</p>
 
 ;;;;;;;;
 <h3>What are static imports?</h3>
 ;;;;
-<p></p>
+<p>The static import construct allows unqualified access to static members without inheriting from the type containing the static members. Instead, the program imports the members, either individually:</p>
+<ul><li>import static java.lang.Math.PI;</li></ul>
+<p>or en masse:</p>
+<ul><li>import static java.lang.Math.*;</li></ul>
+<p>Once the static members have been imported, they may be used without qualification:</p>
+<ul><li>double r = cos(PI * theta);</li></ul>
+<p>(<a href="https://docs.oracle.com/javase/7/docs/technotes/guides/language/static-import.html">docs.oracle.com</a>)</p>
 
 ;;;;;;;;
 <h3>What is the main method signature?</h3>
 ;;;;
-<p></p>
+<p>public static void main(String[] args) { }</p>
 
 ;;;;;;;;
 <h3>What is an array?</h3>
 ;;;;
-<p></p>
+<p>An array is a container object that holds a fixed number of values of a single type.</p>
+<p>(<a href="https://docs.oracle.com/javase/tutorial/java/nutsandbolts/arrays.html">docs.oracle.com</a>)</p>
 
 ;;;;;;;;
 <h3>What property of a Java primitive array tells us the size of the array?</h3>
 ;;;;
-<p></p>
+<p>array_name.length</p>
 
 ;;;;;;;;
 <h3>Does Java employ "pass-by-value" or "pass-by-reference"?</h3>
 ;;;;
-<p></p>
+<p>Java employs pass-by-value. However, since the value passed is a pointer to the location of the object, it's practically pass-by-reference.</p>
 
 ;;;;;;;;
 <h3>What are some constructs used in Java for flow control?</h3>
 ;;;;
-<p></p>
-
+<ul>
+<li>if</li>
+<li>if-else</li>
+<li>if-else-if</li>
+<li>nested IF</li>
+<li>switch</li>
+<li>for-loops</li>
+<li>while and do-while loops</li>
+<li>branching statements</li>
+</ul>
 ;;;;;;;;
 <h3>What is the difference between a while and a do-while loop?</h3>
 ;;;;
-<p></p>
+<p>A do-while loop will execute at least once then check the condition. A while loop checks the condition first and will not do anything if the condition is false.</p>
 
 ;;;;;;;;
 <h3>What is the difference between a for loop and an enhanced for loop?</h3>
 ;;;;
-<p></p>
+<p>A normal for-loop can iterate in decrement or increment order. An enhanced for-loop can iterate only in increment order.</p>
+<p>(<a href="https://www.geeksforgeeks.org/difference-between-for-loop-and-enhanced-for-loop-in-java/">geeksforgeeks.org</a>)</p>
 
 ;;;;;;;;
 <h3>What are short-circuit boolean operators?</h3>
 ;;;;
-<p></p>
+<p>In a statement like (c1 || c2), c2 is not evaluated if c1 is true. In (c1 && c2), c2 will not evaluate if c1 is false.</p>
 
 ;;;;;;;;
 <h3>What is the String Pool?</h3>
 ;;;;
-<p></p>
+<p>String Pool in Java is a pool of Strings which is stored in Java Heap Memory.</p>
+<p>Each time a string literal is created, the JVM checks the string literal pool first. If the string already exists in the string pool, a reference to the pooled instance returns. If the string does not exist in the pool, a new String object initializes and is placed in the pool.</p>
+<p>(<a href="https://www.edureka.co/blog/java-string-pool/">edureka.co</a>)</p>
 
 ;;;;;;;;
 <h3>What is the difference between String, StringBuilder, and StringBuffer?</h3>
 ;;;;
-<p></p>
+<ul>
+<li>String is immutable whereas StringBuffer and StringBuilder are mutable classes.</li>
+<li>StringBuffer is thread-safe and synchronized whereas StringBuilder is not. That’s why StringBuilder is faster than StringBuffer.</li>
+<li>String concatenation operator (+) internally uses StringBuffer or StringBuilder class</li>
+<li>For String manipulations in a non-multi threaded environment, we should use StringBuilder else use StringBuffer class.</li>
+</ul>
+<p>(<a href="https://www.journaldev.com/538/string-vs-stringbuffer-vs-stringbuilder">journaldev.com</a>)</p>
 
 ;;;;;;;;
 <h3>Are Java Strings thread-safe? Why?</h3>
 ;;;;
-<p></p>
+<p>Java String is thread-safe because it is immutable.</p>
+<p>One important point to note is that even if String is immutable thus thread safe, reference to the String object is not thread safe.</p>
+<p>(<a href="https://knpcode.com/java/java-basics/is-java-string-thread-safe/">knpcode.com</a>)</p>
 
 ;;;;;;;;
 <h3>How can a String be created outside of the String Pool?</h3>
 ;;;;
-<p></p>
+<p>String s3 = new String("Hello");</p>
 
 ;;;;;;;;
 <h3>What is string interning?</h3>
 ;;;;
-<p></p>
+<p>String Interning is a method of storing only one copy of each distinct String Value, which must be immutable.</p>
+<p>Strings are interned in the string pool.</p>
+<p>(<a href="https://www.geeksforgeeks.org/interning-of-string/">geeksforgeeks.org</a>)</p>
 
 ;;;;;;;;
 <h3>What is the difference between an exception and an error in Java?</h3>
 ;;;;
-<p></p>
+<p>Exceptions and errors both are subclasses of Throwable class. The error indicates a problem that mainly occurs due to the lack of system resources and our application should not catch these types of problems.</p>
+<p>Exceptions are the problems which can occur at runtime and compile time.</p>
+<p>(<a href="https://www.tutorialspoint.com/difference-between-exception-and-error-in-java">tutorialspoint.com</a>)</p>
 <img src="images/Exception-in-java1.png" alt="exceptions in Java flowchart">
 <p>(<a href="https://www.geeksforgeeks.org/checked-vs-unchecked-exceptions-in-java/">geeksforgeeks.org</a>)</p>
 
@@ -355,27 +402,30 @@ methods of objects that are instances of that class.</p>
 ;;;;;;;;
 <h3>Why do abstract classes have constructors?</h3>
 ;;;;
-<p></p>
+<p>A subclass that inherits the abstract class will use the constructor.</p>
 
 ;;;;;;;;
 <h3>What modifying keywords are implicitly applied to variable members declared within an interface?</h3>
 ;;;;
-<p></p>
+<p>All abstract, default, and static methods in an interface are implicitly public, so you can omit the public modifier. All constant values defined in an interface are implicitly public, static, and final. Once again, you can omit these modifiers.</p>
+<p>(<a href="https://docs.oracle.com/javase/tutorial/java/IandI/interfaceDef.html">docs.oracle.com</a>)</p>
 
 ;;;;;;;;
 <h3>What are functional interfaces?</h3>
 ;;;;
-<p></p>
+<p>A functional interface is an interface that contains only one abstract method.</p>
+<p>(<a href="https://www.geeksforgeeks.org/functional-interfaces-java/">geeksforgeeks.org</a>)</p>
 
 ;;;;;;;;
 <h3>What are marker interfaces?</h3>
 ;;;;
-<p></p>
+<p>It is an empty interface (no field or methods). Examples of marker interface are Serializable, Cloneable and Remote interface. All these interfaces are empty interfaces. </p>
+<p>(<a href="https://www.geeksforgeeks.org/functional-interfaces-java/">geeksforgeeks.org</a>)</p>
 
 ;;;;;;;;
 <h3>What are annotations used for in Java?</h3>
 ;;;;
-<p></p>
+<p>Annotations in Java provide metadata about the program.</p>
 
 ;;;;;;;;
 <h3>What are default interface methods?</h3>
@@ -385,6 +435,5 @@ methods of objects that are instances of that class.</p>
 ;;;;;;;;
 <h3>What is the difference between an array and a linked list?</h3>
 ;;;;
-<p></p>
-
-> 
+<p>Elements in an array can be accessed by index, but inserting elements requires creating a new array. Linked list elements can only be accessed by iterating through the elements, but adding or removing elements is near-instant.</p>
+<p>Why is this so?</p>
