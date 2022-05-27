@@ -9,7 +9,7 @@ set search_path to user_data;
 
 create table users (
   user_id int generated always as identity,
-  username varchar(255) not null check(length(username) >=2),
+  username varchar(255) unique not null check(length(username) >=2),
   fname varchar(255) not null,
   lname varchar(255) not null,
   address1 varchar(255),

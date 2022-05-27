@@ -15,6 +15,10 @@ while (s):
   print(a)
   name = a[5].split("'")[1].split(" ")
   username = name[0][0]+name[1]+str(random.randint(1, 99))
+  while (username in usernames):
+    username = name[0][0]+name[1]+str(random.randint(1, 99))
+  usernames.append(username)
+  username += "@revature.net"
   if (len(name) in [0,1,3,4]):
     print("Flag",name,a)
   address1 = a[0].split("'")[1]
