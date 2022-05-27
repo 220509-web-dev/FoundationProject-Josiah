@@ -1,13 +1,13 @@
 package dev.josiah.daos;
 
-import dev.josiah.entities.User;
+import dev.josiah.entities.UserPriv;
 
 import java.util.List;
 
 public interface UserPrivDAO {
-    User createUserInfo(User user);
-    User getUserInfoById(int id);
-    List<User> getAllUserInfo();
-    User updateUserInfo(User user);
+    void createUserInfo(UserPriv userp);
+    UserPriv getUserInfoById(int id);
+    List<UserPriv> getAllUserInfo();
+    UserPriv updateUserInfo(UserPriv userp);
     void deleteUserInfoById(int id);
 }
