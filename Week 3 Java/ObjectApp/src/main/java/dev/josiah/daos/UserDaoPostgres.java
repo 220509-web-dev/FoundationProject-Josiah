@@ -19,7 +19,9 @@ user_id int generated always as identity,
   postalcode varchar(20),
  */
 public class UserDaoPostgres implements UserDAO{
+    final private String sn = "user_data";  // Schema name
     final private String tn = "users";      // Table name
+    final private String st = sn+"."+tn;
     final private String c0 = "user_id";    // columns
     final private String c1 = "username";
     final private String c2 = "fname";
@@ -34,8 +36,9 @@ public class UserDaoPostgres implements UserDAO{
     @Override
     public User createUser(User user) {
         try(Connection conn = ConnectionUtil.getConnection()) {
-            String sql = "insert into "+tn+" values (default";
+            String sql = "insert into "+st+" values (default";
             for (int i = 1; i<c.length;i++) { sql += ",?"; }
+            sql += ");";
             PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
             ps.setString(1, user.getUsername());
@@ -64,29 +67,31 @@ public class UserDaoPostgres implements UserDAO{
     @Override
     public User getUserById(int id) {
         try(Connection conn = ConnectionUtil.getConnection()) {
-            String sql = "select * from "+tn+" where "+c[0]+" = ?";
+            String sql = "select * from "+st+" where "+c[0]+" = ?";
+            sql += ";";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1,id); // indexed from 1 rather than 0
             ResultSet rs = ps.executeQuery();
 
             // Get first record
-            rs.next();
+            if (rs.next()) {
+                User user = new User();
+                user.setUser_id(id);
+                user.setUsername(   rs.getString(c[1]));
+                user.setFname(      rs.getString(c[2]));
+                user.setLname(      rs.getString(c[3]));
+                user.setAddress1(   rs.getString(c[4]));
+                user.setAddress2(   rs.getString(c[5]));
+                user.setCity(       rs.getString(c[6]));
+                user.setState(      rs.getString(c[7]));
+                user.setPostalcode( rs.getString(c[8]));
+                return user;
+            }
 
-            User user = new User();
-            user.setUser_id(id);
-            user.setUsername(   rs.getString(c[1]));
-            user.setFname(      rs.getString(c[2]));
-            user.setLname(      rs.getString(c[3]));
-            user.setAddress1(   rs.getString(c[4]));
-            user.setAddress2(   rs.getString(c[5]));
-            user.setCity(       rs.getString(c[6]));
-            user.setState(      rs.getString(c[7]));
-            user.setPostalcode( rs.getString(c[8]));
-            return user;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        //return null;
+        return null;
     }
 
     @Override
@@ -94,34 +99,34 @@ public class UserDaoPostgres implements UserDAO{
         // Return type is not an array.
         // This works because username in DB has unique constraint.
         try(Connection conn = ConnectionUtil.getConnection()) {
-            String sql = "select * from "+tn+" where "+c[1]+" = ?";
+            String sql = "select * from "+st+" where "+c[1]+" = ?";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1,username);
             ResultSet rs = ps.executeQuery();
-            rs.next();
-
-            User user = new User();
-            user.setUser_id(    rs.getInt(   c[0]));
-            user.setUsername(   rs.getString(c[1])); // username also works
-            user.setFname(      rs.getString(c[2]));
-            user.setLname(      rs.getString(c[3]));
-            user.setAddress1(   rs.getString(c[4]));
-            user.setAddress2(   rs.getString(c[5]));
-            user.setCity(       rs.getString(c[6]));
-            user.setState(      rs.getString(c[7]));
-            user.setPostalcode( rs.getString(c[8]));
-            return user;
+            if (rs.next()) {
+                User user = new User();
+                user.setUser_id(    rs.getInt(   c[0]));
+                user.setUsername(   rs.getString(c[1])); // username also works
+                user.setFname(      rs.getString(c[2]));
+                user.setLname(      rs.getString(c[3]));
+                user.setAddress1(   rs.getString(c[4]));
+                user.setAddress2(   rs.getString(c[5]));
+                user.setCity(       rs.getString(c[6]));
+                user.setState(      rs.getString(c[7]));
+                user.setPostalcode( rs.getString(c[8]));
+                return user;
+            }
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        //return null;
+        return null;
     }
 
     @Override
     public List<User> getAllUsers() {
         try(Connection conn = ConnectionUtil.getConnection()) {
-            String sql = "select * from "+tn+";";
+            String sql = "select * from "+st+";";
             PreparedStatement ps = conn.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
 
@@ -149,9 +154,9 @@ public class UserDaoPostgres implements UserDAO{
     @Override
     public User updateUser(User user) {
         try(Connection conn = ConnectionUtil.getConnection()) {
-            String sql = "update "+tn+" set ";
+            String sql = "update "+st+" set ";
             for (int i=1; i<c.length-1;i++) {sql += c[i]+" = ?,";}
-            sql += c[c.length-1]+" = ? ;";
+            sql += c[c.length-1]+" = ? where "+c[0]+"=?;";
             PreparedStatement ps = conn.prepareStatement(sql);
 
             ps.setString(1, user.getUsername());
@@ -162,6 +167,7 @@ public class UserDaoPostgres implements UserDAO{
             ps.setString(6, user.getCity());
             ps.setString(7, user.getState());
             ps.setString(8, user.getPostalcode());
+            ps.setInt(   9, user.getUser_id());
             ps.execute();
 
             return user;
@@ -175,7 +181,7 @@ public class UserDaoPostgres implements UserDAO{
     @Override
     public void deleteUserById(int id) {
         try(Connection conn = ConnectionUtil.getConnection()) {
-            String sql = "delete from "+tn+" where "+c[0]+" = ?";
+            String sql = "delete from "+st+" where "+c[0]+" = ?";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, id);
             ps.execute();
