@@ -1,15 +1,17 @@
-select * from "Users" limit 5; 
+set search_path to user_data;
 
-select "Address1" from "Users" limit 5; 
+select * from users limit 5; 
 
-select * from "Users" where lower("Name") like '%josiah%';    -- 3 records
+select address1 from users limit 5; 
 
-select count(*) from "Users" where "Address2" is null;        -- 42932 records
+select * from users where lower(fname) like '%josiah%';    -- 3 records
 
-select * from "Users_private" offset 3000 limit 5;
+select count(*) from users where address2 is null;        -- 42932 records
 
-select u."user_id", u."Name", up.social_sn "SSN" 
-from "Users" u 
-inner join "Users_private" up 
+select * from users_private offset 3000 limit 5;
+
+select u.user_id, u.fname, up.social_sn "SSN" 
+from users u 
+inner join users_private up 
 on u.user_id=up.user_id
 offset 40000 limit 5; 
