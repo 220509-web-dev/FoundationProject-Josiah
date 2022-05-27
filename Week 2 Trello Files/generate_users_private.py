@@ -8,7 +8,7 @@ from datetime import datetime
 loc = ['AR', 'CA', 'VT', 'OK', 'MD', 'FL', 'AL', 'CT', 'MA', 'AZ', 'TN', 'KY', 'GA', 'CO']
 mx = len(loc)
 
-sql1 = 'insert into "Users_private" ("user_id","social_sn","password") values\n'
+sql1 = 'insert into users_private (user_id,social_sn,password) values \n'
 
 
 def make_rec(n):  # Generate 
