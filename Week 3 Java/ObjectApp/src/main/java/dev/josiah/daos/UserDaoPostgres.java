@@ -7,6 +7,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 /*
+-- pSQL code for table column names
 user_id int generated always as identity,
   username varchar(255) not null check(length(username) >=2),
   fname varchar(255) not null,
@@ -52,12 +53,12 @@ public class UserDaoPostgres implements UserDAO{
             rs.next();
             int generatedID = rs.getInt(c[0]);
 
+            user.setUser_id(generatedID);
+            return user;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
-        // create  new User object or modify input ref to set ID?
-        return null; // ???? Why did we generate ID ?
+        //return null;
     }
 
     @Override
@@ -90,11 +91,31 @@ public class UserDaoPostgres implements UserDAO{
 
     @Override
     public User getUserByUsername(String username) {
+        // Return type is not an array.
+        // This works because username in DB has unique constraint.
         try(Connection conn = ConnectionUtil.getConnection()) {
+            String sql = "select * from "+tn+" where "+c[1]+" = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1,username);
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+
+            User user = new User();
+            user.setUser_id(    rs.getInt(   c[0]));
+            user.setUsername(   rs.getString(c[1])); // username also works
+            user.setFname(      rs.getString(c[2]));
+            user.setLname(      rs.getString(c[3]));
+            user.setAddress1(   rs.getString(c[4]));
+            user.setAddress2(   rs.getString(c[5]));
+            user.setCity(       rs.getString(c[6]));
+            user.setState(      rs.getString(c[7]));
+            user.setPostalcode( rs.getString(c[8]));
+            return user;
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return null;
+        //return null;
     }
 
     @Override
