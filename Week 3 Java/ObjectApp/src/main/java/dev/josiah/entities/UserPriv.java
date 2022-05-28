@@ -16,7 +16,6 @@ public class UserPriv {
     @Setter(AccessLevel.NONE)
     private String social_sn;
 
-    @Setter(AccessLevel.NONE)
     private String password;
 
     public UserPriv(int user_id) {
@@ -35,7 +34,7 @@ public class UserPriv {
         }
     }
 
-    public void setPassword(String password) {
+    public void encryptAndSetPassword(String password) {
         String sha256hex = Hashing.sha256()
                 .hashString(password, StandardCharsets.UTF_8)
                 .toString();
