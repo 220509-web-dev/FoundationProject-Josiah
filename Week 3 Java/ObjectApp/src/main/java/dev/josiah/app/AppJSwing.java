@@ -4,6 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
+import static dev.josiah.app.App.Login;
+import static dev.josiah.app.App.Register;
+
 public class AppJSwing {
     public static void main(String[] args)
     {
@@ -23,12 +26,14 @@ public class AppJSwing {
             @Override
             public void actionPerformed( ActionEvent e ) {
                 // register
+                JOptionPane.showMessageDialog(null, "Your credentials have been registered, "+ Register());
             }
         });
         JButton loginButton = new JButton( new AbstractAction(buttonTxt[1]) {
             @Override
             public void actionPerformed( ActionEvent e ) {
                 // login
+                JOptionPane.showMessageDialog(null, "Welcome, "+ Login());
             }
         });
         JButton exitButton = new JButton( new AbstractAction(buttonTxt[2]) {
