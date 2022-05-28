@@ -1,3 +1,4 @@
+set search_path to user_data;
 drop table if exists services;
 drop table if exists users_private;
 drop table if exists users;
@@ -9,7 +10,7 @@ set search_path to user_data;
 
 create table users (
   user_id int generated always as identity,
-  username varchar(255) unique not null check(length(username) >=2),
+  username varchar(255) unique not null,
   fname varchar(255) not null,
   lname varchar(255) not null,
   address1 varchar(255),
@@ -19,14 +20,18 @@ create table users (
   postalcode varchar(20),
 
   constraint users_pk
-  primary key(user_id)
+  primary key(user_id),
+  constraint users_email_username
+  check(username like '%@revature.net'),
+  constraint users_username_length_min
+  check(length(username) >= 14)
 
 );
 
 create table users_private (
   user_id int not null,
   social_sn varchar(9) check (length(social_sn) = 8),
-  password varchar(255) check (length(password) >= 8),
+  password varchar(255) check (length(password) >= 8) not null,
   
   constraint user_private_pk
   primary key(user_id),
