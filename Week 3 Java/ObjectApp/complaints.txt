@@ -1,0 +1,12 @@
+Jun 01, 2022 at 09:46:55 CDT
+java.sql.SQLException: The url cannot be null
+	at java.sql.DriverManager.getConnection(DriverManager.java:649)
+	at java.sql.DriverManager.getConnection(DriverManager.java:270)
+	at dev.josiah.utils.ConnectionUtil.getConnection(ConnectionUtil.java:14)
+	at dev.josiah.complaintDepartment.ProblemScribe.main(ProblemScribe.java:18)
+Jun 01, 2022 at 09:47:13 CDT
+java.sql.SQLException: The url cannot be null
+	at java.sql.DriverManager.getConnection(DriverManager.java:649)
+	at java.sql.DriverManager.getConnection(DriverManager.java:270)
+	at dev.josiah.utils.ConnectionUtil.getConnection(ConnectionUtil.java:14)
+	at dev.josiah.complaintDepartment.ProblemScribe.main(ProblemScribe.java:18)

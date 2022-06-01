@@ -11,9 +11,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.*;
 
+import static dev.josiah.complaintDepartment.ProblemScribe.Complain;
+
 public class App {
-    static int minuserlen = 3;
+    static int minuserlen = 14; // must end in @revature.net
     static int minpasslen = 8;
+    static String useremail = "Username must end in @revature.net";
     static String blankuser = "Username cannot be blank!";
     static String blankpass = "Password cannot be blank!";
     static String userspace = "Username cannot contain spaces!";
@@ -24,6 +27,18 @@ public class App {
     static String passcomma = "Password cannot contain commas!";
     static String shortuser = "Username must be at least " + minuserlen + " characters!";
     static String shortpass = "Password must be at least " + minpasslen + " characters!";
+
+    JFrame frame=new JFrame();//creating object of JFrame class
+    App(){
+        prepareGUI();//calling prepareGUI() method
+    }
+    public void prepareGUI(){
+        frame.setTitle("My Window");//Setting title of JFrame
+        frame.getContentPane().setLayout(null);//Setting Layout
+        frame.setVisible(true);//Setting visibility
+        frame.setBounds(200,200,400,400);//Setting Location and Size
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//Setting default close operation
+    }
 
     public static void main(String[] args) {
         String menuSelection = "";
@@ -49,6 +64,7 @@ public class App {
                         error = "\nPlease make a VALID selection.";
                     } else {valid = true; }
                 } catch (NumberFormatException e) {
+                    Complain(e);
                     error = "\nPlease make a VALID selection.";
                 }
             }
@@ -167,6 +183,7 @@ public class App {
             if (!info[0].trim().equals(info[0])) { errors[error_count] = userspace; error_count++; }
             if (info[0].contains(",")) { errors[error_count] = usercomma; error_count++; }
             if (info[0].length() < minuserlen) { errors[error_count] = shortuser; error_count++; }
+            if (!info[0].endsWith("@revature.net")) { errors[error_count] = useremail; error_count++; }
             if (info[1].trim().equals("")) { errors[error_count] = blankpass; error_count++; }
             if (!info[1].trim().equals(info[1])) { errors[error_count] = passspace; error_count++; }
             if (info[1].contains(",")) { errors[error_count] = passcomma; error_count++; }

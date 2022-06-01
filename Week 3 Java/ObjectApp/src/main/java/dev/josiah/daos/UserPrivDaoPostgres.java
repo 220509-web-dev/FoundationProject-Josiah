@@ -7,6 +7,9 @@ import dev.josiah.utils.ConnectionUtil;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+
+import static dev.josiah.complaintDepartment.ProblemScribe.Complain;
+
 /*
 create table users_private (
   user_id int not null,
@@ -45,6 +48,7 @@ public class UserPrivDaoPostgres implements UserPrivDAO{
             ps.execute();
 
         } catch (SQLException e) {
+            Complain(e);
             throw new RuntimeException(e);
         }
     }
@@ -66,6 +70,7 @@ public class UserPrivDaoPostgres implements UserPrivDAO{
                 return userp;
             }
         } catch (SQLException e) {
+            Complain(e);
             throw new RuntimeException(e);
         }
         return null;
@@ -90,6 +95,7 @@ public class UserPrivDaoPostgres implements UserPrivDAO{
             }
             if (results) return userps;
         } catch (SQLException e) {
+            Complain(e);
             throw new RuntimeException(e);
         }
         return null;
@@ -110,6 +116,7 @@ public class UserPrivDaoPostgres implements UserPrivDAO{
 
             return userp;
         } catch (SQLException e) {
+            Complain(e);
             throw new RuntimeException(e);
         }
         //return null;
@@ -123,6 +130,7 @@ public class UserPrivDaoPostgres implements UserPrivDAO{
             ps.setInt(1, id);
             ps.execute();
         } catch (SQLException e) {
+            Complain(e);
             throw new RuntimeException(e);
         }
 

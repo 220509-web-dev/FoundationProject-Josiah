@@ -6,6 +6,8 @@ import lombok.*;
 import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
+import static dev.josiah.complaintDepartment.ProblemScribe.Complain;
+
 @Getter
 @Setter
 @ToString
@@ -30,6 +32,7 @@ public class UserPriv {
             return true;
         }
         catch (NumberFormatException nfe) {
+            Complain(nfe);
             return false;
         }
     }

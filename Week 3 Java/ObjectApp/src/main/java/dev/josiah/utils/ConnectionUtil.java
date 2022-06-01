@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import static dev.josiah.complaintDepartment.ProblemScribe.Complain;
+
 public class ConnectionUtil {
     public static Connection getConnection() {
         try {
@@ -12,6 +14,7 @@ public class ConnectionUtil {
             Connection connection = DriverManager.getConnection(System.getenv("DB_CONNECTION"));
             return connection;
         } catch (SQLException e) {
+            Complain(e);
             e.printStackTrace();
             return null;
         }

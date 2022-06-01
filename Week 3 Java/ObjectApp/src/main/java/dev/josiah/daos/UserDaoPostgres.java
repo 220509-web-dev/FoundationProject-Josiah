@@ -6,6 +6,9 @@ import dev.josiah.utils.ConnectionUtil;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+
+import static dev.josiah.complaintDepartment.ProblemScribe.Complain;
+
 /*
 -- pSQL code for table column names
 user_id int generated always as identity,
@@ -59,6 +62,7 @@ public class UserDaoPostgres implements UserDAO{
             user.setUser_id(generatedID);
             return user;
         } catch (SQLException e) {
+            Complain(e);
             throw new RuntimeException(e);
         }
         //return null;
@@ -89,6 +93,7 @@ public class UserDaoPostgres implements UserDAO{
             }
 
         } catch (SQLException e) {
+            Complain(e);
             throw new RuntimeException(e);
         }
         return null;
@@ -118,6 +123,7 @@ public class UserDaoPostgres implements UserDAO{
             }
 
         } catch (SQLException e) {
+            Complain(e);
             throw new RuntimeException(e);
         }
         return null;
@@ -146,6 +152,7 @@ public class UserDaoPostgres implements UserDAO{
             }
             return users;
         } catch (SQLException e) {
+            Complain(e);
             throw new RuntimeException(e);
         }
         //return null;
@@ -173,6 +180,7 @@ public class UserDaoPostgres implements UserDAO{
             return user;
 
         } catch (SQLException e) {
+            Complain(e);
             throw new RuntimeException(e);
         }
         //return null;
@@ -186,6 +194,7 @@ public class UserDaoPostgres implements UserDAO{
             ps.setInt(1, id);
             ps.execute();
         } catch (SQLException e) {
+            Complain(e);
             throw new RuntimeException(e);
         }
     }
