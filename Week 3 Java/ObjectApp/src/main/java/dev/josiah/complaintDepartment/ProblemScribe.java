@@ -21,7 +21,6 @@ public class ProblemScribe {
             throw new RuntimeException(ex);
         }
     }
-
     public static void Complain(Throwable ex) {
         setup(); // create file if it doesn't exist
         try (FileWriter writer = new FileWriter(complaintsFile, true)) {
@@ -43,7 +42,23 @@ public class ProblemScribe {
             System.err.println("Some unexpected exception occurred.");
         }
     }
-
+    // Debug messages are handled here
+    public static void Complain(String complaint) {
+        setup(); // create file if it doesn't exist
+        try (FileWriter writer = new FileWriter(complaintsFile, true)) {
+            SimpleDateFormat formatter= new SimpleDateFormat("MMM dd, yyyy 'at' HH:mm:ss z");
+            Date date = new Date(System.currentTimeMillis());
+            writer.write(formatter.format(date) + "\n" + complaint + "\n");
+            writer.close();
+            System.out.println("Successfully complaints data to file!");
+        } catch (IOException e) {
+            System.err.println("Could not get access to file " + complaintsFile);
+            System.out.println("No data persisted to file");
+            //throw new ResourcePersistenceException();
+        } catch (Throwable t) {
+            System.err.println("Some unexpected exception occurred.");
+        }
+    }
     private static void setup() {
         // Append newline, date now(), problems text
         try {

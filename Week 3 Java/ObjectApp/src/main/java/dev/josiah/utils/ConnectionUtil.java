@@ -13,11 +13,11 @@ public class ConnectionUtil {
             //String dbinfo = System.getenv("DB_CONNECTION");
             Connection connection = DriverManager.getConnection(System.getenv("DB_CONNECTION"));
             return connection;
-        } catch (SQLException e) {
+        }  catch (SQLException e) {
             Complain(e);
             e.printStackTrace();
             return null;
-        } catch (Throwable t) {
+        }  catch (Throwable t) {
             Complain(t);
             return null;
         }
