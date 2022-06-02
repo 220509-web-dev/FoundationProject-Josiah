@@ -50,6 +50,8 @@ public class UserPrivDaoPostgres implements UserPrivDAO{
         } catch (SQLException e) {
             Complain(e);
             throw new RuntimeException(e);
+        } catch (Throwable t) {
+            Complain(t);
         }
     }
 
@@ -72,6 +74,8 @@ public class UserPrivDaoPostgres implements UserPrivDAO{
         } catch (SQLException e) {
             Complain(e);
             throw new RuntimeException(e);
+        } catch (Throwable t) {
+            Complain(t);
         }
         return null;
     }
@@ -97,6 +101,8 @@ public class UserPrivDaoPostgres implements UserPrivDAO{
         } catch (SQLException e) {
             Complain(e);
             throw new RuntimeException(e);
+        } catch (Throwable t) {
+            Complain(t);
         }
         return null;
     }
@@ -118,8 +124,10 @@ public class UserPrivDaoPostgres implements UserPrivDAO{
         } catch (SQLException e) {
             Complain(e);
             throw new RuntimeException(e);
+        } catch (Throwable t) {
+            Complain(t);
         }
-        //return null;
+        return null;
     }
 
     @Override
@@ -132,6 +140,8 @@ public class UserPrivDaoPostgres implements UserPrivDAO{
         } catch (SQLException e) {
             Complain(e);
             throw new RuntimeException(e);
+        } catch (Throwable t) {
+            Complain(t);
         }
 
     }

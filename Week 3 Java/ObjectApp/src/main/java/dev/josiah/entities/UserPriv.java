@@ -31,10 +31,9 @@ public class UserPriv {
             this.social_sn = social_sn;
             return true;
         }
-        catch (NumberFormatException nfe) {
-            Complain(nfe);
-            return false;
-        }
+        catch (NumberFormatException nfe) { Complain(nfe); }
+        catch (Throwable t) { Complain(t); }
+        finally { return false; }
     }
 
     public void encryptAndSetPassword(String password) {

@@ -66,6 +66,8 @@ public class App {
                 } catch (NumberFormatException e) {
                     Complain(e);
                     error = "\nPlease make a VALID selection.";
+                } catch (Throwable t) {
+                    Complain(t);
                 }
             }
             switch(inputNumber) {

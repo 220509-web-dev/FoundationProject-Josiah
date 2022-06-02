@@ -22,7 +22,7 @@ public class ProblemScribe {
         }
     }
 
-    public static void Complain(Exception ex) {
+    public static void Complain(Throwable ex) {
         setup(); // create file if it doesn't exist
         try (FileWriter writer = new FileWriter(complaintsFile, true)) {
             SimpleDateFormat formatter= new SimpleDateFormat("MMM dd, yyyy 'at' HH:mm:ss z");
@@ -39,7 +39,7 @@ public class ProblemScribe {
             System.err.println("Could not get access to file " + complaintsFile);
             System.out.println("No data persisted to file");
             //throw new ResourcePersistenceException();
-        } catch (Exception e) {
+        } catch (Throwable t) {
             System.err.println("Some unexpected exception occurred.");
         }
     }

@@ -17,6 +17,9 @@ public class ConnectionUtil {
             Complain(e);
             e.printStackTrace();
             return null;
+        } catch (Throwable t) {
+            Complain(t);
+            return null;
         }
 
     }

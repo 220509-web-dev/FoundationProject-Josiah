@@ -64,8 +64,10 @@ public class UserDaoPostgres implements UserDAO{
         } catch (SQLException e) {
             Complain(e);
             throw new RuntimeException(e);
+        } catch (Throwable t) {
+            Complain(t);
         }
-        //return null;
+        return null;
     }
 
     @Override
@@ -95,6 +97,8 @@ public class UserDaoPostgres implements UserDAO{
         } catch (SQLException e) {
             Complain(e);
             throw new RuntimeException(e);
+        } catch (Throwable t) {
+            Complain(t);
         }
         return null;
     }
@@ -125,6 +129,8 @@ public class UserDaoPostgres implements UserDAO{
         } catch (SQLException e) {
             Complain(e);
             throw new RuntimeException(e);
+        } catch (Throwable t) {
+            Complain(t);
         }
         return null;
     }
@@ -154,8 +160,10 @@ public class UserDaoPostgres implements UserDAO{
         } catch (SQLException e) {
             Complain(e);
             throw new RuntimeException(e);
+        } catch (Throwable t) {
+            Complain(t);
         }
-        //return null;
+        return null;
     }
 
     @Override
@@ -182,8 +190,10 @@ public class UserDaoPostgres implements UserDAO{
         } catch (SQLException e) {
             Complain(e);
             throw new RuntimeException(e);
+        } catch (Throwable t) {
+            Complain(t);
         }
-        //return null;
+        return null;
     }
 
     @Override
@@ -196,6 +206,8 @@ public class UserDaoPostgres implements UserDAO{
         } catch (SQLException e) {
             Complain(e);
             throw new RuntimeException(e);
+        } catch (Throwable t) {
+            Complain(t);
         }
     }
 }
