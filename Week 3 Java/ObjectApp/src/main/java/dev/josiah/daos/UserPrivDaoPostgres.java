@@ -36,7 +36,8 @@ public class UserPrivDaoPostgres implements UserPrivDAO{
 
     @Override
     public void createUserInfo(UserPriv userp) {
-        try(Connection conn = ConnectionUtil.getConnection()) {
+//      try(Connection conn = ConnectionUtil.getConnection()) {
+        try {Connection conn = ConnectionUtil.getConnection();
             String sql = "insert into "+st+" values (";
             for (int i = 0; i<c.length-1;i++) { sql += "?,"; }
             sql += "?);";
@@ -57,7 +58,8 @@ public class UserPrivDaoPostgres implements UserPrivDAO{
 
     @Override
     public UserPriv getUserInfoById(int id) {
-        try(Connection conn = ConnectionUtil.getConnection()) {
+//        try(Connection conn = ConnectionUtil.getConnection()) {
+          try {Connection conn = ConnectionUtil.getConnection();
             String sql = "select * from "+st+" where "+c[0]+" = ? ;";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1,id); // indexed from 1 rather than 0
@@ -82,7 +84,8 @@ public class UserPrivDaoPostgres implements UserPrivDAO{
 
     @Override
     public List<UserPriv> getAllUserInfo() {
-        try(Connection conn = ConnectionUtil.getConnection()) {
+//      try(Connection conn = ConnectionUtil.getConnection()) {
+        try {Connection conn = ConnectionUtil.getConnection();
             String sql = "select * from "+st+";";
             PreparedStatement ps = conn.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
@@ -109,7 +112,8 @@ public class UserPrivDaoPostgres implements UserPrivDAO{
 
     @Override
     public UserPriv updateUserInfo(UserPriv userp) {
-        try(Connection conn = ConnectionUtil.getConnection()) {
+//      try(Connection conn = ConnectionUtil.getConnection()) {
+        try {Connection conn = ConnectionUtil.getConnection();
             String sql = "update "+st+" set ";
             for (int i=1; i<c.length-1;i++) {sql += c[i]+" = ?,";}
             sql += c[c.length-1]+" = ? where "+c[0]+"=?;";
@@ -132,7 +136,8 @@ public class UserPrivDaoPostgres implements UserPrivDAO{
 
     @Override
     public void deleteUserInfoById(int id) {
-        try(Connection conn = ConnectionUtil.getConnection()) {
+//      try(Connection conn = ConnectionUtil.getConnection()) {
+        try {Connection conn = ConnectionUtil.getConnection();
             String sql = "delete from "+st+" where "+c[0]+" = ?";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, id);

@@ -3,24 +3,24 @@ package dev.josiah.utils;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Objects;
 
 import static dev.josiah.complaintDepartment.ProblemScribe.Complain;
 
 public class ConnectionUtil {
-    public static Connection getConnection() {
+    private static Connection connection = null;
+    static {
+        //System.out.println("Making a new connection!");
         try {
             //String dbInfo = "jdbc:postgresql://localhost/local-db?user=postgres&password=g5rEW^";
             //String dbinfo = System.getenv("DB_CONNECTION");
-            Connection connection = DriverManager.getConnection(System.getenv("DB_CONNECTION"));
-            return connection;
+            connection = DriverManager.getConnection(System.getenv("DB_CONNECTION"));
         }  catch (SQLException e) {
             Complain(e);
             e.printStackTrace();
-            return null;
         }  catch (Throwable t) {
             Complain(t);
-            return null;
         }
-
     }
+    public static Connection getConnection() {return connection;}
 }
