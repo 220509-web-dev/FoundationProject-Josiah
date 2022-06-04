@@ -54,7 +54,7 @@
                 <configuration>
                     <url>http://localhost:8080/manager/text</url>
                     <server>LocalTomcat</server>
-                    <path>/quizzard</path>
+                    <path>/login-service</path>
                     <update>true</update>
                 </configuration>
             </plugin>

@@ -8,8 +8,8 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Map;
 
-public class SanityServlet extends HttpServlet {
-    private final static String name = "SanityServlet";
+public class xmlRegServlet extends HttpServlet {
+    private final static String name = "xmlRegServlet";
     @Override
     public void init() throws ServletException {
         System.out.println("[LOG] - "+name+" instantiated!");

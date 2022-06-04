@@ -740,3 +740,14 @@ java.sql.SQLException: The url cannot be null
 	at dev.josiah.utils.ConnectionUtil.connect(ConnectionUtil.java:21)
 	at dev.josiah.utils.ConnectionUtil.getConnection(ConnectionUtil.java:13)
 	at dev.josiah.app.TestApp.main(TestApp.java:10)
+Jun 04, 2022 at 12:06:21 CDT
+File Not Found.
+Jun 04, 2022 at 12:06:21 CDT
+java.io.FileNotFoundException: \webpages\page1.txt (The system cannot find the path specified)
+	at java.io.FileInputStream.open0(Native Method)
+	at java.io.FileInputStream.open(FileInputStream.java:195)
+	at java.io.FileInputStream.<init>(FileInputStream.java:138)
+	at java.util.Scanner.<init>(Scanner.java:611)
+	at dev.josiah.entities.WebPage.load(WebPage.java:37)
+	at dev.josiah.entities.WebPage.<init>(WebPage.java:31)
+	at dev.josiah.app.TestApp.main(TestApp.java:12)
