@@ -733,3 +733,10 @@ org.postgresql.util.PSQLException: FATAL: password authentication failed for use
 	at dev.josiah.utils.ConnectionUtil.connect(ConnectionUtil.java:21)
 	at dev.josiah.utils.ConnectionUtil.getConnection(ConnectionUtil.java:13)
 	at dev.josiah.app.TestApp.main(TestApp.java:10)
+Jun 03, 2022 at 21:45:29 CDT
+java.sql.SQLException: The url cannot be null
+	at java.sql.DriverManager.getConnection(DriverManager.java:649)
+	at java.sql.DriverManager.getConnection(DriverManager.java:270)
+	at dev.josiah.utils.ConnectionUtil.connect(ConnectionUtil.java:21)
+	at dev.josiah.utils.ConnectionUtil.getConnection(ConnectionUtil.java:13)
+	at dev.josiah.app.TestApp.main(TestApp.java:10)
