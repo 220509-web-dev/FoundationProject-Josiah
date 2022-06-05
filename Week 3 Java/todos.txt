@@ -1,6 +1,0 @@
-use something more appropriate than an array
-use a different method in a neatly organized folder structure to validate
-pass the stack/list and use its length property instead of int error_count
-
-finish Complaint Department code
-Singleton server connection
