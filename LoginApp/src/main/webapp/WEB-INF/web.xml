@@ -4,7 +4,7 @@
              http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
 
-    <display-name>Login Service</display-name>
+    <display-name>Login Service</display-name> <!--Name shown in Tomcat Manager-->
 
     <!--    <context-param>-->
     <!--        <param-name>test-context-key</param-name>-->
@@ -12,7 +12,7 @@
     <!--    </context-param>-->
 
     <servlet>
-        <servlet-name>SanityServlet</servlet-name>
+        <servlet-name>SanityServlet</servlet-name>   <!--Name Servlet-->
         <servlet-class>dev.josiah.servletExamples.SanityServlet</servlet-class>
 
         <!--        <init-param>-->
@@ -24,7 +24,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>SanityServlet</servlet-name>
-        <url-pattern>/sanity</url-pattern>
+        <url-pattern>/sanity</url-pattern> <!--Map where this pattern maps to the servlet-->
     </servlet-mapping>
 
     <servlet>

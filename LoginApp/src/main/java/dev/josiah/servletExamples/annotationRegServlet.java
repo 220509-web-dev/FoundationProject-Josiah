@@ -13,14 +13,14 @@ import java.time.LocalDateTime;
 import java.util.Map;
 
 @WebServlet(
-    urlPatterns = "/annot",
-    loadOnStartup = 2,
-    initParams = {
-            @WebInitParam(name = "flashcard1-servlet-key", value = "flashcard1-servlet-value"),
-            @WebInitParam(name = "another-param", value = "another-value")
-    }
+    urlPatterns = "/annot"//,
+//    loadOnStartup = 2,
+//    initParams = {
+//            @WebInitParam(name = "flashcard1-servlet-key", value = "flashcard1-servlet-value"),
+//            @WebInitParam(name = "another-param", value = "another-value")
+//    }
 ) // annotation-based servlet registration
-public class annotationRegServlet  extends HttpServlet {
+public class annotationRegServlet extends HttpServlet {
     private final static String name = "annotationRegServlet";
     @Override
     public void init() throws ServletException {

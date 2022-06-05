@@ -46,12 +46,14 @@ public class WebPage {
             source = fileContents;
         } catch (FileNotFoundException e) {
             String complaint = "File Not Found.";
+            complaint += "Working Directory = " + System.getProperty("user.dir");
             System.out.println(complaint);
             Complain(complaint);
             Complain(e);
             e.printStackTrace();
         } catch (Throwable t) {
             String complaint = "An error occurred.";
+            complaint += "Working Directory = " + System.getProperty("user.dir");
             System.out.println(complaint);
             Complain(complaint);
             Complain(t);
