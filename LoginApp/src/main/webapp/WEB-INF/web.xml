@@ -6,10 +6,10 @@
 
     <display-name>Login Service</display-name> <!--Name shown in Tomcat Manager-->
 
-    <!--    <context-param>-->
-    <!--        <param-name>test-context-key</param-name>-->
-    <!--        <param-value>test-context-value</param-value>-->
-    <!--    </context-param>-->
+        <context-param>
+            <param-name>all-servlet-key1</param-name>
+            <param-value>context-value-for-all-servlets</param-value>
+        </context-param>
 
     <servlet>
         <servlet-name>SanityServlet</servlet-name>   <!--Name Servlet-->

@@ -4,8 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.josiah.entities.User;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebInitParam;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,15 +14,13 @@ import java.time.LocalDateTime;
 
 import static dev.josiah.complaintDepartment.ProblemScribe.Complain;
 
-@WebServlet(urlPatterns = "/jun1rec1getsPayload",
-    loadOnStartup = 2,
-    initParams = {
-            @WebInitParam(name = "servlet-key1", value = "servlet value 1"),
-            @WebInitParam(name = "servlet-key2", value = "servlet value 2")
+public class LoaderRegisteredServlet extends HttpServlet {
+    private final static String name = "LoaderRegisteredServlet";
+    private final ObjectMapper mapper;
+
+    public LoaderRegisteredServlet(ObjectMapper mapper) {
+        this.mapper = mapper;
     }
-)
-public class jun1rec1getsPayload extends HttpServlet {
-    private final static String name = "jun1rec1getsPayload";
 
     @Override
     public void init() throws ServletException {
@@ -32,7 +28,6 @@ public class jun1rec1getsPayload extends HttpServlet {
         System.out.println("[LOG] - Init param, test-init-key: " + this.getServletConfig().getInitParameter("servlet-key1"));
         System.out.println("[LOG] - Context param, test-context-key: " + this.getServletContext().getInitParameter("all-servlet-key1"));
     }
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
@@ -52,7 +47,6 @@ public class jun1rec1getsPayload extends HttpServlet {
 
 
     }
-
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         System.out.println("[LOG] - "+name+" received a POST request at " + LocalDateTime.now());
@@ -80,4 +74,4 @@ public class jun1rec1getsPayload extends HttpServlet {
         resp.setStatus(204);
     }
 
-    }
+}
