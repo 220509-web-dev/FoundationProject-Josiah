@@ -2,7 +2,6 @@ package dev.josiah.daos;
 
 import dev.josiah.entities.User;
 import dev.josiah.utils.ConnectionFactory;
-import dev.josiah.utils.ConnectionUtil;
 
 import java.sql.*;
 import java.util.ArrayList;
