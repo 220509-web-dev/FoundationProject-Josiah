@@ -9,6 +9,7 @@ import dev.josiah.entities.UserPriv;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.*;
 
 import static dev.josiah.complaintDepartment.ProblemScribe.Complain;
 

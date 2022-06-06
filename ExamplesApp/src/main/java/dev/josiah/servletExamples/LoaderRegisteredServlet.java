@@ -39,7 +39,7 @@ public class LoaderRegisteredServlet extends HttpServlet {
 
         resp.setStatus(200); // it is 200 by default
         resp.setHeader("Content-type", "text/html");
-        ObjectMapper mapper = new ObjectMapper();
+        //ObjectMapper mapper = new ObjectMapper();
         User user = new User(999, "", "", "", "", "", "", "", "");
         String payload = mapper.writeValueAsString(user);
         resp.setContentType("application/json");
@@ -59,7 +59,7 @@ public class LoaderRegisteredServlet extends HttpServlet {
 
         try {
             System.out.println("Hello");
-            ObjectMapper mapper = new ObjectMapper();
+            //ObjectMapper mapper = new ObjectMapper();
             User user = mapper.readValue(payload, User.class);
             // Jackson takes the input stream and converts it into a User object
             System.out.println(user);

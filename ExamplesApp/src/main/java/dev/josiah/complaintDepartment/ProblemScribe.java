@@ -1,6 +1,7 @@
 package dev.josiah.complaintDepartment;
 
 import dev.josiah.entities.UserPriv;
+import dev.josiah.utils.ConnectionUtil;
 
 import java.io.*;
 import java.sql.Connection;
@@ -13,6 +14,13 @@ import java.util.Date;
 public class ProblemScribe {
     final private static String complaintsFile = "complaints.txt";
 
+    public static void main(String[] args) {
+        try(Connection conn = ConnectionUtil.getConnection()) {
+            int i = 1;
+            } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
     public static void Complain(Throwable ex) {
         setup(); // create file if it doesn't exist
         try (FileWriter writer = new FileWriter(complaintsFile, true)) {
