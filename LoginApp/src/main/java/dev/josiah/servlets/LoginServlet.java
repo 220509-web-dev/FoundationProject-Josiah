@@ -23,9 +23,13 @@ import java.util.Map;
 public class LoginServlet extends HttpServlet {
     private final static String name = "LoginServlet";
     private final ObjectMapper mapper;
+    private final UserDAO userDAO;
+    private final UserPrivDAO upDAO;
 
-    public LoginServlet(ObjectMapper mapper) {
+    public LoginServlet(ObjectMapper mapper, UserDAO userDAO, UserPrivDAO upDAO) {
         this.mapper = mapper;
+        this.userDAO = userDAO;
+        this.upDAO = upDAO;
     }
 
     @Override
@@ -61,19 +65,19 @@ public class LoginServlet extends HttpServlet {
         String paramPassword = request.getParameter("password");
         UserPass userPass = new UserPass(paramUsername, paramPassword);
 
-        UserDAO userDAO = new UserDaoPostgres();
+        // TODO : Move this to services
         User u = userDAO.getUserByUsername(paramUsername);
         String user_info = "";
         if (u == null) user_info = "User not found!";
         else {
-            UserPrivDAO pDAO = new UserPrivDaoPostgres();
-            UserPriv up = pDAO.getUserInfoById(u.getUser_id());
+            UserPriv up = upDAO.getUserInfoById(u.getUser_id());
             UserPriv entered = new UserPriv();
             entered.encryptAndSetPassword(paramPassword);
             if (up.getPassword().equals(entered.getPassword())) {
                 user_info = "Logging in as " + paramUsername;
             } else user_info = "Incorrect Password";
         }
+        // TODO end
 
         PrintWriter writer = response.getWriter();
         String Return = "<html>Data Entered: <br/>Username : " + paramUsername;

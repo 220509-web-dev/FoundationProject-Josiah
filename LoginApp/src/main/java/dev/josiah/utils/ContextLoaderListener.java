@@ -1,8 +1,13 @@
 package dev.josiah.utils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import dev.josiah.daos.UserDAO;
+import dev.josiah.daos.UserDaoPostgres;
+import dev.josiah.daos.UserPrivDAO;
+import dev.josiah.daos.UserPrivDaoPostgres;
 import dev.josiah.filters.ExampleFilter;
 import dev.josiah.servlets.LoginServlet;
+import dev.josiah.servlets.UserServiceServlet;
 
 import javax.servlet.*;
 import java.time.LocalDateTime;
@@ -12,11 +17,16 @@ public class ContextLoaderListener  implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         System.out.println("[LOG] - The servlet context was initialized at " + LocalDateTime.now());
+
+        // Instantiate necessary Objects
         ObjectMapper mapper = new ObjectMapper();
+        UserDAO userDAO = new UserDaoPostgres();
+        UserPrivDAO upDAO = new UserPrivDaoPostgres();
 
         // Obtain the context from ServletContextEvent
         ServletContext context = sce.getServletContext();
 
+        // Register Filter (done in web.xml for now)
         /*
         // Register ExampleFilter
         // TODO : Make this registration work, then delete web.xml filter registration
@@ -26,11 +36,14 @@ public class ContextLoaderListener  implements ServletContextListener {
                 // intercept everything with "/*"
         */
 
-        LoginServlet loginServlet = new LoginServlet(mapper);
+        // Instantiate Servlet Objects
+        LoginServlet loginServlet = new LoginServlet(mapper, userDAO, upDAO);
+        UserServiceServlet userServiceServlet = new UserServiceServlet(mapper, userDAO);
 
-        // replaced with dynamic
-        //context.addServlet("LoginServlet", loginServlet).addMapping("/login/*");
+        // userServiceServlet registration
+        context.addServlet("userServiceServlet", userServiceServlet).addMapping("/userauth/*");
 
+        // LoginServlet dynamic registration
         ServletRegistration.Dynamic registeredServlet = context.addServlet("LoginServlet", loginServlet);
         registeredServlet.setLoadOnStartup(3);
         registeredServlet.setInitParameter("user-servlet-key1", "user-servlet-value");
