@@ -54,7 +54,7 @@
                 <configuration>
                     <url>http://localhost:8080/manager/text</url>
                     <server>LocalTomcat</server>
-                    <path>/login-service</path>
+                    <path>/example-service</path>
                     <update>true</update> <!--Automatically updates server-->
                     <!-- Try changing the pom.xml servername, see update-->
                 </configuration>
