@@ -1,6 +1,9 @@
 package dev.josiah.utils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import dev.josiah.daos.UserDAO;
+import dev.josiah.daos.UserDaoPostgres;
+import dev.josiah.servletExamples.GetAllUsersServlet;
 import dev.josiah.servletExamples.LoaderRegisteredServlet;
 
 import javax.servlet.ServletContext;
@@ -14,14 +17,15 @@ public class ContextLoaderListener  implements ServletContextListener {
     public void contextInitialized(ServletContextEvent sce) {
         System.out.println("[LOG] - The servlet context was initialized at " + LocalDateTime.now());
         ObjectMapper mapper = new ObjectMapper();
-        System.out.println("ContextLoaderListener FLAG 1");
+
+        ServletContext context = sce.getServletContext();
+        // Obtain the context from ServletContextEvent
+
+        UserDAO userDAO = new UserDaoPostgres();
+        GetAllUsersServlet getAllUsersServlet = new GetAllUsersServlet(mapper, userDAO);
+        context.addServlet("GetAllUsersServlet", getAllUsersServlet).addMapping("/getall/*");
 
         LoaderRegisteredServlet testServlet = new LoaderRegisteredServlet(mapper);
-        System.out.println("ContextLoaderListener FLAG 2");
-
-        // Obtain the context from ServletContextEvent
-        ServletContext context = sce.getServletContext();
-        System.out.println("ContextLoaderListener FLAG 3");
 
         // replaced with dynamic
         //context.addServlet("LoaderRegisteredServlet", testServlet).addMapping("/testloaded/*");
