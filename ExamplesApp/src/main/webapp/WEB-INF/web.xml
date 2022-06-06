@@ -12,6 +12,16 @@
         </context-param>
 
     <servlet>
+        <servlet-name>newServlet111</servlet-name>
+        <servlet-class>dev.josiah.servletExamples.newServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>newServlet111</servlet-name>
+        <url-pattern>/newserv</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
         <servlet-name>SanityServlet</servlet-name>   <!--Name Servlet-->
         <servlet-class>dev.josiah.servletExamples.SanityServlet</servlet-class>
 

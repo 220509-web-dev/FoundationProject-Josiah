@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Map;
 
-
+//dev.josiah.servletExamples.SanityServlet
 //A "health check" servlet to ensure the web application deployed
 public class SanityServlet extends HttpServlet {
     private final static String name = "SanityServlet";

@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+
 public class ProblemScribe {
     final private static String complaintsFile = "complaints.txt";
 
