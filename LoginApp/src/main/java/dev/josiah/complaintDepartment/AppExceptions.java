@@ -1,7 +1,13 @@
 package dev.josiah.complaintDepartment;
 
-public class AppExceptions extends Exception {
-    public void NegativeIdException(String s) {
-        
+public class AppExceptions{
+    private String message;
+
+    public AppExceptions(String msg) {
+        this.message = msg;
+    }
+
+    public String getMessage() {
+        return message;
     }
 }
