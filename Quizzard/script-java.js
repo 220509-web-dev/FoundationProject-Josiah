@@ -43,12 +43,7 @@ function getRandomInt() {
   memory.push(final_rnum);
   var max_size = Math.floor(window.elems /2);
   if (memory.length > max_size) { memory.shift(); }
-  console.log("adjust");
-  console.log(adjust);
-  console.log("rnum");
-  console.log(rnum);
-  console.log("memory");
-  console.log(memory.toString());
+  console.log("adjust="+ adjust+ " rnum="+ rnum+ " memory={"+memory.toString()+"}");
   return final_rnum;
 }
 function set_sel(val) {
