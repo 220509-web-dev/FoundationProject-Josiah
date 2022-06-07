@@ -8,8 +8,8 @@ import static dev.josiah.complaintDepartment.ProblemScribe.Complain;
 import static java.lang.Math.toIntExact;
 
 public class ServiceGetUserById {
-    private static Long minId = 0L;             // Using wrapper class so that it can be set to null if need be
-    private static Long maxId = 2147483647L;    // null values tell code to not enforce the min or max restraint
+    final private static Long minId = 0L;             // Using wrapper class so that it can be set to null if need be
+    final private static Long maxId = 2147483647L;    // null values tell code to not enforce the min or max restraint
 
     public static User ServiceIdRequest(String id_feed, UserDAO userDAO) {
         long id = validateId(id_feed);

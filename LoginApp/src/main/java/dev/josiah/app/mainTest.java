@@ -7,7 +7,9 @@ import static java.lang.Math.toIntExact;
 
 public class mainTest {
     public static void main(String[] args) {
-        throw new AuthExceptions.UserNotFound("User with ID ... not found!");
+
+
+        //throw new AuthExceptions.UserNotFound("User with ID ... not found!");
         //throw new RuntimeException("message111");
 //        try {
 //            int i = 2;
