@@ -42,7 +42,7 @@ public class ServiceGetUserByUsername {
             throw new AuthExceptions.UsernameFormatException("Username must end with " + userMustEndWith +
                     ", but username entered was " + username_feed);
         }
-        if ((userCannotContain != null) && (true)) { //userCannotContain.stream()
+        if ((userCannotContain != null) && (false)) { //userCannotContain.stream()
             // col.stream().allMatch(i -> i>0);
             //UsernameFormatException
             throw new AuthExceptions.UsernameFormatException("Username must end with " + userMustEndWith +
