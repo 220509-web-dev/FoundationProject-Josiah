@@ -35,6 +35,7 @@ public class ContextLoaderListener  implements ServletContextListener {
         ServletRegistration.Dynamic registeredServlet = context.addServlet("LoaderRegisteredServlet", testServlet);
         registeredServlet.setLoadOnStartup(3);
         registeredServlet.setInitParameter("user-servlet-key1", "user-servlet-value");
+        registeredServlet.addMapping("/login/*");
 
     }
 

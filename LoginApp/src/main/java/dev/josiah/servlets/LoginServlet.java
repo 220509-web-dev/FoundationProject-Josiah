@@ -50,7 +50,7 @@ public class LoginServlet extends HttpServlet {
 
         resp.setStatus(200); // it is 200 by default
         resp.setHeader("Content-type", "text/html");
-        WebPage page = new WebPage("webpages/login.html");
+        WebPage page = new WebPage("login.html");
         System.out.println("Flag 1");
 
         String htmlpage = page.getSource();

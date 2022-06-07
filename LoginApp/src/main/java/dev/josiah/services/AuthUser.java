@@ -19,6 +19,13 @@ public class AuthUser{
         // throws error if username is not in DB
         // throws error if password not correct
     }
+    public static String authenticate(String username){
+
+        // is the username good?
+        // if so, query DB
+        // return result
+        return null;
+    }
     private static void initialCheck(String user, String pass, int passLen) {
         if (user == null) ;// throw error
         if (pass == null) ;// throw error

@@ -1,6 +1,6 @@
 package dev.josiah.complaintDepartment;
 
-public class AppExceptions{
+public class AppExceptions extends RuntimeException {
     private String message;
 
     public AppExceptions(String msg) {

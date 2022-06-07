@@ -13,7 +13,7 @@ import javax.servlet.*;
 import java.time.LocalDateTime;
 import java.util.EnumSet;
 
-public class ContextLoaderListener  implements ServletContextListener {
+public class ContextLoaderListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         System.out.println("[LOG] - The servlet context was initialized at " + LocalDateTime.now());
@@ -41,7 +41,7 @@ public class ContextLoaderListener  implements ServletContextListener {
         UserServiceServlet userServiceServlet = new UserServiceServlet(mapper, userDAO);
 
         // userServiceServlet registration
-        context.addServlet("userServiceServlet", userServiceServlet).addMapping("/userauth/*");
+        context.addServlet("UserServiceServlet", userServiceServlet).addMapping("/userauth/*");
 
         // LoginServlet dynamic registration
         ServletRegistration.Dynamic registeredServlet = context.addServlet("LoginServlet", loginServlet);

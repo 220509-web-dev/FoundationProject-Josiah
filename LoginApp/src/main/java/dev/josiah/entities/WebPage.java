@@ -7,13 +7,14 @@ import java.util.Scanner;
 import static dev.josiah.complaintDepartment.ProblemScribe.Complain;
 
 public class WebPage {
+    private String path = "src/main/webapp/";
     private String location = "";
     private String source = "";
 
     @Override
     public String toString() {
         String Return = "";
-        Return += "************ " + location + " ************";
+        Return += "************ " + path+location + " ************";
         Return += "\n" + source + "\n";
         Return += "************************************";
         return Return;
@@ -22,12 +23,12 @@ public class WebPage {
     public WebPage() {}
 
     public WebPage(String location, String source) {
-        this.location = location;
+        this.location = path+location;
         this.source = source;
     }
 
     public WebPage(String location) {
-        this.location = location;
+        this.location = path+location;
         load();
     }
 
@@ -66,7 +67,7 @@ public class WebPage {
     }
 
     public void setLocation(String location) {
-        this.location = location;
+        this.location = path+location;
     }
 
     public String getSource() {
