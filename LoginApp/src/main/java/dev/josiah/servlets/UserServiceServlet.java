@@ -5,6 +5,7 @@ import dev.josiah.daos.UserDAO;
 import dev.josiah.entities.User;
 import dev.josiah.entities.WebPage;
 import dev.josiah.services.ServiceGetUserById;
+import dev.josiah.services.ServiceGetUserByUsername;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static dev.josiah.complaintDepartment.ProblemScribe.Complain;
 import static dev.josiah.services.AuthUser.authenticate;
@@ -55,7 +57,11 @@ public class UserServiceServlet  extends HttpServlet {
             try {
                 User user = ServiceGetUserById.ServiceIdRequest(potentialId, userDAO);
                 feedback = "Got back from service layer with " + user;
-            } catch (Throwable t) {
+                if (user == null) {
+                    feedback = "User not found!";
+                    resp.setStatus(400);
+                }
+            } catch (Throwable t) { // happens if service or DAO layer throws anything
                 Complain(t);
                 // not throwing an exception
                 feedback = "Invalid Input.";
@@ -69,11 +75,46 @@ public class UserServiceServlet  extends HttpServlet {
             resp.getWriter().write(feedback);
 
         }
+
+        // This line is reached only if (potentialId == null)
         if (potentialUsername != null) {
             System.out.println("potentialUsername is forwarding to services Username : " + potentialUsername);
+            String feedback;
+            try {
+                User user = ServiceGetUserByUsername.ServiceUsernameRequest(potentialUsername, userDAO);
+                feedback = "Got back from service layer with " + user;
+            } catch (Throwable t) { // happens if service or DAO layer throws anything
+                Complain(t);
+                // not throwing an exception
+                feedback = "Invalid Input.";
+                resp.setStatus(400);
+                // throw new RuntimeException(); // I don't want to throw an error here because ...
+                // Throwing an error here gives a stacktrace to the website visitor
+                // But I don't want them to see the servlet structure
+            }
+            System.out.println(feedback);
+            resp.setContentType("text/html");
+            resp.getWriter().write(feedback);
         }
         if (potentialId == null && potentialUsername == null) {
             System.out.println("potentialUsername is forwarding to services request for all user data");
+            String feedback;
+            try {
+                List<User> users = null;
+                // = ServiceGetUserByUsername.ServiceUsernameRequest(potentialUsername, userDAO);
+                feedback = "Got back from service layer with " + users;
+            } catch (Throwable t) { // happens if service or DAO layer throws anything
+                Complain(t);
+                // not throwing an exception
+                feedback = "Invalid Input.";
+                resp.setStatus(400);
+                // throw new RuntimeException(); // I don't want to throw an error here because ...
+                // Throwing an error here gives a stacktrace to the website visitor
+                // But I don't want them to see the servlet structure
+            }
+            System.out.println(feedback);
+            resp.setContentType("text/html");
+            resp.getWriter().write(feedback);
         }
 
         /*

@@ -2,28 +2,27 @@
 <head>
     <title>Quick Servlet Demo</title>
 </head>
-<body>     
+<body>
+<h1>Welcome to The App!</h1>
     <br/><br/>
 <!-- form action points to the endpoint /login -->
 <!-- method="post" makes the servlet use the doPost method-->
     <form action="userauth" method="get">
-        Username: <input type="text" size="14" name="username"/>
-
-        &nbsp;&nbsp;
-        <input type="submit" value="Login" />
-    </form>
-    <br/><br/>
-    <form action="userauth" method="get">
         ID: <input type="text" size="14" name="id"/>
-        &nbsp;&nbsp;
-        <input type="submit" value="Login" />
-    </form>
+        &nbsp;
+        <input type="submit" value="Find User" />
     </form>
     <br/><br/>
     <form action="userauth" method="get">
-        Get all users: <input type="text" size="1" name="none"/>
+        Username: <input type="text" size="14" name="username"/>
+        &nbsp;
+        <input type="submit" value="Find User" />
+    </form>
+    <br/><br/>
+    <form action="userauth" method="get">
+        Get all users:
         &nbsp;&nbsp;
-        <input type="submit" value="Login" />
+        <input type="submit" value="Get All Users">
     </form>
 </body>
 </html>
