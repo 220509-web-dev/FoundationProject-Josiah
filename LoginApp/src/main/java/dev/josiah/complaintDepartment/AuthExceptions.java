@@ -31,6 +31,4 @@ public class AuthExceptions {
             super(msg);
         }
     }
-
-
 }

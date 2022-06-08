@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- Bootstrap CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+
+    <!-- Bootstrap JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+
+    <style>
+        h1 {
+            color:skyblue;
+            border: 5px dotted;
+            border-color: lightblue;
+            max-width: 50%;
+            margin: 5px;
+            padding: 10px;
+            background-color: rgb(255,255,100);
+        }
+        .div1 {
+            border: 5px dotted;
+            border-color: lightblue;
+
+            padding: 5px;
+        }
+    </style>
+
+    <title>Quick Servlet Demo</title>
+</head>
+<body>
+<h1>Welcome to The App!</h1>
+    <br/><br/>
+<!-- form action points to the endpoint /login -->
+<!-- method="post" makes the servlet use the doPost method-->
+    <div class="div1 col-md-6 col-xl-4 col-8">
+    <form action="userauth" method="get">
+        ID: <input type="text" size="14" name="id"/>
+        &nbsp;
+        <input type="submit" value="Find User" />
+    </form>
+
+    <br/><br/>
+    <form action="userauth" method="get">
+        Username: <input type="text" size="14" name="username", value="@revature.net"/>
+        &nbsp;
+        <input type="submit" value="Find User" />
+    </form>
+
+    <br/><br/>
+    <form action="userauth" method="get">
+        Get all users:
+        &nbsp;&nbsp;
+        <input type="submit" value="Get All Users">
+    </form>
+    </div>
+</body>
+</html>

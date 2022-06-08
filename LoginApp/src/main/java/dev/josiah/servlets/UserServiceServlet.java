@@ -110,7 +110,7 @@ public class UserServiceServlet  extends HttpServlet {
                 if (users == null) {
                     feedback = "No users found.";
                 } else {
-                    feedback = "Got back from service layer with " + users;
+                    feedback = "<h2>Got back from service layer</h2>\n <p>" + users + "</p>";
                 }
 
             } catch (Throwable t) { // happens if service or DAO layer throws anything
