@@ -11,7 +11,7 @@ import static dev.josiah.services.Encrypt.encrypt;
 
 
 public class ServiceLogin {
-    public int login(UserDAO userDAO, UserPrivDAO userPrivDAO, String username, String password) {
+    public static int login(UserDAO userDAO, UserPrivDAO userPrivDAO, String username, String password) {
         checkUsername(username);
         checkPassword(password); // error means username or password didn't meet constraints
         User user;
