@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -55,19 +56,24 @@ public class UserServiceServlet extends HttpServlet {
             try {
                 User user = ServiceGetUserById.ServiceIdRequest(potentialId, userDAO);
                 feedback = "Got back from service layer with " + user;
-                if (user == null) {
-                    feedback = "User not found!";
-                    resp.setStatus(200);
-                }
-            } catch (AuthExceptions.InputWasNull e) {
-                feedback = "Form input was null!";
+            } catch (AuthExceptions.UserNotFoundException e) {
+                feedback = "User not found!";
+                resp.setStatus(400);
+            } catch (AuthExceptions.InputWasNullException e) {
+                feedback = "Form input was blank!";
+                resp.setStatus(400);
+            } catch (AuthExceptions.InputNotAnIntegerException e) {
+                feedback = "Input must be an integer";
                 resp.setStatus(400);
             } catch (NumberFormatException e) {
                 feedback = "Please enter a whole number";
                 resp.setStatus(400);
-            } catch (AuthExceptions.ValueOutOfRange e) {
+            } catch (AuthExceptions.ValueOutOfRangeException e) {
                 feedback = "ID inputted was out of bounds";
                 resp.setStatus(400);
+            } catch (SQLException e) {
+                feedback = "There was a problem with the ddatabase";
+                resp.setStatus(500);
             } catch (Throwable t) { // happens if service or DAO layer throws anything
                 Complain(t);
                 // not throwing an exception

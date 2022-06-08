@@ -9,6 +9,7 @@ import dev.josiah.dtos.UserPass;
 import dev.josiah.entities.User;
 import dev.josiah.entities.UserPriv;
 import dev.josiah.entities.WebPage;
+import lombok.SneakyThrows;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -88,6 +89,7 @@ public class LoginServlet extends HttpServlet {
 //        resp.getWriter().write(htmlpage);
     }
 
+    @SneakyThrows // remove later
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws IOException {

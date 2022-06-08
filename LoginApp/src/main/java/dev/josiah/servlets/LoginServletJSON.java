@@ -37,8 +37,7 @@ public class LoginServletJSON extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         System.out.println("[LOG] - "+name+" received a request at " + LocalDateTime.now());
         System.out.println("[LOG] - Request URI: " + req.getRequestURI());
         System.out.println("[LOG] - Request method: " + req.getMethod());
@@ -83,7 +82,7 @@ public class LoginServletJSON extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         System.out.println("[LOG] - "+name+" received a request at " + LocalDateTime.now());
         System.out.println("[LOG] - Request URI: " + req.getRequestURI());
         System.out.println("[LOG] - Request method: " + req.getMethod());

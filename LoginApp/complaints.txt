@@ -2048,3 +2048,11 @@ Caused by: java.lang.NumberFormatException: For input string: "0.1"
 	at java.lang.Long.parseLong(Long.java:631)
 	at dev.josiah.services.ServiceGetUserById.validateId(ServiceGetUserById.java:32)
 	... 30 more
+Jun 08, 2022 at 15:55:47 CDT
+Unhandled URI posted to: /login-service/loginjson
+Jun 08, 2022 at 15:55:55 CDT
+Unhandled URI posted to: /login-service/loginjson
+Jun 08, 2022 at 16:02:32 CDT
+Unhandled URI posted to: /login-service/loginjson
+Jun 08, 2022 at 16:14:19 CDT
+Unhandled URI posted to: /login-service/loginjson

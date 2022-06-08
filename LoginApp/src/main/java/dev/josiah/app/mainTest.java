@@ -7,6 +7,7 @@ import dev.josiah.daos.UserPrivDAO;
 import dev.josiah.daos.UserPrivDaoPostgres;
 import dev.josiah.entities.User;
 import dev.josiah.entities.UserPriv;
+import lombok.SneakyThrows;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,6 +18,7 @@ import static dev.josiah.services.Encrypt.encrypt;
 import static java.lang.Math.toIntExact;
 
 public class mainTest {
+    @SneakyThrows
     public static void main(String[] args) {
         String password = "12345678";
         String enc = encrypt(password);
@@ -26,6 +28,7 @@ public class mainTest {
         System.out.println(enc);
 
     }
+    @SneakyThrows
     private static void createUser() {
         User user = new User();
         user.setUsername("Jsparks109@revature.net");

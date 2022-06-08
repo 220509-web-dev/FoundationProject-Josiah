@@ -5,20 +5,20 @@ public class AuthExceptions {
         public UsernameFormatException(String msg) {
             super(msg);
         }}
-    public static class UserNotFound extends AppExceptions {
-        public UserNotFound(String msg) {
+    public static class UserNotFoundException extends AppExceptions {
+        public UserNotFoundException(String msg) {
             super(msg);
         }}
-    public static class InputWasNull extends AppExceptions {
-        public InputWasNull(String msg) {
+    public static class InputWasNullException extends AppExceptions {
+        public InputWasNullException(String msg) {
             super(msg);
         }}
-    public static class InputNotAnInteger extends AppExceptions {
-        public InputNotAnInteger(String msg) {
+    public static class InputNotAnIntegerException extends AppExceptions {
+        public InputNotAnIntegerException(String msg) {
             super(msg);
         }}
-    public static class ValueOutOfRange extends AppExceptions {
-        public ValueOutOfRange(String msg) { super(msg); }}
+    public static class ValueOutOfRangeException extends AppExceptions {
+        public ValueOutOfRangeException(String msg) { super(msg); }}
     public static class UsernameNotAvailableException extends AppExceptions {
         public UsernameNotAvailableException(String msg) { super(msg); }}
     public static class InvalidCredentialsException extends AppExceptions {

@@ -22,17 +22,17 @@ public class AuthUser{
 
     public static void checkUsername(String username) {
         if (username == null) {
-            throw new AuthExceptions.InputWasNull("Username was null");
+            throw new AuthExceptions.InputWasNullException("Username was null");
             // Shouldn't ever happen. Servlet won't call this if username param is null
         }
 
         if ((maxLen != null) && (username.length() > maxLen)) {
-            throw new AuthExceptions.ValueOutOfRange("Username length was " + username.length() +
+            throw new AuthExceptions.ValueOutOfRangeException("Username length was " + username.length() +
                     ", expected length to be at most " + maxLen);
         }
 
         if ((minLen != null) && (username.length() < minLen)) {
-            throw new AuthExceptions.ValueOutOfRange("Username length was " + username.length() +
+            throw new AuthExceptions.ValueOutOfRangeException("Username length was " + username.length() +
                     ", expected length to be at least " + minLen);
         }
 

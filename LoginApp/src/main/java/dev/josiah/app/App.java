@@ -6,6 +6,7 @@ import dev.josiah.daos.UserPrivDAO;
 import dev.josiah.daos.UserPrivDaoPostgres;
 import dev.josiah.entities.User;
 import dev.josiah.entities.UserPriv;
+import lombok.SneakyThrows;
 
 import javax.swing.*;
 import java.awt.*;
@@ -87,13 +88,14 @@ public class App {
             }
         }
     }
-
+    @SneakyThrows
     public static Boolean validate(String username) {
         UserDAO userDAO = new UserDaoPostgres();
         User u = userDAO.getUserByUsername(username);
         if (u == null) return true;  // username available!
         return false; // username not available.
     }
+    @SneakyThrows
     public static String validate(String username, String password) {
         String[] fields;
         String[] errors = new String[5];
@@ -130,6 +132,7 @@ public class App {
         output += args[ind];
         return output;
     }
+    @SneakyThrows
     public static void Store(String first, String last, String username, String password) {
         User u = new User(1, username, first, last, "null","null","null","null","null");
         UserDAO userDAO = new UserDaoPostgres();
@@ -249,7 +252,7 @@ public class App {
         }
         return info[0];
     }
-
+    @SneakyThrows
     private static void code_holder() {
 
         /*

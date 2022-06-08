@@ -14,22 +14,22 @@
         <listener-class>dev.josiah.utils.ContextLoaderListener</listener-class>
     </listener>
 
-    <filter>
-        <filter-name>ExampleFil</filter-name>
-        <filter-class>dev.josiah.filters.ExampleFilter</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>ExampleFil</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
+<!--    <filter>-->
+<!--        <filter-name>ExampleFil</filter-name>-->
+<!--        <filter-class>dev.josiah.filters.ExampleFilter</filter-class>-->
+<!--    </filter>-->
+<!--    <filter-mapping>-->
+<!--        <filter-name>ExampleFil</filter-name>-->
+<!--        <url-pattern>/*</url-pattern>-->
+<!--    </filter-mapping>-->
 
-    <!--    <filter>-->
-    <!--        <filter-name>Cors</filter-name>-->
-    <!--        <filter-class>dev.josiah.filters.CorsFilter</filter-class>-->
-    <!--    </filter>-->
-    <!--    <filter-mapping>-->
-    <!--        <filter-name>Cors</filter-name>-->
-    <!--        <url-pattern>/*</url-pattern>-->
-    <!--    </filter-mapping>-->
+        <filter>
+            <filter-name>Cors</filter-name>
+            <filter-class>dev.josiah.filters.CorsFilter</filter-class>
+        </filter>
+        <filter-mapping>
+            <filter-name>Cors</filter-name>
+            <url-pattern>/*</url-pattern>
+        </filter-mapping>
 
 </web-app>

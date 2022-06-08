@@ -22,31 +22,29 @@ public class ServiceGetUserById {
             user = userDAO.getUserById(id_int);
         } catch (SQLException e) {
             throw new SQLException(e);
+        } catch (Throwable t) {
+            throw new RuntimeException(t);
         }
         if (user == null) {
-            return null;
-            //throw new AuthExceptions.UserNotFound("User with ID "+id_int+" not found!");
+            throw new AuthExceptions.UserNotFoundException("User with ID "+id_int+" not found!");
         }
         return user;
     }
     private static long validateId(String id_feed) {
         if (id_feed == null) {
             Complain("ID was null");
-            throw new AuthExceptions.InputWasNull("ID was null");
+            throw new AuthExceptions.InputWasNullException("ID was null");
         }
         long id;
         try {
             id = Long.parseLong(id_feed);
-        } catch (NumberFormatException e) {
-            Complain(e);
-            throw new AuthExceptions.InputNotAnInteger(id_feed + " could not be parsed as an integer.");
         } catch (Throwable t) {
             Complain(t);
-            throw new RuntimeException(t);
+            throw new AuthExceptions.InputNotAnIntegerException(id_feed + " could not be parsed as an integer.");
         }
 
         if (id_feed.length() > maxLen || (minId != null && id < minId) || (maxId != null && maxId < id)) {
-            throw new AuthExceptions.ValueOutOfRange("ID "+id+" was not in the service-enforced range constraint");
+            throw new AuthExceptions.ValueOutOfRangeException ("ID "+id+" was not in the service-enforced range constraint");
         }
 
         return id;

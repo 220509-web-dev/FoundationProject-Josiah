@@ -14,14 +14,14 @@ public class AuthPass {
 
     public static void checkPassword(String password) {
         if (password == null) {
-            throw new AuthExceptions.InputWasNull("Password was null");
+            throw new AuthExceptions.InputWasNullException("Password was null");
         }
         if ((maxLen != null) && (password.length() > maxLen)) {
-            throw new AuthExceptions.ValueOutOfRange("Password length was " + password.length() +
+            throw new AuthExceptions.ValueOutOfRangeException("Password length was " + password.length() +
                     ", expected length to be at most " + maxLen);
         }
         if ((minLen != null) && (password.length() < minLen)) {
-            throw new AuthExceptions.ValueOutOfRange("Password length was " + password.length() +
+            throw new AuthExceptions.ValueOutOfRangeException("Password length was " + password.length() +
                     ", expected length to be at least " + minLen);
         }
         if ((cannotContain != null) &&
