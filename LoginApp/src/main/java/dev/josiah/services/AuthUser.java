@@ -49,7 +49,7 @@ public class AuthUser{
         }
 
         if ((userCannotContain != null) &&
-                userCannotContain.stream().allMatch(t -> !username.contains(t))) {
+                userCannotContain.stream().allMatch(t -> username.contains(t))) {
             throw new AuthExceptions.UsernameFormatException(username+" contained an illegal character");
         }
     }

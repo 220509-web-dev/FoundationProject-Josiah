@@ -25,7 +25,7 @@ public class AuthPass {
                     ", expected length to be at least " + minLen);
         }
         if ((cannotContain != null) &&
-                cannotContain.stream().allMatch(t -> !password.contains(t))) {
+                cannotContain.stream().allMatch(t -> password.contains(t))) {
             throw new AuthExceptions.UsernameFormatException("Password entered contained an illegal character");
         }
     }
