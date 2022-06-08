@@ -19,6 +19,9 @@ import java.io.PrintWriter;
 import java.time.LocalDateTime;
 import java.util.Map;
 
+import static dev.josiah.complaintDepartment.ProblemScribe.Complain;
+import static dev.josiah.services.ServiceLogin.login;
+
 // registered in web.xml
 public class LoginServlet extends HttpServlet {
     private final static String name = "LoginServlet";
@@ -50,8 +53,31 @@ public class LoginServlet extends HttpServlet {
 
         String username = req.getParameter("username");
         String password = req.getParameter("password");
+
+        System.out.println("username = " + username);
+        System.out.println("username is"+((username == null)? "":" not")+" null");
+
+        System.out.println("password = " + password);
+        System.out.println("password is"+((password == null)? "":" not")+" null");
+
+        String message = "";
+        int responseCode;
+        try {
+            responseCode = login(userDAO,upDAO,username,password);
+            switch (responseCode) {
+                case 0: message = "Logged in"; break;
+                case 1: message = "User not found"; break;
+                case 2: message = "Incorrect password"; break;
+                case 3: message = "An internal error occurred"; break;
+                default: message = "You shouldn't be getting this message"; break;
+            }
+        } catch (Throwable t) {
+            Complain(t);
+            message = "Invalid input";
+        }
+
         resp.setContentType("text/html");
-        resp.getWriter().write("trying to login with username " + username + " and password "+ password);
+        resp.getWriter().write(message);
 
 //        resp.setStatus(200); // it is 200 by default
 //        resp.setHeader("Content-type", "text/html");
