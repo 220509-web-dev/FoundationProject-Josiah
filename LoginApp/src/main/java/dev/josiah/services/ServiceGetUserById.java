@@ -4,6 +4,8 @@ import dev.josiah.complaintDepartment.AuthExceptions;
 import dev.josiah.daos.UserDAO;
 import dev.josiah.entities.User;
 
+import java.sql.SQLException;
+
 import static dev.josiah.complaintDepartment.ProblemScribe.Complain;
 import static java.lang.Math.toIntExact;
 
@@ -12,10 +14,15 @@ public class ServiceGetUserById {
     final private static Long maxId = 2147483647L;    // null values tell code to not enforce the min or max restraint
     final private static int maxLen = 20;             // Larger than this, the input is larger than largest Long value
 
-    public static User ServiceIdRequest(String id_feed, UserDAO userDAO) {
+    public static User ServiceIdRequest(String id_feed, UserDAO userDAO) throws SQLException {
         long id = validateId(id_feed);
         int id_int = toIntExact(id); // can be removed later to accommodate >2.1bil DB records
-        User user = userDAO.getUserById(id_int);
+        User user;
+        try {
+            user = userDAO.getUserById(id_int);
+        } catch (SQLException e) {
+            throw new SQLException(e);
+        }
         if (user == null) {
             return null;
             //throw new AuthExceptions.UserNotFound("User with ID "+id_int+" not found!");
@@ -32,7 +39,7 @@ public class ServiceGetUserById {
             id = Long.parseLong(id_feed);
         } catch (NumberFormatException e) {
             Complain(e);
-            throw new RuntimeException(e);
+            throw new AuthExceptions.InputNotAnInteger(id_feed + " could not be parsed as an integer.");
         } catch (Throwable t) {
             Complain(t);
             throw new RuntimeException(t);

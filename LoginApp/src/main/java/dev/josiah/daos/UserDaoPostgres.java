@@ -37,7 +37,7 @@ public class UserDaoPostgres implements UserDAO{
     final private String[] c = {c0,c1,c2,c3,c4,c5,c6,c7,c8};
 
     @Override
-    public User createUser(User user) {
+    public User createUser(User user) throws SQLException {
 //      try(Connection conn = ConnectionUtil.getConnection()) {
         try {Connection conn = ConnectionFactory.getInstance().getConnection();
             String sql = "insert into "+st+" values (default";
@@ -64,15 +64,16 @@ public class UserDaoPostgres implements UserDAO{
             return user;
         } catch (SQLException e) {
             Complain(e);
-            throw new RuntimeException(e);
+            throw new SQLException(e);
         } catch (Throwable t) {
             Complain(t);
+            throw new RuntimeException(t);
         }
-        return null;
+        //return null;
     }
 
     @Override
-    public User getUserById(int id) {
+    public User getUserById(int id) throws SQLException {
 //      try(Connection conn = ConnectionUtil.getConnection()) {
         try {Connection conn = ConnectionFactory.getInstance().getConnection();
             String sql = "select * from "+st+" where "+c[0]+" = ?";
@@ -98,15 +99,16 @@ public class UserDaoPostgres implements UserDAO{
 
         } catch (SQLException e) {
             Complain(e);
-            throw new RuntimeException(e);
+            throw new SQLException(e);
         } catch (Throwable t) {
             Complain(t);
+            throw new RuntimeException(t);
         }
         return null;
     }
 
     @Override
-    public User getUserByUsername(String username) {
+    public User getUserByUsername(String username) throws SQLException {
         // Return type is not an array.
         // This works because username in DB has unique constraint.
 //      try(Connection conn = ConnectionUtil.getConnection()) {
@@ -131,15 +133,16 @@ public class UserDaoPostgres implements UserDAO{
 
         } catch (SQLException e) {
             Complain(e);
-            throw new RuntimeException(e);
+            throw new SQLException(e);
         } catch (Throwable t) {
             Complain(t);
+            throw new RuntimeException(t);
         }
         return null;
     }
 
     @Override
-    public List<User> getAllUsers() {
+    public List<User> getAllUsers() throws SQLException {
 //      try(Connection conn = ConnectionUtil.getConnection()) {
         try {Connection conn = ConnectionFactory.getInstance().getConnection();
             String sql = "select * from "+st+";";
@@ -163,15 +166,16 @@ public class UserDaoPostgres implements UserDAO{
             return users;
         } catch (SQLException e) {
             Complain(e);
-            throw new RuntimeException(e);
+            throw new SQLException(e);
         } catch (Throwable t) {
             Complain(t);
+            throw new RuntimeException(t);
         }
-        return null;
+        //return null;
     }
 
     @Override
-    public User updateUser(User user) {
+    public User updateUser(User user) throws SQLException {
 //      try(Connection conn = ConnectionUtil.getConnection()) {
         try {Connection conn = ConnectionFactory.getInstance().getConnection();
             String sql = "update "+st+" set ";
@@ -194,15 +198,16 @@ public class UserDaoPostgres implements UserDAO{
 
         } catch (SQLException e) {
             Complain(e);
-            throw new RuntimeException(e);
+            throw new SQLException(e);
         } catch (Throwable t) {
             Complain(t);
+            throw new RuntimeException(t);
         }
-        return null;
+        //return null;
     }
 
     @Override
-    public void deleteUserById(int id) {
+    public void deleteUserById(int id) throws SQLException {
 //      try(Connection conn = ConnectionUtil.getConnection()) {
         try {Connection conn = ConnectionFactory.getInstance().getConnection();
             String sql = "delete from "+st+" where "+c[0]+" = ?";
@@ -211,9 +216,10 @@ public class UserDaoPostgres implements UserDAO{
             ps.execute();
         } catch (SQLException e) {
             Complain(e);
-            throw new RuntimeException(e);
+            throw new SQLException(e);
         } catch (Throwable t) {
             Complain(t);
+            throw new RuntimeException(t);
         }
     }
 }

@@ -3,6 +3,7 @@ package dev.josiah.daos;
 import dev.josiah.entities.UserPriv;
 import dev.josiah.utils.ConnectionFactory;
 
+import javax.sql.rowset.RowSetWarning;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +35,7 @@ public class UserPrivDaoPostgres implements UserPrivDAO{
     final private String[] c = {c0,c1,c2};
 
     @Override
-    public void createUserInfo(UserPriv userp) {
+    public void createUserInfo(UserPriv userp) throws SQLException {
 //      try(Connection conn = ConnectionUtil.getConnection()) {
         try {Connection conn = ConnectionFactory.getInstance().getConnection();
             String sql = "insert into "+st+" values (";
@@ -48,14 +49,15 @@ public class UserPrivDaoPostgres implements UserPrivDAO{
 
         } catch (SQLException e) {
             Complain(e);
-            throw new RuntimeException(e);
+            throw new SQLException(e);
         } catch (Throwable t) {
             Complain(t);
+            throw new RuntimeException(t);
         }
     }
 
     @Override
-    public UserPriv getUserInfoById(int id) {
+    public UserPriv getUserInfoById(int id) throws SQLException {
 //        try(Connection conn = ConnectionUtil.getConnection()) {
           try {Connection conn = ConnectionFactory.getInstance().getConnection();
             String sql = "select * from "+st+" where "+c[0]+" = ? ;";
@@ -73,15 +75,16 @@ public class UserPrivDaoPostgres implements UserPrivDAO{
             }
         } catch (SQLException e) {
             Complain(e);
-            throw new RuntimeException(e);
+            throw new SQLException(e);
         } catch (Throwable t) {
             Complain(t);
+            throw new RuntimeException(t);
         }
         return null;
     }
 
     @Override
-    public List<UserPriv> getAllUserInfo() {
+    public List<UserPriv> getAllUserInfo() throws SQLException {
 //      try(Connection conn = ConnectionUtil.getConnection()) {
         try {Connection conn = ConnectionFactory.getInstance().getConnection();
             String sql = "select * from "+st+";";
@@ -101,15 +104,16 @@ public class UserPrivDaoPostgres implements UserPrivDAO{
             if (results) return userps;
         } catch (SQLException e) {
             Complain(e);
-            throw new RuntimeException(e);
+            throw new SQLException(e);
         } catch (Throwable t) {
             Complain(t);
+            throw new RuntimeException(t);
         }
         return null;
     }
 
     @Override
-    public UserPriv updateUserInfo(UserPriv userp) {
+    public UserPriv updateUserInfo(UserPriv userp) throws SQLException {
 //      try(Connection conn = ConnectionUtil.getConnection()) {
         try {Connection conn = ConnectionFactory.getInstance().getConnection();
             String sql = "update "+st+" set ";
@@ -125,15 +129,16 @@ public class UserPrivDaoPostgres implements UserPrivDAO{
             return userp;
         } catch (SQLException e) {
             Complain(e);
-            throw new RuntimeException(e);
+            throw new SQLException(e);
         } catch (Throwable t) {
             Complain(t);
+            throw new RuntimeException(t);
         }
-        return null;
+        //return null;
     }
 
     @Override
-    public void deleteUserInfoById(int id) {
+    public void deleteUserInfoById(int id) throws SQLException {
 //      try(Connection conn = ConnectionUtil.getConnection()) {
         try {Connection conn = ConnectionFactory.getInstance().getConnection();
             String sql = "delete from "+st+" where "+c[0]+" = ?";
@@ -142,10 +147,10 @@ public class UserPrivDaoPostgres implements UserPrivDAO{
             ps.execute();
         } catch (SQLException e) {
             Complain(e);
-            throw new RuntimeException(e);
+            throw new SQLException(e);
         } catch (Throwable t) {
             Complain(t);
+            throw new RuntimeException(t);
         }
-
     }
 }
