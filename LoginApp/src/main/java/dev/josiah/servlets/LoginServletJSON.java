@@ -3,6 +3,7 @@ package dev.josiah.servlets;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.josiah.daos.UserDAO;
 import dev.josiah.daos.UserPrivDAO;
+import dev.josiah.dtos.UserInfo;
 import dev.josiah.dtos.UserPass;
 
 import javax.servlet.ServletException;
@@ -91,6 +92,12 @@ public class LoginServletJSON extends HttpServlet {
         String self_loc = "/login-service/loginjson";
         String uri = req.getRequestURI().replace(self_loc, "");
 
+        if (!(uri.equals("/login") || uri.equals("/register"))) {
+            String complaint = "Unhandled URI posted to: " + self_loc + uri;
+            Complain(complaint);
+            System.out.println(complaint);
+        }
+
         if (uri.equals("/login")) {
             System.out.println("Doing JSON login");
             try {
@@ -103,8 +110,16 @@ public class LoginServletJSON extends HttpServlet {
         }
         if (uri.equals("/register")) {
             System.out.println("Doing JSON register");
+            try {
+                UserInfo userInfo = mapper.readValue(req.getInputStream(), UserInfo.class);
+                System.out.println("input mapped to " + userInfo);
+            } catch (Throwable t) {
+                System.out.println("Invalid JSON in POST request to " + name);
+            }
+
 
         }
+
 
 
     }

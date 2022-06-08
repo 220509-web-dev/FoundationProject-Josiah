@@ -23,6 +23,7 @@ user_id int generated always as identity,
 @ToString
 public class UserInfo {
     private String username;
+    private String password;
     private String fname;
     private String lname;
     private String address1;
