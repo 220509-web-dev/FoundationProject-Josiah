@@ -58,6 +58,8 @@ public class LoginServlet extends HttpServlet {
         System.out.println("password = " + password);
         System.out.println("password is"+((password == null)? "":" not")+" null");
 
+
+        // copy+paste to LoginServletJSON begins here
         String message = "";
         int responseCode;
         try {

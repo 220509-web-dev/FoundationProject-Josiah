@@ -47,7 +47,7 @@ public class ContextLoaderListener implements ServletContextListener {
         // registration
         context.addServlet("LoginPageServlet", loginPageServlet).addMapping("/login");
         context.addServlet("UserServiceServlet", userServiceServlet).addMapping("/userauth");
-        context.addServlet("LoginServletJSON", loginServletJSON).addMapping("/loginjson");
+        context.addServlet("LoginServletJSON", loginServletJSON).addMapping("/loginjson/*");
 
 
         // LoginServlet dynamic registration
