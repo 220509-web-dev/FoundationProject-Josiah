@@ -3,7 +3,6 @@ package dev.josiah.servlets;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.josiah.daos.UserDAO;
 import dev.josiah.entities.User;
-import dev.josiah.entities.WebPage;
 import dev.josiah.services.ServiceGetUserById;
 import dev.josiah.services.ServiceGetUserByUsername;
 
@@ -16,7 +15,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import static dev.josiah.complaintDepartment.ProblemScribe.Complain;
-import static dev.josiah.services.AuthUser.authenticate;
 import static dev.josiah.services.ServiceGetAllUsers.ServiceAllUsersRequest;
 
 public class UserServiceServlet  extends HttpServlet {
