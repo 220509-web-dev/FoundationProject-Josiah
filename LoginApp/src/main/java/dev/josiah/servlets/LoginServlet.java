@@ -25,12 +25,10 @@ import static dev.josiah.services.ServiceLogin.login;
 // registered in web.xml
 public class LoginServlet extends HttpServlet {
     private final static String name = "LoginServlet";
-    private final ObjectMapper mapper;
     private final UserDAO userDAO;
     private final UserPrivDAO upDAO;
 
-    public LoginServlet(ObjectMapper mapper, UserDAO userDAO, UserPrivDAO upDAO) {
-        this.mapper = mapper;
+    public LoginServlet(UserDAO userDAO, UserPrivDAO upDAO) {
         this.userDAO = userDAO;
         this.upDAO = upDAO;
     }

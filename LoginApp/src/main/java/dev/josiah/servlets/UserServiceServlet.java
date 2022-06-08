@@ -19,11 +19,9 @@ import static dev.josiah.services.ServiceGetAllUsers.ServiceAllUsersRequest;
 
 public class UserServiceServlet  extends HttpServlet {
     private final static String name = "UserServiceServlet";
-    private final ObjectMapper mapper;
     private final UserDAO userDAO;
 
-    public UserServiceServlet(ObjectMapper mapper, UserDAO userDAO) {
-        this.mapper = mapper;
+    public UserServiceServlet(UserDAO userDAO) {
         this.userDAO = userDAO;
     }
 
