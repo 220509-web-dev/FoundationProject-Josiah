@@ -56,7 +56,6 @@
                     <server>LocalTomcat</server>
                     <path>/login-service</path>
                     <update>true</update> <!--Automatically updates server-->
-                    <!-- Try changing the pom.xml servername, see update-->
                 </configuration>
             </plugin>
         </plugins>

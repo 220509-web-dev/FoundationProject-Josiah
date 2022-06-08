@@ -11,14 +11,14 @@
             <param-value>context-value-for-all-servlets</param-value>
         </context-param>
 
-    <servlet>
-        <servlet-name>newServlet111</servlet-name>
-        <servlet-class>dev.josiah.servletExamples.newServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>newServlet111</servlet-name>
-        <url-pattern>/newserv</url-pattern>
-    </servlet-mapping>
+<!--    <servlet>-->
+<!--        <servlet-name>newServlet111</servlet-name>-->
+<!--        <servlet-class>dev.josiah.servletExamples.newServlet</servlet-class>-->
+<!--    </servlet>-->
+<!--    <servlet-mapping>-->
+<!--        <servlet-name>newServlet111</servlet-name>-->
+<!--        <url-pattern>/newserv</url-pattern>-->
+<!--    </servlet-mapping>-->
 
 
     <servlet>
@@ -37,78 +37,78 @@
         <url-pattern>/sanity</url-pattern> <!--Map where this pattern maps to the servlet-->
     </servlet-mapping>
 
-    <servlet>
-        <servlet-name>xmlRegServlet</servlet-name>
-        <servlet-class>dev.josiah.servletExamples.xmlRegServlet</servlet-class>
-        <load-on-startup>1</load-on-startup> <!-- Tells Tomcat to eagerly create this servlet -->
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>xmlRegServlet</servlet-name>
-        <url-pattern>/xmlreg</url-pattern>
-    </servlet-mapping>
+<!--    <servlet>-->
+<!--        <servlet-name>xmlRegServlet</servlet-name>-->
+<!--        <servlet-class>dev.josiah.servletExamples.xmlRegServlet</servlet-class>-->
+<!--        <load-on-startup>1</load-on-startup> &lt;!&ndash; Tells Tomcat to eagerly create this servlet &ndash;&gt;-->
+<!--    </servlet>-->
+<!--    <servlet-mapping>-->
+<!--        <servlet-name>xmlRegServlet</servlet-name>-->
+<!--        <url-pattern>/xmlreg</url-pattern>-->
+<!--    </servlet-mapping>-->
 
-    <servlet>
-        <servlet-name>RectangleServlet</servlet-name>
-        <servlet-class>dev.josiah.servletExamples.RectangleServlet</servlet-class>
-        <load-on-startup>1</load-on-startup> <!-- Tells Tomcat to eagerly create this servlet -->
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>RectangleServlet</servlet-name>
-        <url-pattern>/rectangle</url-pattern>
-    </servlet-mapping>
+<!--    <servlet>-->
+<!--        <servlet-name>RectangleServlet</servlet-name>-->
+<!--        <servlet-class>dev.josiah.servletExamples.RectangleServlet</servlet-class>-->
+<!--        <load-on-startup>1</load-on-startup> &lt;!&ndash; Tells Tomcat to eagerly create this servlet &ndash;&gt;-->
+<!--    </servlet>-->
+<!--    <servlet-mapping>-->
+<!--        <servlet-name>RectangleServlet</servlet-name>-->
+<!--        <url-pattern>/rectangle</url-pattern>-->
+<!--    </servlet-mapping>-->
 
-    <servlet>
-        <servlet-name>QuickServlet</servlet-name>
-        <servlet-class>dev.josiah.servletExamples.RectangleHandler</servlet-class>
-        <load-on-startup>1</load-on-startup> <!-- Tells Tomcat to eagerly create this servlet -->
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>QuickServlet</servlet-name>
-        <url-pattern>/QuickServlet</url-pattern>
-    </servlet-mapping>
+<!--    <servlet>-->
+<!--        <servlet-name>QuickServlet</servlet-name>-->
+<!--        <servlet-class>dev.josiah.servletExamples.RectangleHandler</servlet-class>-->
+<!--        <load-on-startup>1</load-on-startup> &lt;!&ndash; Tells Tomcat to eagerly create this servlet &ndash;&gt;-->
+<!--    </servlet>-->
+<!--    <servlet-mapping>-->
+<!--        <servlet-name>QuickServlet</servlet-name>-->
+<!--        <url-pattern>/QuickServlet</url-pattern>-->
+<!--    </servlet-mapping>-->
 
-    <servlet>
-        <servlet-name>LoginServlet</servlet-name>
-        <servlet-class>dev.josiah.servlets.LoginServlet</servlet-class>
-        <load-on-startup>1</load-on-startup> <!-- Tells Tomcat to eagerly create this servlet -->
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>LoginServlet</servlet-name>
-        <url-pattern>/login</url-pattern>
-    </servlet-mapping>
+<!--    <servlet>-->
+<!--        <servlet-name>LoginServlet</servlet-name>-->
+<!--        <servlet-class>dev.josiah.servlets.LoginServlet</servlet-class>-->
+<!--        <load-on-startup>1</load-on-startup> &lt;!&ndash; Tells Tomcat to eagerly create this servlet &ndash;&gt;-->
+<!--    </servlet>-->
+<!--    <servlet-mapping>-->
+<!--        <servlet-name>LoginServlet</servlet-name>-->
+<!--        <url-pattern>/login</url-pattern>-->
+<!--    </servlet-mapping>-->
 
-    <servlet>
-        <servlet-name>LoginHandler</servlet-name>
-        <servlet-class>dev.josiah.servlets.LoginHandler</servlet-class>
-        <load-on-startup>1</load-on-startup> <!-- Tells Tomcat to eagerly create this servlet -->
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>LoginHandler</servlet-name>
-        <url-pattern>/LoginHandler</url-pattern>
-    </servlet-mapping>
+<!--    <servlet>-->
+<!--        <servlet-name>LoginHandler</servlet-name>-->
+<!--        <servlet-class>dev.josiah.servlets.LoginHandler</servlet-class>-->
+<!--        <load-on-startup>1</load-on-startup> &lt;!&ndash; Tells Tomcat to eagerly create this servlet &ndash;&gt;-->
+<!--    </servlet>-->
+<!--    <servlet-mapping>-->
+<!--        <servlet-name>LoginHandler</servlet-name>-->
+<!--        <url-pattern>/LoginHandler</url-pattern>-->
+<!--    </servlet-mapping>-->
 
 
 
-    <listener>
-        <listener-class>dev.josiah.utils.ContextLoaderListener</listener-class>
-    </listener>
-
-<!--    <filter>-->
-<!--        <filter-name>Cors</filter-name>-->
-<!--        <filter-class>dev.josiah.filters.CorsFilter</filter-class>-->
-<!--    </filter>-->
-<!--    <filter-mapping>-->
-<!--        <filter-name>Cors</filter-name>-->
-<!--        <url-pattern>/*</url-pattern>-->
-<!--    </filter-mapping>-->
+<!--    <listener>-->
+<!--        <listener-class>dev.josiah.utils.ContextLoaderListener</listener-class>-->
+<!--    </listener>-->
 
     <filter>
-        <filter-name>ExampleFil</filter-name>
-        <filter-class>dev.josiah.filters.ExampleFilter</filter-class>
+        <filter-name>Cors</filter-name>
+        <filter-class>dev.josiah.filters.CorsFilter</filter-class>
     </filter>
     <filter-mapping>
-        <filter-name>ExampleFil</filter-name>
+        <filter-name>Cors</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
+
+<!--    <filter>-->
+<!--        <filter-name>ExampleFil</filter-name>-->
+<!--        <filter-class>dev.josiah.filters.ExampleFilter</filter-class>-->
+<!--    </filter>-->
+<!--    <filter-mapping>-->
+<!--        <filter-name>ExampleFil</filter-name>-->
+<!--        <url-pattern>/*</url-pattern>-->
+<!--    </filter-mapping>-->
 
 </web-app>

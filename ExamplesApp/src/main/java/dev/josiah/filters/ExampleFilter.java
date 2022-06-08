@@ -18,6 +18,7 @@ public class ExampleFilter extends HttpFilter {
     }
 
     protected void doFilter(HttpServletRequest req, HttpServletResponse resp, FilterChain chain) {
+        // just saves the step; already has the HttpServletRequest and HttpServletResponse
         try {
             System.out.println("ExampleFilter leveraged");
             req.setAttribute("was-filtered", true);

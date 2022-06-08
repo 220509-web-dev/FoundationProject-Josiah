@@ -1,6 +1,7 @@
 package dev.josiah.servlets;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import dev.josiah.complaintDepartment.AuthExceptions;
 import dev.josiah.daos.UserDAO;
 import dev.josiah.entities.User;
 import dev.josiah.services.ServiceGetUserById;
@@ -17,7 +18,7 @@ import java.util.List;
 import static dev.josiah.complaintDepartment.ProblemScribe.Complain;
 import static dev.josiah.services.ServiceGetAllUsers.ServiceAllUsersRequest;
 
-public class UserServiceServlet  extends HttpServlet {
+public class UserServiceServlet extends HttpServlet {
     private final static String name = "UserServiceServlet";
     private final UserDAO userDAO;
 
@@ -58,6 +59,15 @@ public class UserServiceServlet  extends HttpServlet {
                     feedback = "User not found!";
                     resp.setStatus(200);
                 }
+            } catch (AuthExceptions.InputWasNull e) {
+                feedback = "Form input was null!";
+                resp.setStatus(400);
+            } catch (NumberFormatException e) {
+                feedback = "Please enter a whole number";
+                resp.setStatus(400);
+            } catch (AuthExceptions.ValueOutOfRange e) {
+                feedback = "ID inputted was out of bounds";
+                resp.setStatus(400);
             } catch (Throwable t) { // happens if service or DAO layer throws anything
                 Complain(t);
                 // not throwing an exception

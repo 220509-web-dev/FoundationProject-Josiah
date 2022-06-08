@@ -41,7 +41,6 @@ public class UserPrivDaoPostgres implements UserPrivDAO{
             for (int i = 0; i<c.length-1;i++) { sql += "?,"; }
             sql += "?);";
             PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-
             ps.setInt(1, userp.getUser_id());
             ps.setString(2, userp.getSocial_sn());
             ps.setString(3, userp.getPassword());
