@@ -3,6 +3,7 @@ package dev.josiah.servlets;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.josiah.daos.UserDAO;
 import dev.josiah.daos.UserPrivDAO;
+import dev.josiah.dtos.UserPass;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -38,6 +39,12 @@ public class LoginServletJSON extends HttpServlet {
         System.out.println("[LOG] - Request method: " + req.getMethod());
         System.out.println("[LOG] - Request header, example: " + req.getHeader("example"));
         System.out.println("[LOG] - Request query string: " + req.getQueryString());
+
+//AppUser newUser = mapper.readValue(req.getInputStream(), AppUser.class);
+        UserPass userPass = mapper.readValue(req.getInputStream(), UserPass.class);
+        System.out.println("Got the data: " + userPass);
+        resp.setContentType("text/json");
+        resp.getWriter().write(userPass.toString());
 
 }}
  /*

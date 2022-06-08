@@ -36,7 +36,7 @@ public class ContextLoaderListener implements ServletContextListener {
         context.addFilter("ExampleFilter", exampleFilter)
                 .addMappingForUrlPatterns(EnumSet.of(DispatcherType.INCLUDE), true, "/*");
                 // intercept everything with "/*"
-        */
+        */ // unnecessary
 
         // Instantiate Servlet Objects
         LoginPageServlet loginPageServlet = new LoginPageServlet();

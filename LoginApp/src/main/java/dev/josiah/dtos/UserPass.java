@@ -1,19 +1,14 @@
 package dev.josiah.dtos;
 
-import lombok.Getter;
-
-import static dev.josiah.services.Encrypt.encrypt;
+import lombok.*;
 
 @Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode
+@ToString
 public class UserPass {
-    private String user;
-    private String pass;
-    private int passLen;
-
-    public UserPass(String user, String pass) {
-        passLen = (pass == null) ? 0 : pass.length();
-        this.user = user;
-        this.pass = encrypt(pass);
-    }
-
+    private String username;
+    private String password;
 }
