@@ -44,11 +44,11 @@ public class UserServiceServlet  extends HttpServlet {
         String potentialId = req.getParameter("id");
         String potentialUsername = req.getParameter("username");
 
-        System.out.println("potentialId = " + potentialId);
-        System.out.println("potentialId is"+((potentialId == null)? "":" not")+" null");
-
-        System.out.println("potentialUsername = " + potentialUsername);
-        System.out.println("potentialUsername is"+((potentialUsername == null)? "":" not")+" null");
+//        System.out.println("potentialId = " + potentialId);
+//        System.out.println("potentialId is"+((potentialId == null)? "":" not")+" null");
+//
+//        System.out.println("potentialUsername = " + potentialUsername);
+//        System.out.println("potentialUsername is"+((potentialUsername == null)? "":" not")+" null");
 
         if (potentialId != null) {
             System.out.println("UserServiceServlet is forwarding to services ID : " + potentialId);
