@@ -18,10 +18,10 @@ public class ServiceLogin {
         UserPriv up;
         try {
             user = userDAO.getUserByUsername(username);
-            if (user == null) return 1; // jank-enum 1 means user not found
+            if (user == null) return 1;  // jank-enum 1 means user not found
             up = userPrivDAO.getUserInfoById(user.getUser_id());
             String pw = encrypt(password);
-            if (pw != up.getPassword()) return 2; // jank-enum 2 means incorrect password
+            if (pw != up.getPassword()) return 2;  // jank-enum 2 means incorrect password
 
         } catch (Throwable e) {
             return 3; // jank-enum 3 means database error
