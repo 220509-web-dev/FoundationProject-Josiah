@@ -48,14 +48,18 @@ public class LoginServlet extends HttpServlet {
         System.out.println("[LOG] - Request header, example: " + req.getHeader("example"));
         System.out.println("[LOG] - Request query string: " + req.getQueryString());
 
-        resp.setStatus(200); // it is 200 by default
-        resp.setHeader("Content-type", "text/html");
-        WebPage page = new WebPage("login.html");
-        System.out.println("Flag 1");
-
-        String htmlpage = page.getSource();
+        String username = req.getParameter("username");
+        String password = req.getParameter("password");
         resp.setContentType("text/html");
-        resp.getWriter().write(htmlpage);
+        resp.getWriter().write("trying to login with username " + username + " and password "+ password);
+
+//        resp.setStatus(200); // it is 200 by default
+//        resp.setHeader("Content-type", "text/html");
+//        WebPage page = new WebPage("login.html");
+//
+//        String htmlpage = page.getSource();
+//        resp.setContentType("text/html");
+//        resp.getWriter().write(htmlpage);
     }
 
     @Override

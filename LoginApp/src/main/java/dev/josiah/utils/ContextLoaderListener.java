@@ -6,6 +6,7 @@ import dev.josiah.daos.UserDaoPostgres;
 import dev.josiah.daos.UserPrivDAO;
 import dev.josiah.daos.UserPrivDaoPostgres;
 import dev.josiah.filters.ExampleFilter;
+import dev.josiah.servlets.LoginPageServlet;
 import dev.josiah.servlets.LoginServlet;
 import dev.josiah.servlets.UserServiceServlet;
 
@@ -37,17 +38,20 @@ public class ContextLoaderListener implements ServletContextListener {
         */
 
         // Instantiate Servlet Objects
+        LoginPageServlet loginPageServlet = new LoginPageServlet();
         LoginServlet loginServlet = new LoginServlet(mapper, userDAO, upDAO);
         UserServiceServlet userServiceServlet = new UserServiceServlet(mapper, userDAO);
 
-        // userServiceServlet registration
-        context.addServlet("UserServiceServlet", userServiceServlet).addMapping("/userauth/*");
+        // registration
+        context.addServlet("LoginPageServlet", loginPageServlet).addMapping("/login");
+        context.addServlet("UserServiceServlet", userServiceServlet).addMapping("/userauth");
+
 
         // LoginServlet dynamic registration
         ServletRegistration.Dynamic registeredServlet = context.addServlet("LoginServlet", loginServlet);
         registeredServlet.setLoadOnStartup(3);
         registeredServlet.setInitParameter("user-servlet-key1", "user-servlet-value");
-        registeredServlet.addMapping("/login/*");
+        registeredServlet.addMapping("/loginuser/*");
         // Servlet registered and will handle all /login/ or /login/anything
 
     }
