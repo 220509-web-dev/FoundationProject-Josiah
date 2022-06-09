@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.IllegalFormatException;
 import java.util.List;
@@ -35,24 +36,25 @@ public class AuthServlet extends HttpServlet {
     private final ObjectMapper mapper;
     private final UserDAO userDAO;
     private final UserPrivDAO upDAO;
+    private final String[] supportedURIs = new String[] {"/login", "/register"};
+    private final static String self_loc = "/login-service/userauth";
 
     @Override public void init() { System.out.println("[LOG] - "+name+" instantiated!"); }
 
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        String self_loc = "/login-service/userauth";
         String uri = req.getRequestURI().replace(self_loc, "");
 
-        if (!(uri.equals("/login") || uri.equals("/register"))) {
+        if (!Arrays.asList(supportedURIs).contains(uri)) {
             String complaint = "Unhandled URI posted to: " + self_loc + uri;
             Complain(complaint);
             System.out.println(complaint);
             resp.setContentType("text/html");
-            resp.getWriter().write(uri+" is not a supported URI");
+            resp.getWriter().write(uri + " is not a supported URI");
             return;
         }
 
-        if (uri.equals("/login")) {
+        if (uri.equals(supportedURIs[0])) {
             UserPass userPass = new UserPass();
             String feedback = "";
             try {
@@ -95,7 +97,7 @@ public class AuthServlet extends HttpServlet {
             resp.getWriter().write(mapper.writeValueAsString(errorMessage));
         }
 
-        if (uri.equals("/register")) {
+        if (uri.equals(supportedURIs[1])) {
             resp.setContentType("text/html");
             resp.getWriter().write("Register not implemented");
             return;

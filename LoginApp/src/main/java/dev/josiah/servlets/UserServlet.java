@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 
 import static dev.josiah.complaintDepartment.ProblemScribe.Complain;
@@ -20,6 +21,8 @@ import static dev.josiah.services.ServiceGetAllUsers.ServiceAllUsersRequest;
 public class UserServlet extends HttpServlet {
     private final static String name = "UserServlet";
     private final UserDAO userDAO;
+    private final String[] supportedURIs = new String[] {"/getall", "/getbyid", "/getbyusername"};
+    private final static String self_loc = "/login-service/users";
 
     public UserServlet(UserDAO userDAO) {
         this.userDAO = userDAO;
@@ -29,18 +32,34 @@ public class UserServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-
         System.out.println("[LOG] - " + name + " received a request at " + LocalDateTime.now());
         System.out.println("[LOG] - Request URI: " + req.getRequestURI());
         System.out.println("[LOG] - Request method: " + req.getMethod());
         System.out.println("[LOG] - Request query string: " + req.getQueryString());
 
-        String potentialId = req.getParameter("id");
-        String potentialUsername = req.getParameter("username");
 
-        if (potentialId != null) {
-            System.out.println("UserServiceServlet is forwarding to services ID : " + potentialId);
+        String uri = req.getRequestURI().replace(self_loc, "");
+
+        if (!Arrays.asList(supportedURIs).contains(uri)) {
+            String complaint = "Unhandled URI posted to: " + self_loc + uri;
+            Complain(complaint);
+            System.out.println(complaint);
+            resp.setContentType("text/html");
+            resp.getWriter().write(uri + " is not a supported URI");
+            return;
+        }
+
+        if (uri.equals(supportedURIs[1])) {
+            String potentialId = req.getParameter("id");
             String feedback;
+            if (potentialId == null) {
+                feedback = "Bad request";
+                resp.setStatus(400);
+                resp.setContentType("text/html");
+                resp.getWriter().write(feedback); // TODO : Prepare for JS to HTML
+                return;
+            }
+            System.out.println("UserServiceServlet is forwarding to services ID : " + potentialId);
             try {
                 User user = ServiceGetUserById.ServiceIdRequest(potentialId, userDAO);
                 feedback = "Got back from service layer with " + user;
@@ -76,10 +95,17 @@ public class UserServlet extends HttpServlet {
             return;
         }
 
-        // This line is reached only if (potentialId == null)
-        if (potentialUsername != null) {
-            System.out.println("UserServiceServlet is forwarding to services Username : " + potentialUsername);
+        if(uri.equals(supportedURIs[2])) {
+            String potentialUsername = req.getParameter("username");
             String feedback;
+            if (potentialUsername == null) {
+                feedback = "Bad request";
+                resp.setStatus(400);
+                resp.setContentType("text/html");
+                resp.getWriter().write(feedback); // TODO : Prepare for JS to HTML
+                return;
+            }
+            System.out.println("UserServiceServlet is forwarding to services Username : " + potentialUsername);
             try {
                 User user = ServiceGetUserByUsername.ServiceUsernameRequest(potentialUsername, userDAO);
                 feedback = "Got back from service layer with " + user;
@@ -113,7 +139,8 @@ public class UserServlet extends HttpServlet {
             resp.getWriter().write(feedback);
             return;
         }
-        if (true) {  // (potentialId == null && potentialUsername == null)
+
+        if(uri.equals(supportedURIs[0])) {
             System.out.println("UserServiceServlet is forwarding to services request for all user data");
             String feedback;
             try {
