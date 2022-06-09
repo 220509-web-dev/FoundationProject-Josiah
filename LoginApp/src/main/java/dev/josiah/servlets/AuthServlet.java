@@ -94,7 +94,10 @@ public class AuthServlet extends HttpServlet {
             } catch (AuthExceptions.InputWasNullException e) {
                 feedback = "Form input was blank";
                 resp.setStatus(400);
-            } catch (IllegalFormatException e) {
+            } catch (AuthExceptions.ValueOutOfRangeException e) {
+                feedback = "Username length was incorrect";
+                resp.setStatus(500);
+            } catch (AuthExceptions.UsernameFormatException e) {
                 feedback = "Username must end with @revature.net";
                 resp.setStatus(500);
             } catch (AuthExceptions.IllegalCharacterException e) {
@@ -118,25 +121,24 @@ public class AuthServlet extends HttpServlet {
             String feedback;
             try {
                 List<User> users = ServiceAllUsersRequest(userDAO);
-                if (users == null) {
-                    feedback = "No users found.";
-                } else {
-                    feedback = "<h2>Got back from service layer</h2>\n <p>" + users + "</p>";
-                }
+                feedback = "<h2>Got back from service layer</h2>\n <p>" + users + "</p>";
+                // TODO : prepare for JS to put in nice HTML
 
-            } catch (Throwable t) { // happens if service or DAO layer throws anything
+            } catch (AuthExceptions.UserNotFoundException e) {
+                feedback = "No users exist in database";
+                resp.setStatus(200);
+            } catch (SQLException e) {
+                feedback = "There was a problem with the database";
+                resp.setStatus(500);
+            }
+            catch (Throwable t) {
                 Complain(t);
-                // not throwing an exception
                 feedback = "An internal error occurred.";
-                resp.setStatus(400);
-                // throw new RuntimeException(); // I don't want to throw an error here because ...
-                // Throwing an error here gives a stacktrace to the website visitor
-                // But I don't want them to see the servlet structure
+                resp.setStatus(500);
             }
             System.out.println(feedback);
             resp.setContentType("text/html");
             resp.getWriter().write(feedback);
         }
     }
-
 }

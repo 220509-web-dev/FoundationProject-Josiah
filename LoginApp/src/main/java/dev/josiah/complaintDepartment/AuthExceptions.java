@@ -1,6 +1,8 @@
 package dev.josiah.complaintDepartment;
 
 public class AuthExceptions {
+    public static class UsernameFormatException extends AppExceptions {
+        public UsernameFormatException(String msg) { super(msg); }}
     public static class IllegalCharacterException extends AppExceptions {
         public IllegalCharacterException(String msg) { super(msg); }}
     public static class UserNotFoundException extends AppExceptions {
