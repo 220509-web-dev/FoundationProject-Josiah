@@ -1,11 +1,7 @@
 package dev.josiah.services;
 
-import com.google.common.hash.Hashing;
 import dev.josiah.complaintDepartment.AuthExceptions;
-import dev.josiah.dtos.UserPass;
-import dev.josiah.entities.User;
 
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 

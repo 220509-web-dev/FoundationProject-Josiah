@@ -59,7 +59,8 @@ public class LoginServlet extends HttpServlet {
         String message = "";
         int responseCode;
         try {
-            responseCode = login(userDAO,upDAO,username,password);
+            responseCode = 0;
+            login(userDAO,upDAO,username,password);
             switch (responseCode) {
                 case 0: message = "Logged in"; break;
                 case 1: message = "User not found"; break;
@@ -84,35 +85,8 @@ public class LoginServlet extends HttpServlet {
 //        resp.getWriter().write(htmlpage);
     }
 
-    @SneakyThrows // remove later
-    @Override
-    public void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws IOException {
-        String paramUsername = request.getParameter("username");
-        String paramPassword = request.getParameter("password");
-        UserPass userPass = new UserPass(paramUsername, paramPassword);
 
-        // TODO : Move this to services
-        User u = userDAO.getUserByUsername(paramUsername);
-        String user_info = "";
-        if (u == null) user_info = "User not found!";
-        else {
-            UserPriv up = upDAO.getUserInfoById(u.getUser_id());
-            UserPriv entered = new UserPriv();
-            entered.encryptAndSetPassword(paramPassword);
-            if (up.getPassword().equals(entered.getPassword())) {
-                user_info = "Logging in as " + paramUsername;
-            } else user_info = "Incorrect Password";
-        }
-        // TODO end
 
-        PrintWriter writer = response.getWriter();
-        String Return = "<html>Data Entered: <br/>Username : " + paramUsername;
-        Return += "<br/>Password : " + paramPassword;
-        Return += "<br/>"+user_info+"</html>";
-        writer.println(Return);
-        writer.flush();
-    }
 
     @Override
     public void destroy() {

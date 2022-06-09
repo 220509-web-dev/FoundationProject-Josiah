@@ -2108,3 +2108,9 @@ com.fasterxml.jackson.databind.exc.InvalidDefinitionException: No serializer fou
 	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
 	at java.lang.Thread.run(Thread.java:748)
+Jun 08, 2022 at 22:18:04 CDT
+Unhandled URI posted to: /login-service/userauth
+Jun 08, 2022 at 22:19:17 CDT
+Unhandled URI posted to: /login-service/userauth/k
+Jun 08, 2022 at 22:19:27 CDT
+Unhandled URI posted to: /login-service/userauth/

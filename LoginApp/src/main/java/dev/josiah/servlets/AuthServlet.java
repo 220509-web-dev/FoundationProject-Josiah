@@ -4,16 +4,20 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.josiah.complaintDepartment.AuthExceptions;
 import dev.josiah.daos.UserDAO;
 import dev.josiah.daos.UserPrivDAO;
+import dev.josiah.dtos.UserPass;
 import dev.josiah.entities.User;
+import dev.josiah.entities.UserPriv;
 import dev.josiah.services.ServiceGetUserById;
 import dev.josiah.services.ServiceGetUserByUsername;
 import lombok.AllArgsConstructor;
+import lombok.SneakyThrows;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.IllegalFormatException;
@@ -21,6 +25,7 @@ import java.util.List;
 
 import static dev.josiah.complaintDepartment.ProblemScribe.Complain;
 import static dev.josiah.services.ServiceGetAllUsers.ServiceAllUsersRequest;
+import static dev.josiah.services.ServiceLogin.login;
 
 @AllArgsConstructor
 public class AuthServlet extends HttpServlet {
@@ -30,6 +35,61 @@ public class AuthServlet extends HttpServlet {
     private final UserPrivDAO upDAO;
 
     @Override public void init() { System.out.println("[LOG] - "+name+" instantiated!"); }
+
+    @SneakyThrows
+    @Override
+    public void doPost(HttpServletRequest req, HttpServletResponse resp) {
+        String self_loc = "/login-service/userauth";
+        String uri = req.getRequestURI().replace(self_loc, "");
+
+        if (!(uri.equals("/login") || uri.equals("/register"))) {
+            String complaint = "Unhandled URI posted to: " + self_loc + uri;
+            Complain(complaint);
+            System.out.println(complaint);
+            resp.setContentType("text/html");
+            resp.getWriter().write(uri+" is not a supported URI");
+            return;
+        }
+        if (uri.equals("/login")) {
+            UserPass userPass = new UserPass();
+            String feedback = "";
+            try {
+                userPass = mapper.readValue(req.getInputStream(), UserPass.class);
+            } catch (Throwable t) {
+                resp.setStatus(400);
+                feedback = "Invalid input";
+                resp.setContentType("text/html");
+                resp.getWriter().write(feedback);
+                return;
+            }
+            String username = userPass.getUsername();
+            String password = userPass.getPassword();
+
+            if (username == null || password == null) {
+                resp.setStatus(400);
+                feedback = "Invalid input";
+            }
+            try {
+                login(userDAO, upDAO, username, password);
+                feedback = "Data Entered: \nUsername : " + username;
+                feedback += "\nPassword : " + password;
+
+            } catch (Throwable t){
+                resp.setStatus(400);
+                feedback = "Invalid input";
+            }
+
+            resp.setContentType("text/html");
+            resp.getWriter().write(feedback);
+        }
+
+        if (uri.equals("/register")) {
+            resp.setContentType("text/html");
+            resp.getWriter().write("Register not implemented");
+            return;
+        }
+
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {

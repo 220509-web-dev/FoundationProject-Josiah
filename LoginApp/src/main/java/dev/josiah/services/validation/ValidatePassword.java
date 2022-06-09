@@ -1,18 +1,18 @@
-package dev.josiah.services;
+package dev.josiah.services.validation;
 
 import dev.josiah.complaintDepartment.AuthExceptions;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class AuthPass {
+public class ValidatePassword {
     // set anything to null to remove validation for it
     final private static Integer maxLen = 30; // Arbitrary constraint
     final private static Integer minLen = 8;
     final private static ArrayList<String> cannotContain =
             new ArrayList<String>(Arrays.asList(" ", "\n", ""+'\u00A0'));
 
-    public static void checkPassword(String password) {
+    public static void validatePassword(String password) {
         if (password == null) {
             throw new AuthExceptions.InputWasNullException("Password was null");
         }

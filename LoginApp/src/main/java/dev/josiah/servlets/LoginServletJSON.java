@@ -64,7 +64,8 @@ public class LoginServletJSON extends HttpServlet {
         String message = "";
         int responseCode;
         try {
-            responseCode = login(userDAO,upDAO,username,password);
+            responseCode = 0;
+            login(userDAO,upDAO,username,password);
             switch (responseCode) {
                 case 0: message = "Logged in"; break;
                 case 1: message = "User not found"; break;
