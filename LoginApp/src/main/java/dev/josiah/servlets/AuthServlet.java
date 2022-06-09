@@ -48,6 +48,7 @@ public class AuthServlet extends HttpServlet {
             try {
                 User user = ServiceGetUserById.ServiceIdRequest(potentialId, userDAO);
                 feedback = "Got back from service layer with " + user;
+                System.out.println("##############################");
                 // TODO : prepare for JS to put in nice HTML
 
             } catch (AuthExceptions.UserNotFoundException e) {
