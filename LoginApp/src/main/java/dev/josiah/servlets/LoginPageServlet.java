@@ -42,8 +42,9 @@ public class LoginPageServlet extends HttpServlet {
 
         resp.setStatus(200); // it is 200 by default
         resp.setHeader("Content-type", "text/html");
-        WebPage page = new WebPage("login.html");
-        System.out.println("Flag 1");
+        String pageloc = "login.html";
+        WebPage page = new WebPage(pageloc);
+        System.out.println("[LOG] - "+name+" loading page " + pageloc);
 
         String htmlpage = page.getSource();
         resp.setContentType("text/html");

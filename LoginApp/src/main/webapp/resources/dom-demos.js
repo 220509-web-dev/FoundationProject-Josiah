@@ -59,7 +59,5 @@ function login() {
         // Show the error message
         errorContainer.removeAttribute('hidden');
         errorContainer.innerText = "You must provide a username and password!";
-        
     }
-
 }
