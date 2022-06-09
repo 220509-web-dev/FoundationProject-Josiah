@@ -1,14 +1,10 @@
 package dev.josiah.servlets;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.josiah.daos.UserDAO;
-import dev.josiah.daos.UserDaoPostgres;
 import dev.josiah.daos.UserPrivDAO;
-import dev.josiah.daos.UserPrivDaoPostgres;
 import dev.josiah.dtos.UserPass;
 import dev.josiah.entities.User;
 import dev.josiah.entities.UserPriv;
-import dev.josiah.entities.WebPage;
 import lombok.SneakyThrows;
 
 import javax.servlet.ServletException;
@@ -18,12 +14,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDateTime;
-import java.util.Map;
 
 import static dev.josiah.complaintDepartment.ProblemScribe.Complain;
 import static dev.josiah.services.ServiceLogin.login;
 
-// registered in web.xml
+
 public class LoginServlet extends HttpServlet {
     private final static String name = "LoginServlet";
     private final UserDAO userDAO;
@@ -44,12 +39,12 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+
         System.out.println("[LOG] - "+name+" received a request at " + LocalDateTime.now());
         System.out.println("[LOG] - Request URI: " + req.getRequestURI());
         System.out.println("[LOG] - Request method: " + req.getMethod());
         System.out.println("[LOG] - Request header, example: " + req.getHeader("example"));
         System.out.println("[LOG] - Request query string: " + req.getQueryString());
-
         String username = req.getParameter("username");
         String password = req.getParameter("password");
 

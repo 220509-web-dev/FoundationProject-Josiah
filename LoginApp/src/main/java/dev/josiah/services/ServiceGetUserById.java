@@ -6,16 +6,12 @@ import dev.josiah.entities.User;
 
 import java.sql.SQLException;
 
-import static dev.josiah.complaintDepartment.ProblemScribe.Complain;
+import static dev.josiah.services.validation.ValidateID.validateID;
 import static java.lang.Math.toIntExact;
 
 public class ServiceGetUserById {
-    final private static Long minId = 0L;             // Using wrapper class so that it can be set to null if need be
-    final private static Long maxId = 2147483647L;    // null values tell code to not enforce the min or max restraint
-    final private static int maxLen = 20;             // Larger than this, the input is larger than largest Long value
-
     public static User ServiceIdRequest(String id_feed, UserDAO userDAO) throws SQLException {
-        long id = validateId(id_feed);
+        long id = validateID(id_feed);
         int id_int = toIntExact(id); // can be removed later to accommodate >2.1bil DB records
         User user;
         try {
@@ -30,24 +26,4 @@ public class ServiceGetUserById {
         }
         return user;
     }
-    private static long validateId(String id_feed) {
-        if (id_feed == null) {
-            Complain("ID was null");
-            throw new AuthExceptions.InputWasNullException("ID was null");
-        }
-        long id;
-        try {
-            id = Long.parseLong(id_feed);
-        } catch (Throwable t) {
-            Complain(t);
-            throw new AuthExceptions.InputNotAnIntegerException(id_feed + " could not be parsed as an integer.");
-        }
-
-        if (id_feed.length() > maxLen || (minId != null && id < minId) || (maxId != null && maxId < id)) {
-            throw new AuthExceptions.ValueOutOfRangeException ("ID "+id+" was not in the service-enforced range constraint");
-        }
-
-        return id;
-    }
-
 }
