@@ -9,7 +9,6 @@ import dev.josiah.servlets.*;
 
 import javax.servlet.*;
 import java.time.LocalDateTime;
-import java.util.EnumSet;
 
 public class ContextLoaderListener implements ServletContextListener {
     @Override
@@ -23,16 +22,6 @@ public class ContextLoaderListener implements ServletContextListener {
 
         // Obtain the context from ServletContextEvent
         ServletContext context = sce.getServletContext();
-
-        // Register Filter (done in web.xml for now)
-        /*
-        // Register ExampleFilter
-        // TODO : Make this registration work, then delete web.xml filter registration
-        ExampleFilter exampleFilter = new ExampleFilter();
-        context.addFilter("ExampleFilter", exampleFilter)
-                .addMappingForUrlPatterns(EnumSet.of(DispatcherType.INCLUDE), true, "/*");
-                // intercept everything with "/*"
-        */ // unnecessary
 
         // Instantiate Servlet Objects
         LoginPageServlet loginPageServlet = new LoginPageServlet();

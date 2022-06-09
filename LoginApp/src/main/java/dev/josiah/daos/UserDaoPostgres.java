@@ -9,18 +9,6 @@ import java.util.List;
 
 import static dev.josiah.complaintDepartment.ProblemScribe.Complain;
 
-/*
--- pSQL code for table column names
-user_id int generated always as identity,
-  username varchar(255) not null check(length(username) >=2),
-  fname varchar(255) not null,
-  lname varchar(255) not null,
-  address1 varchar(255),
-  address2 varchar(255),
-  city varchar(255),
-  state varchar(100),
-  postalcode varchar(20),
- */
 public class UserDaoPostgres implements UserDAO{
     final private String sn = "user_data";  // Schema name
     final private String tn = "users";      // Table name

@@ -3,28 +3,12 @@ package dev.josiah.daos;
 import dev.josiah.entities.UserPriv;
 import dev.josiah.utils.ConnectionFactory;
 
-import javax.sql.rowset.RowSetWarning;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 import static dev.josiah.complaintDepartment.ProblemScribe.Complain;
 
-/*
-create table users_private (
-  user_id int not null,
-  social_sn varchar(9) check (length(social_sn) = 8),
-  password varchar(255) check (length(password) >= 8),
-
-  constraint user_private_pk
-  primary key(user_id),
-
-  constraint user_private_fk
-  foreign key (user_id)
-  references users(user_id)
-
-);
- */
 public class UserPrivDaoPostgres implements UserPrivDAO{
     final private String sn = "user_data";
     final private String tn = "users_private";      // Table name

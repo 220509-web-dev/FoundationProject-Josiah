@@ -1,6 +1,5 @@
 package dev.josiah.app;
 
-import dev.josiah.complaintDepartment.AuthExceptions;
 import dev.josiah.daos.UserDAO;
 import dev.josiah.daos.UserDaoPostgres;
 import dev.josiah.daos.UserPrivDAO;
@@ -9,16 +8,10 @@ import dev.josiah.entities.User;
 import dev.josiah.entities.UserPriv;
 import lombok.SneakyThrows;
 
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 
-import static dev.josiah.complaintDepartment.ProblemScribe.Complain;
-import static dev.josiah.services.AuthUser.checkUsername;
 import static dev.josiah.services.Encrypt.encrypt;
-import static java.lang.Math.toIntExact;
 
 public class mainTest {
 
