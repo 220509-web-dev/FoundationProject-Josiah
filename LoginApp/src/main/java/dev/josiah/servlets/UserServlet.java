@@ -54,6 +54,7 @@ public class UserServlet extends HttpServlet {
             String feedback;
             if (potentialId == null) {
                 feedback = "Bad request";
+                System.out.println("Bad GET request to "+name+" with URI: "+uri.toString());
                 resp.setStatus(400);
                 resp.setContentType("text/html");
                 resp.getWriter().write(feedback); // TODO : Prepare for JS to HTML
@@ -100,6 +101,7 @@ public class UserServlet extends HttpServlet {
             String feedback;
             if (potentialUsername == null) {
                 feedback = "Bad request";
+                System.out.println("Bad GET request to "+name+" with URI: "+uri.toString());
                 resp.setStatus(400);
                 resp.setContentType("text/html");
                 resp.getWriter().write(feedback); // TODO : Prepare for JS to HTML
