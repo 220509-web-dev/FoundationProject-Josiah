@@ -17,6 +17,7 @@ public class ContextLoaderListener implements ServletContextListener {
 
         // Instantiate necessary Objects
         ObjectMapper mapper = new ObjectMapper();
+        ObjectMapper mapper1 = new ObjectMapper();
         UserDAO userDAO = new UserDaoPostgres();
         UserPrivDAO upDAO = new UserPrivDaoPostgres();
 
@@ -25,7 +26,7 @@ public class ContextLoaderListener implements ServletContextListener {
 
         // Instantiate Servlet Objects
         LoginPageServlet loginPageServlet = new LoginPageServlet();
-        AuthServlet authServlet = new AuthServlet(mapper, userDAO, upDAO);
+        AuthServlet authServlet = new AuthServlet(mapper, mapper1, userDAO, upDAO);
         UserServlet userServlet = new UserServlet(userDAO);
 
         // registration
@@ -35,7 +36,7 @@ public class ContextLoaderListener implements ServletContextListener {
         // AuthServlet dynamic registration
         ServletRegistration.Dynamic registeredServlet = context.addServlet("AuthServlet", authServlet);
         registeredServlet.setLoadOnStartup(3);
-        registeredServlet.setInitParameter("user-servlet-key1", "user-servlet-value");
+        //registeredServlet.setInitParameter("user-servlet-key1", "user-servlet-value");
         registeredServlet.addMapping("/userauth/*"); // handle anything starting with /userauth
 
     }

@@ -1,9 +1,12 @@
 package dev.josiah.servlets;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.josiah.complaintDepartment.AuthExceptions;
 import dev.josiah.daos.UserDAO;
 import dev.josiah.daos.UserPrivDAO;
+import dev.josiah.dtos.Greeting;
+import dev.josiah.dtos.UserInfo;
 import dev.josiah.dtos.UserPass;
 import dev.josiah.entities.User;
 import dev.josiah.entities.UserPriv;
@@ -29,11 +32,13 @@ import java.util.List;
 import static dev.josiah.complaintDepartment.ProblemScribe.Complain;
 import static dev.josiah.services.ServiceGetAllUsers.ServiceAllUsersRequest;
 import static dev.josiah.services.ServiceLogin.login;
+import static dev.josiah.services.ServiceRegisterUser.register;
 
 @AllArgsConstructor
 public class AuthServlet extends HttpServlet {
     private final static String name = "AuthServlet";
     private final ObjectMapper mapper;
+    private final ObjectMapper mapper1;
     private final UserDAO userDAO;
     private final UserPrivDAO upDAO;
     private final String[] supportedURIs = new String[] {"/login", "/register"};
@@ -99,10 +104,26 @@ public class AuthServlet extends HttpServlet {
         }
 
         if (uri.equals(supportedURIs[1])) {
+            UserInfo userInfo;
+            try {
+                userInfo = mapper.readValue(req.getInputStream(), UserInfo.class);
+                //register(userDAO,upDAO,userInfo);
 
-            resp.setContentType("text/html");
-            resp.getWriter().write("Register not implemented");
-            return;
+            } catch (Throwable t) {
+                System.out.println("Registration Failed");
+                return;
+            } // TODO : implement register
+
+            try {
+                mapper1.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+                Greeting greeting = mapper1.convertValue(userInfo, Greeting.class);
+                resp.setContentType("application/json");
+                resp.getWriter().write(mapper.writeValueAsString(greeting));
+                return;
+            } catch (Throwable t) {
+                System.out.println("An unknown error occurred");
+                return;
+            }
         }
     }
 }
