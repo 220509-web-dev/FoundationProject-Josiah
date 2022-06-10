@@ -132,3 +132,5 @@ java.lang.NumberFormatException: For input string: "a"
 	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
 	at java.lang.Thread.run(Thread.java:748)
+Jun 09, 2022 at 14:26:20 CDT
+Unhandled URI posted to: /login-service/users

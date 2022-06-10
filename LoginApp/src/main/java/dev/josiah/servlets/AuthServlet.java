@@ -75,10 +75,11 @@ public class AuthServlet extends HttpServlet {
                 feedback = "Invalid input";
             }
             try {
-                User user = login(userDAO, upDAO, username, password);
+                UserPass userPass1 = new UserPass(username, password);
+                User user = login(userDAO, upDAO, userPass1);
                 HttpSession session = req.getSession();
                 session.setAttribute("auth-user", user);
-                resp.setStatus(204);
+                resp.setStatus(200);
                 HashMap<String, Object> message = new HashMap<>();
                 message.put("message", "Logged in");
                 message.put("timestamp", LocalDateTime.now().toString());
@@ -98,6 +99,7 @@ public class AuthServlet extends HttpServlet {
         }
 
         if (uri.equals(supportedURIs[1])) {
+
             resp.setContentType("text/html");
             resp.getWriter().write("Register not implemented");
             return;

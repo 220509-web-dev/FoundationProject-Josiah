@@ -1,5 +1,6 @@
 package dev.josiah.servlets;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.josiah.complaintDepartment.AuthExceptions;
 import dev.josiah.daos.UserDAO;
 import dev.josiah.entities.User;
@@ -22,6 +23,7 @@ public class UserServlet extends HttpServlet {
     private final static String name = "UserServlet";
     private final UserDAO userDAO;
     private final String[] supportedURIs = new String[] {"/getall", "/getbyid", "/getbyusername"};
+    private final ObjectMapper mapper = new ObjectMapper(); // TODO : add to constructor
     private final static String self_loc = "/login-service/users";
 
     public UserServlet(UserDAO userDAO) {
@@ -63,16 +65,17 @@ public class UserServlet extends HttpServlet {
             System.out.println("UserServiceServlet is forwarding to services ID : " + potentialId);
             try {
                 User user = ServiceGetUserById.ServiceIdRequest(potentialId, userDAO);
-                feedback = "Got back from service layer with " + user;
-                System.out.println("##############################");
+                resp.setContentType("application/json");
+                resp.getWriter().write(mapper.writeValueAsString(user));
+                return;
                 // TODO : prepare for JS to put in nice HTML
 
             } catch (AuthExceptions.UserNotFoundException e) {
                 feedback = "User not found";
-                resp.setStatus(400);
+                resp.setStatus(404);  // ANY RESOURCE NOT FOUND IS 404
             } catch (AuthExceptions.InputWasNullException e) {
                 feedback = "Form input was blank";
-                resp.setStatus(400);
+                resp.setStatus(400); // BAD REQUEST, GENERAL; UER SENT DATA THAT DOESN'T MAKE SENSE
             } catch (AuthExceptions.InputNotAnIntegerException e) {
                 feedback = "Input must be an integer";
                 resp.setStatus(400);
@@ -84,12 +87,13 @@ public class UserServlet extends HttpServlet {
                 resp.setStatus(400);
             } catch (SQLException e) {
                 feedback = "There was a problem with the database";
-                resp.setStatus(500);
+                resp.setStatus(500); // MAYBE, BUT DEPENDS ON WHAT KIND OF SQL EXCEPTION
             } catch (Throwable t) { // happens if service or DAO layer throws anything
                 Complain(t);
                 feedback = "Invalid Input.";
                 resp.setStatus(400);
             }
+            //
             System.out.println(feedback);
             resp.setContentType("text/html");
             resp.getWriter().write(feedback); // TODO : Prepare for JS to HTML
