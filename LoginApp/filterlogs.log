@@ -2824,3 +2824,63 @@ Jun 10, 2022 at 04:27:32 CDT
 Request URI: /login-service/users
 Request method: GET
 Request query string: id=0
+Jun 10, 2022 at 04:47:43 CDT
+
+2022-06-10T04:47:43.150
+Request URI: /login-service/
+Request method: GET
+Request query string: null
+Jun 10, 2022 at 04:47:55 CDT
+
+2022-06-10T04:47:55.871
+Request URI: /login-service/users
+Request method: GET
+Request query string: id=1
+Jun 10, 2022 at 04:48:00 CDT
+
+2022-06-10T04:48:00.888
+Request URI: /login-service/users
+Request method: GET
+Request query string: id=2
+Jun 10, 2022 at 04:48:22 CDT
+
+2022-06-10T04:48:22.378
+Request URI: /login-service/users
+Request method: GET
+Request query string: username=GJones45%40revature.net
+Jun 10, 2022 at 04:48:34 CDT
+
+2022-06-10T04:48:34.212
+Request URI: /login-service/users
+Request method: GET
+Request query string: username=GJone.s45%40revature.net
+Jun 10, 2022 at 04:48:42 CDT
+
+2022-06-10T04:48:42.002
+Request URI: /login-service/users
+Request method: GET
+Request query string: username=GJone%21s45%40revature.net
+Jun 10, 2022 at 04:48:50 CDT
+
+2022-06-10T04:48:50.346
+Request URI: /login-service/login.html
+Request method: GET
+Request query string: null
+Jun 10, 2022 at 04:48:50 CDT
+
+2022-06-10T04:48:50.428
+Request URI: /login-service/resources/login.js
+Request method: GET
+Request query string: null
+Jun 10, 2022 at 04:48:53 CDT
+
+2022-06-10T04:48:53.700
+Request URI: /login-service/register.html
+Request method: GET
+Request query string: null
+Jun 10, 2022 at 04:48:53 CDT
+
+2022-06-10T04:48:53.771
+Request URI: /login-service/resources/register.js
+Request method: GET
+Request query string: null

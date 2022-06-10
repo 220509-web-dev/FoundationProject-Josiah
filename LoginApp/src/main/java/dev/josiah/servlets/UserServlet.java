@@ -4,8 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.josiah.complaintDepartment.Exceptions.*;
 import dev.josiah.daos.UserDAO;
 import dev.josiah.entities.User;
-import dev.josiah.services.ServiceGetUserById;
-import dev.josiah.services.ServiceGetUserByUsername;
 import lombok.AllArgsConstructor;
 
 import javax.servlet.http.HttpServlet;
@@ -18,7 +16,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import static dev.josiah.complaintDepartment.ProblemScribe.Complain;
-import static dev.josiah.services.ServiceGetAllUsers.ServiceAllUsersRequest;
+import static dev.josiah.services.ServiceGet.*;
+
 
 @AllArgsConstructor
 public class UserServlet extends HttpServlet {
@@ -43,7 +42,7 @@ public class UserServlet extends HttpServlet {
         if (potentialId != null) {
             System.out.println(potentialId+" being sent from UserServlet to the service layer");
             try {
-                User user = ServiceGetUserById.ServiceIdRequest(potentialId, userDAO);
+                User user = ServiceIdRequest(potentialId, userDAO);
                 resp.setStatus(200);  // unnecessary
                 resp.setContentType("application/json");
                 resp.getWriter().write(mapper.writeValueAsString(user));
@@ -104,7 +103,7 @@ public class UserServlet extends HttpServlet {
         if(potentialUsername != null) {
             System.out.println(potentialUsername + " being sent from UserServlet to the service layer");
             try {
-                User user = ServiceGetUserByUsername.ServiceUsernameRequest(potentialUsername, userDAO);
+                User user = ServiceUsernameRequest(potentialUsername, userDAO);
                 resp.setStatus(200);  // unnecessary
                 resp.setContentType("application/json");
                 resp.getWriter().write(mapper.writeValueAsString(user));
