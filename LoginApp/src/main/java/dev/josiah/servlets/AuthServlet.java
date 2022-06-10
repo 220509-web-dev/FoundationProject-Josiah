@@ -48,16 +48,16 @@ public class AuthServlet extends HttpServlet {
         String[] supportedDestinations = {"login", "register"};
 
         // Determine the intended destination
-        try {
-            userPass = mapper.readValue(req.getInputStream(), UserPass.class);
-            destination = "login";
-        } catch (Throwable t) {}
+
 
         try {
             userInfo = mapper.readValue(req.getInputStream(), UserInfo.class);
             destination = "register";
-        } catch (Throwable t) {}
-
+        } catch (Throwable t) {System.out.println("Couldn't map to UserInfo");}
+        try {
+            userPass = mapper.readValue(req.getInputStream(), UserPass.class);
+            destination = "login";
+        } catch (Throwable t) { System.out.println("Couldn't map to UserPass");}
 
         Boolean supported = false;
         for (String loc: supportedDestinations) {
@@ -155,7 +155,8 @@ public class AuthServlet extends HttpServlet {
                 return;
             }
         }
-
+        System.out.println(req.getLocalAddr());
+        System.out.println("@@@@@@@@@@@@^^^^");
         if (destination.equals("register")) {
             try {
                 register(caster, userDAO, upDAO, userInfo);

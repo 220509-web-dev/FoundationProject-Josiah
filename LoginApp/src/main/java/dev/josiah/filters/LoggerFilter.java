@@ -29,7 +29,16 @@ public class LoggerFilter extends HttpFilter {
     }
     public void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain){
         try {
-            String log = "\n"+LocalDateTime.now();
+            SimpleDateFormat formatter= new SimpleDateFormat("MMM dd, yyyy 'at' HH:mm:ss z");
+            Date date = new Date(System.currentTimeMillis());
+            String log = "\n"+formatter.format(date);
+            log += "\nRequester getLocalAddr: " + req.getLocalAddr();
+            log += "\nRequester getRemoteAddr: " + req.getRemoteAddr();
+            log += "\nRequester getRemoteHost: " + req.getRemoteHost();
+            log += "\nRequester getContextPath: " + req.getContextPath();
+            log += "\nRequester getRemoteUser: " + req.getRemoteUser();
+            log += "\nRequester getRequestedSessionId: " + req.getRequestedSessionId();
+            log += "\nRequester getRequestURL: " + req.getRequestURL();
             log += "\nRequest URI: " + req.getRequestURI();
             log += "\nRequest method: " + req.getMethod();
             log += "\nRequest query string: " + req.getQueryString();

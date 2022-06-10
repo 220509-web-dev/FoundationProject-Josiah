@@ -50,7 +50,7 @@ function register() {
             }
             if (resp.status == 400) { // ADD CODE HANDLING
                 errorContainer.removeAttribute('hidden');
-                errorContainer.innerText = "Login failed!";
+                errorContainer.innerText = "Registration failed!";
                 return;
             }
 

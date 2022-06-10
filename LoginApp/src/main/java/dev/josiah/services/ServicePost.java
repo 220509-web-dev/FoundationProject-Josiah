@@ -26,6 +26,9 @@ public class ServicePost {
         User user;
         UserPriv up;
         user = userDAO.getUserByUsername(username);
+        if (user == null) {
+            throw new UserNotFoundException();
+        }
         up = upDAO.getUserInfoById(user.getUser_id());
         if (user == null) throw new UserNotFoundException();
         if (!encrypt(password).equals(up.getPassword())) {
