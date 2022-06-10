@@ -2410,3 +2410,219 @@ Jun 10, 2022 at 01:36:38 CDT
 Request URI: /login-service/userauth/register
 Request method: POST
 Request query string: null
+Jun 10, 2022 at 01:38:00 CDT
+
+2022-06-10T01:38:00.228
+Request URI: /login-service/userauth/register
+Request method: OPTIONS
+Request query string: null
+Jun 10, 2022 at 01:38:00 CDT
+
+2022-06-10T01:38:00.235
+Request URI: /login-service/userauth/register
+Request method: POST
+Request query string: null
+Jun 10, 2022 at 01:54:36 CDT
+
+2022-06-10T01:54:36.194
+Request URI: /login-service/
+Request method: GET
+Request query string: null
+Jun 10, 2022 at 01:54:38 CDT
+
+2022-06-10T01:54:38.143
+Request URI: /login-service/resources/floating-labels.css
+Request method: GET
+Request query string: null
+Jun 10, 2022 at 01:54:54 CDT
+
+2022-06-10T01:54:54.896
+Request URI: /login-service/
+Request method: GET
+Request query string: null
+Jun 10, 2022 at 01:54:56 CDT
+
+2022-06-10T01:54:56.887
+Request URI: /login-service/register.html
+Request method: GET
+Request query string: null
+Jun 10, 2022 at 01:54:56 CDT
+
+2022-06-10T01:54:56.990
+Request URI: /login-service/resources/register.js
+Request method: GET
+Request query string: null
+Jun 10, 2022 at 01:54:59 CDT
+
+2022-06-10T01:54:59.699
+Request URI: /login-service/login.html
+Request method: GET
+Request query string: null
+Jun 10, 2022 at 01:54:59 CDT
+
+2022-06-10T01:54:59.784
+Request URI: /login-service/resources/dom-demos.js
+Request method: GET
+Request query string: null
+Jun 10, 2022 at 01:57:16 CDT
+
+2022-06-10T01:57:16.202
+Request URI: /login-service/
+Request method: GET
+Request query string: null
+Jun 10, 2022 at 01:57:18 CDT
+
+2022-06-10T01:57:18.998
+Request URI: /login-service/register.html
+Request method: GET
+Request query string: null
+Jun 10, 2022 at 01:57:19 CDT
+
+2022-06-10T01:57:19.051
+Request URI: /login-service/resources/register.js
+Request method: GET
+Request query string: null
+Jun 10, 2022 at 01:57:21 CDT
+
+2022-06-10T01:57:21.439
+Request URI: /login-service/login.html
+Request method: GET
+Request query string: null
+Jun 10, 2022 at 01:57:23 CDT
+
+2022-06-10T01:57:23.545
+Request URI: /login-service/
+Request method: GET
+Request query string: null
+Jun 10, 2022 at 01:57:29 CDT
+
+2022-06-10T01:57:29.401
+Request URI: /login-service/
+Request method: GET
+Request query string: null
+Jun 10, 2022 at 01:57:48 CDT
+
+2022-06-10T01:57:48.470
+Request URI: /login-service/register.html
+Request method: GET
+Request query string: null
+Jun 10, 2022 at 01:57:49 CDT
+
+2022-06-10T01:57:49.483
+Request URI: /login-service/
+Request method: GET
+Request query string: null
+Jun 10, 2022 at 01:57:59 CDT
+
+2022-06-10T01:57:59.564
+Request URI: /login-service/
+Request method: GET
+Request query string: null
+Jun 10, 2022 at 02:00:46 CDT
+
+2022-06-10T02:00:46.591
+Request URI: /login-service/
+Request method: GET
+Request query string: null
+Jun 10, 2022 at 02:01:00 CDT
+
+2022-06-10T02:01:00.927
+Request URI: /login-service/login.html
+Request method: GET
+Request query string: null
+Jun 10, 2022 at 02:01:09 CDT
+
+2022-06-10T02:01:09.320
+Request URI: /login-service/register.html
+Request method: GET
+Request query string: null
+Jun 10, 2022 at 02:01:09 CDT
+
+2022-06-10T02:01:09.426
+Request URI: /login-service/resources/register.js
+Request method: GET
+Request query string: null
+Jun 10, 2022 at 02:10:12 CDT
+
+2022-06-10T02:10:12.427
+Request URI: /login-service/register.html
+Request method: GET
+Request query string: null
+Jun 10, 2022 at 02:10:12 CDT
+
+2022-06-10T02:10:12.486
+Request URI: /login-service/resources/register.js
+Request method: GET
+Request query string: null
+Jun 10, 2022 at 02:10:14 CDT
+
+2022-06-10T02:10:14.813
+Request URI: /login-service/login.html
+Request method: GET
+Request query string: null
+Jun 10, 2022 at 02:10:16 CDT
+
+2022-06-10T02:10:16.615
+Request URI: /login-service/
+Request method: GET
+Request query string: null
+Jun 10, 2022 at 02:10:38 CDT
+
+2022-06-10T02:10:38.216
+Request URI: /login-service/
+Request method: GET
+Request query string: null
+Jun 10, 2022 at 02:10:40 CDT
+
+2022-06-10T02:10:40.260
+Request URI: /login-service/login.html
+Request method: GET
+Request query string: null
+Jun 10, 2022 at 02:10:40 CDT
+
+2022-06-10T02:10:40.501
+Request URI: /login-service/resources/dom-demos.js
+Request method: GET
+Request query string: null
+Jun 10, 2022 at 02:10:44 CDT
+
+2022-06-10T02:10:44.261
+Request URI: /login-service/register.html
+Request method: GET
+Request query string: null
+Jun 10, 2022 at 02:10:44 CDT
+
+2022-06-10T02:10:44.734
+Request URI: /login-service/resources/register.js
+Request method: GET
+Request query string: null
+Jun 10, 2022 at 02:11:16 CDT
+
+2022-06-10T02:11:16.720
+Request URI: /login-service/login.html
+Request method: GET
+Request query string: null
+Jun 10, 2022 at 02:11:20 CDT
+
+2022-06-10T02:11:20.527
+Request URI: /login-service/
+Request method: GET
+Request query string: null
+Jun 10, 2022 at 02:11:36 CDT
+
+2022-06-10T02:11:36.869
+Request URI: /login-service/users/getbyid
+Request method: GET
+Request query string: id=2
+Jun 10, 2022 at 02:11:42 CDT
+
+2022-06-10T02:11:42.090
+Request URI: /login-service/login.html
+Request method: GET
+Request query string: null
+Jun 10, 2022 at 02:11:46 CDT
+
+2022-06-10T02:11:46.497
+Request URI: /login-service/register.html
+Request method: GET
+Request query string: null

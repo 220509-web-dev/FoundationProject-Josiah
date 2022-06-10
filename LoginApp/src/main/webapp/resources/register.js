@@ -27,7 +27,7 @@ function register() {
     let errorContainer = document.getElementById('error-message');
 
 
-    if (u && p && f && l && a1 && c && s) {
+    if (u && p && f) {
         
         // If the error message is being displayed, hide it
         errorContainer.setAttribute('hidden', true);
@@ -43,13 +43,12 @@ function register() {
             console.log(`Response timestamp: ${Date.now()}`);
 
             if (Math.floor(resp.status/100) == 2) {
-                console.log("Response 200");
                 errorContainer.setAttribute('hidden', true);
                 feedbackContainer.removeAttribute('hidden');
-                feedbackContainer.innerText = "Login Successful!";
+                feedbackContainer.innerText = "Registration Successful!";
                 return;
             }
-            if (Math.floor(resp.status/100) != 2) {
+            if (resp.status == 400) { // ADD CODE HANDLING
                 errorContainer.removeAttribute('hidden');
                 errorContainer.innerText = "Login failed!";
                 return;
@@ -73,11 +72,11 @@ function register() {
         if (!ar[0]) { arr.push(fields[0]); }
         if (!ar[1]) { arr.push(fields[1]); }
         if (!ar[2]) { arr.push(fields[2]); }
-        if (!ar[3]) { arr.push(fields[3]); }
-        if (!ar[4]) { arr.push(fields[4]); }
+        //if (!ar[3]) { arr.push(fields[3]); }
+        //if (!ar[4]) { arr.push(fields[4]); }
         //if (!ar[5]) { arr.push(fields[5]); }
-        if (!ar[6]) { arr.push(fields[6]); }
-        if (!ar[7]) { arr.push(fields[7]); }
+        //if (!ar[6]) { arr.push(fields[6]); }
+        //if (!ar[7]) { arr.push(fields[7]); }
         //if (!ar[8]) { arr.push(fields[8]); }
 
         if (arr.every(function(e,i) {return e;})) { // if any not blank
