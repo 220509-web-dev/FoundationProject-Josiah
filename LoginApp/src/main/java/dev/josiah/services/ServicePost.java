@@ -18,19 +18,19 @@ import static dev.josiah.services.validation.ValidatePassword.validatePassword;
 import static dev.josiah.services.validation.ValidateUsername.validateUsername;
 
 public class ServicePost {
-    public static User login(UserDAO userDAO, UserPrivDAO upDAO, UserPass userPass) throws IllegalCharacterException, UsernameFormatException, InputWasNullException, ValueOutOfRangeException, SQLException, UserNotFoundException, InvalidCredentialsException {
+    public static void login(UserDAO userDAO, UserPrivDAO upDAO, UserPass userPass) throws IllegalCharacterException, UsernameFormatException, InputWasNullException, ValueOutOfRangeException, SQLException, UserNotFoundException, InvalidCredentialsException {
         String username = userPass.getUsername();
         String password = userPass.getPassword();
         validateUsername(username);
-        validatePassword(password); // error means username or password didn't meet constraints
+        validatePassword(password);
         User user;
         UserPriv up;
         user = userDAO.getUserByUsername(username);
         up = upDAO.getUserInfoById(user.getUser_id());
         if (user == null) throw new UserNotFoundException();
-        if (encrypt(password).equals(up.getPassword())) {
-            return user;
-        } else {throw new InvalidCredentialsException("Incorrect Password");} // 401 : UNAUTHORIZED; INVALID USER+PASS COMBO
+        if (!encrypt(password).equals(up.getPassword())) {
+            throw new InvalidCredentialsException("Incorrect Password");
+        }  // 401 : UNAUTHORIZED; INVALID USER+PASS COMBO
         // 403 USER WAS LOGGED IN AND HAD A TOKEN/SESSION BUT...
         // IS TRYING TO HIT AN ENDPOINT THEY'RE "FORBIDDEN" FROM GOING TO
     }
@@ -52,6 +52,8 @@ public class ServicePost {
         user = userDAO.createUser(user);
         UserPriv up = new UserPriv(user.getUser_id());
         up.encryptAndSetPassword(password);
+        upDAO.createUserInfo(up);
+
 
 
     }

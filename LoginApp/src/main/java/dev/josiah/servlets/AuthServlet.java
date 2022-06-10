@@ -18,6 +18,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
+import static dev.josiah.complaintDepartment.ProblemScribe.Complain;
+import static dev.josiah.services.ServicePost.login;
+
 
 @AllArgsConstructor
 public class AuthServlet extends HttpServlet {
@@ -70,11 +73,74 @@ public class AuthServlet extends HttpServlet {
             return;
         }
 
+        HashMap<String, Object> message = new HashMap<>();
         if (destination.equals("login")) {
-//            try {
-//                login(userDAO, upDAO, userPass);
-//            }
-            return;
+            try {
+                login(userDAO, upDAO, userPass);
+                resp.setStatus(204);  // logged in, no other content
+                message.put("code", 204); // successful request, but no data to return
+                message.put("message", "Logged in");
+                message.put("timestamp", LocalDateTime.now().toString());
+                resp.getWriter().write(mapper.writeValueAsString(message));
+                return;
+            } catch (UserNotFoundException e) {
+                resp.setStatus(404);
+                message.put("code", 404);
+                message.put("message", "User not found");
+                message.put("timestamp", LocalDateTime.now().toString());
+                resp.getWriter().write(mapper.writeValueAsString(message));
+                return;
+            } catch (IllegalCharacterException e) {
+                resp.setStatus(400);
+                message.put("code", 400);
+                message.put("message", "Input contained an illegal character");
+                message.put("timestamp", LocalDateTime.now().toString());
+                resp.getWriter().write(mapper.writeValueAsString(message));
+                return;
+            } catch (UsernameFormatException e) {
+                resp.setStatus(400);
+                message.put("code", 400);
+                message.put("message", "Username must end with @revature.net");
+                message.put("timestamp", LocalDateTime.now().toString());
+                resp.getWriter().write(mapper.writeValueAsString(message));
+                return;
+            } catch (InputWasNullException e) {
+                resp.setStatus(400);
+                message.put("code", 400);
+                message.put("message", "An input field was left blank");
+                message.put("timestamp", LocalDateTime.now().toString());
+                resp.getWriter().write(mapper.writeValueAsString(message));
+                return;
+            } catch (ValueOutOfRangeException e) {
+                resp.setStatus(400);
+                message.put("code", 400);
+                message.put("message", "Username or password length was too large or small");
+                message.put("timestamp", LocalDateTime.now().toString());
+                resp.getWriter().write(mapper.writeValueAsString(message));
+                return;
+            } catch (InvalidCredentialsException e) {
+                resp.setStatus(401);
+                message.put("code", 401);
+                message.put("message", "Username length was incorrect");
+                message.put("timestamp", LocalDateTime.now().toString());
+                resp.getWriter().write(mapper.writeValueAsString(message));
+                return;
+            } catch (SQLException e) {
+                resp.setStatus(500);
+                message.put("code", 500);
+                message.put("message", "There was a problem with the database");
+                message.put("timestamp", LocalDateTime.now().toString());
+                resp.getWriter().write(mapper.writeValueAsString(message));
+                return;
+            } catch (Throwable t) {
+                Complain(t);
+                resp.setStatus(500);
+                message.put("code", 500);
+                message.put("message", "An unknown error occurred");
+                message.put("timestamp", LocalDateTime.now().toString());
+                resp.getWriter().write(mapper.writeValueAsString(message));
+                return;
+            }
         }
 
         if (destination.equals("register")) {

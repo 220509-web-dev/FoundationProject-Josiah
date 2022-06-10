@@ -172,7 +172,7 @@ public class UserServlet extends HttpServlet {
         } catch (UserNotFoundException e) {
             resp.setStatus(204);
             HashMap<String, Object> message = new HashMap<>();
-            message.put("code", 204);
+            message.put("code", 204); // successful request, but no data to return
             message.put("message", "No users exist in database");
             message.put("timestamp", LocalDateTime.now().toString());
             resp.getWriter().write(mapper.writeValueAsString(message));

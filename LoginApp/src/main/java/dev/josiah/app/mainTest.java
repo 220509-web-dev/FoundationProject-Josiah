@@ -31,10 +31,7 @@ public class mainTest {
         User user = mapper.readValue(mapper.writeValueAsString(userInfo), User.class);
         System.out.println(userInfo);
         System.out.println(user);
-
-
     }
-
 
     private static void testPassword(int i) throws SQLException {
         String password = "12345678";
