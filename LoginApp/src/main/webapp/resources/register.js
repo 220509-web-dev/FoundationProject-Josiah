@@ -23,9 +23,11 @@ function register() {
     let s = document.getElementById('register-state').value;
     let z = document.getElementById('register-postal-code').value;
 
+    let feedbackContainer = document.getElementById('feedback');
     let errorContainer = document.getElementById('error-message');
 
-    if (u && p && f && l) {
+
+    if (u && p && f && l && a1 && c && s) {
         
         // If the error message is being displayed, hide it
         errorContainer.setAttribute('hidden', true);
@@ -40,32 +42,77 @@ function register() {
             console.log(`Response status: ${resp.status}`);
             console.log(`Response timestamp: ${Date.now()}`);
 
+            if (Math.floor(resp.status/100) == 2) {
+                console.log("Response 200");
+                errorContainer.setAttribute('hidden', true);
+                feedbackContainer.removeAttribute('hidden');
+                feedbackContainer.innerText = "Login Successful!";
+                return;
+            }
             if (Math.floor(resp.status/100) != 2) {
                 errorContainer.removeAttribute('hidden');
                 errorContainer.innerText = "Login failed!";
                 return;
             }
 
-            return resp.json();
+
+            return resp;
         })
         
-        if (respData) {
-            respData.then(data => {
-                let successMsgContainer = document.createElement('p');
-                successMsgContainer.setAttribute('class', 'alert alert-success');
-                successMsgContainer.innerText = `Register successful! Welcome, ${data['firstname']}!`;
-                document.getElementById('login-container').appendChild(successMsgContainer);
-            });
-        }
+//        if (respData) {
+//            respData.then(data => {
+//                // got a response!
+//                processFeedback(data);
+//            });
+//        }
 
     } else {
-        let m = "Missing ";
-        if (!u) {m+="a username,";}
-        if (!p) {m+="a password, ";}
-        if (!f) {m+="a first name, "}
-        if (!l) {m+="a last name, "}
-        // Show the error message
+        let ar = [u,p,f,l,a1,a2,c,s,z];
+        let arr = [];
+        let fields = ["username", "password", "first name", "last name", "address", "apt #", "city", "State", "postal code"];
+        if (!ar[0]) { arr.push(fields[0]); }
+        if (!ar[1]) { arr.push(fields[1]); }
+        if (!ar[2]) { arr.push(fields[2]); }
+        if (!ar[3]) { arr.push(fields[3]); }
+        if (!ar[4]) { arr.push(fields[4]); }
+        //if (!ar[5]) { arr.push(fields[5]); }
+        if (!ar[6]) { arr.push(fields[6]); }
+        if (!ar[7]) { arr.push(fields[7]); }
+        //if (!ar[8]) { arr.push(fields[8]); }
+
+        if (arr.every(function(e,i) {return e;})) { // if any not blank
+          let message = "Missing "
+          let last_e = arr.pop();
+
+          if (arr.length == 1) {
+            message += arr.pop() + " and " + last_e;
+          }
+          else if (arr.length != 0) {
+            message += arr.join(", ");
+            message += ", and " + last_e;
+          }
+          else {
+            message += last_e;
+          }
+        console.log(message);
         errorContainer.removeAttribute('hidden');
-        errorContainer.innerText = m;
+        errorContainer.innerText = message;
+        return;
+        }
+    }
+}
+function processFeedback(data) {
+    //let parsed = JSON.parse(data);
+    console.log(`${data['firstname']}`);
+    console.log(`${data.status}`);
+
+    console.log(JSON.stringify(data));
+
+
+
+
+    if (Math.floor(data['code']/100) == 2) {
+        feedbackContainer.removeAttribute('hidden');
+        feedbackContainer.innerText = `Registration successful! Welcome, ${data['firstname']}!`;
     }
 }

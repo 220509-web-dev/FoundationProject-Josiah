@@ -115,10 +115,19 @@ public class AuthServlet extends HttpServlet {
             } // TODO : implement register
 
             try {
-                mapper1.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
-                Greeting greeting = mapper1.convertValue(userInfo, Greeting.class);
+//                mapper1.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+//                Greeting greeting = mapper1.convertValue(userInfo, Greeting.class);
+//                resp.setContentType("application/json");
+//                resp.getWriter().write(mapper.writeValueAsString(greeting));
+//                return;
                 resp.setContentType("application/json");
-                resp.getWriter().write(mapper.writeValueAsString(greeting));
+
+                HashMap<String, Object> message = new HashMap<>();
+                message.put("code", 200);
+                message.put("message", "Registration Successful!");
+                message.put("firstname", "@@@@@@@@"); // userInfo.getFname()
+                message.put("timestamp", LocalDateTime.now().toString());
+                resp.getWriter().write(mapper.writeValueAsString(message));
                 return;
             } catch (Throwable t) {
                 System.out.println("An unknown error occurred");
