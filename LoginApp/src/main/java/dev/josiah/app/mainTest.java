@@ -22,7 +22,17 @@ import static dev.josiah.services.Encrypt.encrypt;
 public class mainTest {
 
     public static void main(String[] args) throws IOException {
-
+        ArrayList<String> supportedDestinations = new ArrayList<String>(Arrays.asList("login", "register"));
+        String destination = "login";
+        System.out.println(supportedDestinations);
+        Boolean supported = false;
+        for (String loc: supportedDestinations) {
+            if(destination.equals(loc)) {
+                supported = true;
+                break;
+            }
+        }
+        System.out.println(supported);
     }
 
 

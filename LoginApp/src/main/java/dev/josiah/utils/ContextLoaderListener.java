@@ -28,14 +28,12 @@ public class ContextLoaderListener implements ServletContextListener {
         UserServlet userServlet = new UserServlet(userDAO);
 
         // registration
-        context.addServlet("UserServlet", userServlet).addMapping("/users/*");
+        context.addServlet("UserServlet", userServlet).addMapping("/users");
 
         // AuthServlet dynamic registration
         ServletRegistration.Dynamic registeredServlet = context.addServlet("AuthServlet", authServlet);
         registeredServlet.setLoadOnStartup(3);
-        //registeredServlet.setInitParameter("user-servlet-key1", "user-servlet-value");
-        registeredServlet.addMapping("/userauth/*"); // handle anything starting with /userauth
-
+        registeredServlet.addMapping("/userauth");
     }
 
     @Override
