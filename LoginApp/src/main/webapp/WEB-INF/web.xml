@@ -3,13 +3,8 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
              http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
-    <display-name>Login Service</display-name> <!--Name shown in Tomcat Manager-->
+    <display-name>Endpoint</display-name> <!--Name shown in Tomcat Manager-->
     <welcome-file>login.html</welcome-file> <!-- Landing Page -->
-
-    <context-param>
-        <param-name>all-servlet-key1</param-name>
-        <param-value>context-value-for-all-servlets</param-value>
-    </context-param>
 
     <listener>
         <listener-class>dev.josiah.utils.ContextLoaderListener</listener-class>
