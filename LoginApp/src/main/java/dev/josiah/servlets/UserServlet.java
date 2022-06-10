@@ -1,7 +1,7 @@
 package dev.josiah.servlets;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import dev.josiah.complaintDepartment.AuthExceptions;
+import dev.josiah.complaintDepartment.Exceptions.*;
 import dev.josiah.daos.UserDAO;
 import dev.josiah.entities.User;
 import dev.josiah.services.ServiceGetUserById;
@@ -70,19 +70,19 @@ public class UserServlet extends HttpServlet {
                 return;
                 // TODO : prepare for JS to put in nice HTML
 
-            } catch (AuthExceptions.UserNotFoundException e) {
+            } catch (UserNotFoundException e) {
                 feedback = "User not found";
                 resp.setStatus(404);  // ANY RESOURCE NOT FOUND IS 404
-            } catch (AuthExceptions.InputWasNullException e) {
+            } catch (InputWasNullException e) {
                 feedback = "Form input was blank";
-                resp.setStatus(400); // BAD REQUEST, GENERAL; UER SENT DATA THAT DOESN'T MAKE SENSE
-            } catch (AuthExceptions.InputNotAnIntegerException e) {
+                resp.setStatus(400); // BAD REQUEST, GENERAL; USER SENT DATA THAT DOESN'T MAKE SENSE
+            } catch (InputNotAnIntegerException e) {
                 feedback = "Input must be an integer";
                 resp.setStatus(400);
             } catch (NumberFormatException e) {
                 feedback = "Please enter a whole number";
                 resp.setStatus(400);
-            } catch (AuthExceptions.ValueOutOfRangeException e) {
+            } catch (ValueOutOfRangeException e) {
                 feedback = "ID inputted was out of bounds";
                 resp.setStatus(400);
             } catch (SQLException e) {
@@ -117,19 +117,19 @@ public class UserServlet extends HttpServlet {
                 feedback = "Got back from service layer with " + user;
                 // TODO : prepare for JS to put in nice HTML
 
-            } catch (AuthExceptions.UserNotFoundException e) {
+            } catch (UserNotFoundException e) {
                 feedback = "User not found";
-                resp.setStatus(400);
-            } catch (AuthExceptions.InputWasNullException e) {
+                resp.setStatus(404);
+            } catch (InputWasNullException e) {
                 feedback = "Form input was blank";
                 resp.setStatus(400);
-            } catch (AuthExceptions.ValueOutOfRangeException e) {
+            } catch (ValueOutOfRangeException e) {
                 feedback = "Username length was incorrect";
-                resp.setStatus(500);
-            } catch (AuthExceptions.UsernameFormatException e) {
+                resp.setStatus(400);
+            } catch (UsernameFormatException e) {
                 feedback = "Username must end with @revature.net";
-                resp.setStatus(500);
-            } catch (AuthExceptions.IllegalCharacterException e) {
+                resp.setStatus(400);
+            } catch (IllegalCharacterException e) {
                 feedback = "Username contained an illegal character";
                 resp.setStatus(400);
             } catch (SQLException e) {
@@ -138,7 +138,7 @@ public class UserServlet extends HttpServlet {
             } catch (Throwable t) { // happens if service or DAO layer throws anything
                 Complain(t);
                 feedback = "Invalid Input.";
-                resp.setStatus(500);
+                resp.setStatus(400);
             }
             System.out.println(feedback);
             resp.setContentType("text/html");
@@ -154,9 +154,9 @@ public class UserServlet extends HttpServlet {
                 feedback = "<h2>Got back from service layer</h2>\n <p>" + users + "</p>";
                 // TODO : prepare for JS to put in nice HTML
 
-            } catch (AuthExceptions.UserNotFoundException e) {
+            } catch (UserNotFoundException e) {
                 feedback = "No users exist in database";
-                resp.setStatus(200);
+                resp.setStatus(204);
             } catch (SQLException e) {
                 feedback = "There was a problem with the database";
                 resp.setStatus(500);

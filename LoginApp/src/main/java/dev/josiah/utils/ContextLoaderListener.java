@@ -17,7 +17,6 @@ public class ContextLoaderListener implements ServletContextListener {
 
         // Instantiate necessary Objects
         ObjectMapper mapper = new ObjectMapper();
-        ObjectMapper mapper1 = new ObjectMapper();
         UserDAO userDAO = new UserDaoPostgres();
         UserPrivDAO upDAO = new UserPrivDaoPostgres();
 
@@ -25,12 +24,12 @@ public class ContextLoaderListener implements ServletContextListener {
         ServletContext context = sce.getServletContext();
 
         // Instantiate Servlet Objects
-        LoginPageServlet loginPageServlet = new LoginPageServlet();
-        AuthServlet authServlet = new AuthServlet(mapper, mapper1, userDAO, upDAO);
+        //LoginPageServlet loginPageServlet = new LoginPageServlet();
+        AuthServlet authServlet = new AuthServlet(mapper, userDAO, upDAO);
         UserServlet userServlet = new UserServlet(userDAO);
 
         // registration
-        context.addServlet("LoginPageServlet", loginPageServlet).addMapping("/login/*");
+        //context.addServlet("LoginPageServlet", loginPageServlet).addMapping("/login/*");
         context.addServlet("UserServlet", userServlet).addMapping("/users/*");
 
         // AuthServlet dynamic registration

@@ -1,36 +1,24 @@
 package dev.josiah.servlets;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import dev.josiah.complaintDepartment.AuthExceptions;
 import dev.josiah.daos.UserDAO;
 import dev.josiah.daos.UserPrivDAO;
-import dev.josiah.dtos.Greeting;
 import dev.josiah.dtos.UserInfo;
 import dev.josiah.dtos.UserPass;
 import dev.josiah.entities.User;
-import dev.josiah.entities.UserPriv;
-import dev.josiah.services.ServiceGetUserById;
-import dev.josiah.services.ServiceGetUserByUsername;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.IllegalFormatException;
-import java.util.List;
 
 import static dev.josiah.complaintDepartment.ProblemScribe.Complain;
-import static dev.josiah.services.ServiceGetAllUsers.ServiceAllUsersRequest;
 import static dev.josiah.services.ServiceLogin.login;
 import static dev.josiah.services.ServiceRegisterUser.register;
 
@@ -38,7 +26,6 @@ import static dev.josiah.services.ServiceRegisterUser.register;
 public class AuthServlet extends HttpServlet {
     private final static String name = "AuthServlet";
     private final ObjectMapper mapper;
-    private final ObjectMapper mapper1;
     private final UserDAO userDAO;
     private final UserPrivDAO upDAO;
     private final String[] supportedURIs = new String[] {"/login", "/register"};

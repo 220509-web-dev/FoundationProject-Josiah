@@ -1,6 +1,7 @@
 package dev.josiah.services.validation;
 
-import dev.josiah.complaintDepartment.AuthExceptions;
+
+import dev.josiah.complaintDepartment.Exceptions.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,37 +17,37 @@ public class ValidateUsername {
     final private static Integer minLen = ((userMustEndWith == null) ? 0:userMustEndWith.length()) +
             ((userMustStartWith == null) ? 0:userMustStartWith.length()) + minNonRequiredChars;
 
-    public static void validateUsername(String username) {
+    public static void validateUsername(String username) throws InputWasNullException, ValueOutOfRangeException, UsernameFormatException, IllegalCharacterException {
         if (username == null) {
-            throw new AuthExceptions.InputWasNullException("Username was null");
+            throw new InputWasNullException("Username was null");
             // Shouldn't ever happen. Servlet won't call this if username param is null
         }
 
         if ((maxLen != null) && (username.length() > maxLen)) {
-            throw new AuthExceptions.ValueOutOfRangeException("Username length was " + username.length() +
+            throw new ValueOutOfRangeException("Username length was " + username.length() +
                     ", expected length to be at most " + maxLen);
         }
 
         if ((minLen != null) && (username.length() < minLen)) {
-            throw new AuthExceptions.ValueOutOfRangeException("Username length was " + username.length() +
+            throw new ValueOutOfRangeException("Username length was " + username.length() +
                     ", expected length to be at least " + minLen);
         }
 
         if ((userMustStartWith != null) && !(username.startsWith(userMustStartWith))) {
             //UsernameFormatException
-            throw new AuthExceptions.UsernameFormatException("Username must start with " + userMustStartWith +
+            throw new UsernameFormatException("Username must start with " + userMustStartWith +
                     ", but username entered was " + username);
         }
 
         if ((userMustEndWith != null) && !(username.endsWith(userMustEndWith))) {
             //UsernameFormatException
-            throw new AuthExceptions.UsernameFormatException("Username must end with " + userMustEndWith +
+            throw new UsernameFormatException("Username must end with " + userMustEndWith +
                     ", but username entered was " + username);
         }
 
         if ((userCannotContain != null) &&
                 userCannotContain.stream().allMatch(t -> username.contains(t))) {
-            throw new AuthExceptions.IllegalCharacterException(username+" contained an illegal character");
+            throw new IllegalCharacterException(username+" contained an illegal character");
         }
     }
 }
