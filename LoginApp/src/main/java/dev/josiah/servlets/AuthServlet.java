@@ -6,6 +6,7 @@ import dev.josiah.daos.UserDAO;
 import dev.josiah.daos.UserPrivDAO;
 import dev.josiah.dtos.UserInfo;
 import dev.josiah.dtos.UserPass;
+import dev.josiah.entities.User;
 import lombok.AllArgsConstructor;
 
 import javax.servlet.http.HttpServlet;
@@ -37,6 +38,9 @@ public class AuthServlet extends HttpServlet {
 
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        HashMap<String, Object> errorMessage = new HashMap<>();
+        HashMap<String, Object> message = new HashMap<>();
+
         UserPass userPass = new UserPass();
         UserInfo userInfo = new UserInfo();
 
@@ -63,7 +67,6 @@ public class AuthServlet extends HttpServlet {
             }
         }
 
-        HashMap<String, Object> errorMessage = new HashMap<>();
         if (!supported) {
             resp.setStatus(400);
             resp.setContentType("application/json");
@@ -75,7 +78,6 @@ public class AuthServlet extends HttpServlet {
             return;
         }
 
-        HashMap<String, Object> message = new HashMap<>();
         if (destination.equals("login")) {
             try {
                 login(userDAO, upDAO, userPass);
@@ -157,19 +159,92 @@ public class AuthServlet extends HttpServlet {
         if (destination.equals("register")) {
             try {
                 register(caster, userDAO, upDAO, userInfo);
-
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            } catch (IllegalCharacterException e) {
-                throw new RuntimeException(e);
-            } catch (UsernameFormatException e) {
-                throw new RuntimeException(e);
+                userPass = caster.readValue(caster.writeValueAsString(userInfo), UserPass.class);
+                login(userDAO,upDAO,userPass);
+                resp.setStatus(204);  // registered, no other content
+                resp.setContentType("application/json");
+                message.put("code", 204); // successful request, but no data to return
+                message.put("message", "Registered and logged in");
+                message.put("timestamp", LocalDateTime.now().toString());
+                resp.getWriter().write(mapper.writeValueAsString(message));
+                return;
             } catch (InputWasNullException e) {
-                throw new RuntimeException(e);
+                resp.setStatus(400);
+                resp.setContentType("application/json");
+                errorMessage.put("code", 400);
+                errorMessage.put("message", "Form input was blank");
+                errorMessage.put("timestamp", LocalDateTime.now().toString());
+                resp.getWriter().write(mapper.writeValueAsString(errorMessage));
+                return;
             } catch (ValueOutOfRangeException e) {
-                throw new RuntimeException(e);
+                resp.setStatus(400);
+                resp.setContentType("application/json");
+                errorMessage.put("code", 400);
+                errorMessage.put("message", "Username length was incorrect");
+                errorMessage.put("timestamp", LocalDateTime.now().toString());
+                resp.getWriter().write(mapper.writeValueAsString(errorMessage));
+                return;
+            } catch (UsernameFormatException e) {
+                resp.setStatus(400);
+                resp.setContentType("application/json");
+                errorMessage.put("code", 400);
+                errorMessage.put("message", "Username must end with @revature.net");
+                errorMessage.put("timestamp", LocalDateTime.now().toString());
+                resp.getWriter().write(mapper.writeValueAsString(errorMessage));
+                return;
+            } catch (IllegalCharacterException e) {
+                resp.setStatus(400);
+                resp.setContentType("application/json");
+                errorMessage.put("code", 400);
+                errorMessage.put("message", "Username contained an illegal character");
+                errorMessage.put("timestamp", LocalDateTime.now().toString());
+                resp.getWriter().write(mapper.writeValueAsString(errorMessage));
+                return;
             } catch (UsernameNotAvailableException e) {
-                throw new RuntimeException(e);
+                resp.setStatus(409);
+                resp.setContentType("application/json");
+                errorMessage.put("code", 409);
+                errorMessage.put("message", "Username already taken!");
+                errorMessage.put("timestamp", LocalDateTime.now().toString());
+                resp.getWriter().write(mapper.writeValueAsString(errorMessage));
+                return;
+            } catch (UserNotFoundException e) {
+                Complain(userInfo.getUsername() + " just registered, but now can't login.");
+                Complain(e);
+                resp.setStatus(404);
+                resp.setContentType("application/json");
+                errorMessage.put("code", 404);
+                errorMessage.put("message", "User not found");
+                errorMessage.put("timestamp", LocalDateTime.now().toString());
+                resp.getWriter().write(mapper.writeValueAsString(errorMessage));
+                return;
+            } catch (InvalidCredentialsException e) {
+                Complain(userInfo.getUsername() + " just registered, but now can't login.");
+                Complain(e);
+                resp.setStatus(401);
+                resp.setContentType("application/json");
+                message.put("code", 401);
+                message.put("message", "Username length was incorrect");
+                message.put("timestamp", LocalDateTime.now().toString());
+                resp.getWriter().write(mapper.writeValueAsString(message));
+                return;
+            }  catch (SQLException e) {
+                resp.setStatus(500);
+                resp.setContentType("application/json");
+                message.put("code", 500);
+                message.put("message", "There was a problem with the database");
+                message.put("timestamp", LocalDateTime.now().toString());
+                resp.getWriter().write(mapper.writeValueAsString(message));
+                return;
+            } catch (Throwable t) {
+                Complain(t);
+                resp.setContentType("application/json");
+                resp.setStatus(500);
+                message.put("code", 500);
+                message.put("message", "An unknown error occurred");
+                message.put("timestamp", LocalDateTime.now().toString());
+                resp.getWriter().write(mapper.writeValueAsString(message));
+                return;
             }
         }
     }
