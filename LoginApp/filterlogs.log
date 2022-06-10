@@ -2734,3 +2734,93 @@ Jun 10, 2022 at 03:55:18 CDT
 Request URI: /login-service/users
 Request method: GET
 Request query string: id=1
+Jun 10, 2022 at 04:25:03 CDT
+
+2022-06-10T04:25:03.471
+Request URI: /login-service/
+Request method: GET
+Request query string: null
+Jun 10, 2022 at 04:25:05 CDT
+
+2022-06-10T04:25:05.438
+Request URI: /login-service/images/Endpoint.png
+Request method: GET
+Request query string: null
+Jun 10, 2022 at 04:25:09 CDT
+
+2022-06-10T04:25:09.005
+Request URI: /login-service/login.html
+Request method: GET
+Request query string: null
+Jun 10, 2022 at 04:25:09 CDT
+
+2022-06-10T04:25:09.150
+Request URI: /login-service/resources/dom-demos.js
+Request method: GET
+Request query string: null
+Jun 10, 2022 at 04:25:10 CDT
+
+2022-06-10T04:25:10.051
+Request URI: /login-service/register.html
+Request method: GET
+Request query string: null
+Jun 10, 2022 at 04:25:10 CDT
+
+2022-06-10T04:25:10.218
+Request URI: /login-service/resources/register.js
+Request method: GET
+Request query string: null
+Jun 10, 2022 at 04:25:22 CDT
+
+2022-06-10T04:25:22.506
+Request URI: /login-service/users
+Request method: GET
+Request query string: id=1
+Jun 10, 2022 at 04:25:32 CDT
+
+2022-06-10T04:25:32.051
+Request URI: /login-service/users
+Request method: GET
+Request query string: id=p
+Jun 10, 2022 at 04:25:44 CDT
+
+2022-06-10T04:25:44.703
+Request URI: /login-service/users
+Request method: GET
+Request query string: id=100
+Jun 10, 2022 at 04:25:50 CDT
+
+2022-06-10T04:25:50.727
+Request URI: /login-service/users
+Request method: GET
+Request query string: id=-1
+Jun 10, 2022 at 04:26:11 CDT
+
+2022-06-10T04:26:11.966
+Request URI: /login-service/users
+Request method: GET
+Request query string: username=Jsparks109%40revature.net
+Jun 10, 2022 at 04:26:23 CDT
+
+2022-06-10T04:26:23.618
+Request URI: /login-service/users
+Request method: GET
+Request query string: username=Jsparks109%40revaturte.net
+Jun 10, 2022 at 04:26:36 CDT
+
+2022-06-10T04:26:36.275
+Request URI: /login-service/users
+Request method: GET
+Request query string: username=%21%40revature.net
+Jun 10, 2022 at 04:26:54 CDT
+
+2022-06-10T04:26:54.292
+Request URI: /login-service/users
+Request method: GET
+Request query string: username=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa%40revature.net
+Jun 10, 2022 at 04:27:32 CDT
+
+2022-06-10T04:27:32.558
+Request URI: /login-service/users
+Request method: GET
+Request query string: id=0

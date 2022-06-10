@@ -6,6 +6,7 @@ import dev.josiah.daos.UserDAO;
 import dev.josiah.entities.User;
 import dev.josiah.services.ServiceGetUserById;
 import dev.josiah.services.ServiceGetUserByUsername;
+import lombok.AllArgsConstructor;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -19,14 +20,11 @@ import java.util.List;
 import static dev.josiah.complaintDepartment.ProblemScribe.Complain;
 import static dev.josiah.services.ServiceGetAllUsers.ServiceAllUsersRequest;
 
+@AllArgsConstructor
 public class UserServlet extends HttpServlet {
     private final static String name = "UserServlet";
+    private final ObjectMapper mapper;
     private final UserDAO userDAO;
-    private final ObjectMapper mapper = new ObjectMapper(); // TODO : add to constructor
-
-    public UserServlet(UserDAO userDAO) {
-        this.userDAO = userDAO;
-    }
 
     @Override public void init() { System.out.println("[LOG] - "+name+" instantiated!"); }
 

@@ -25,7 +25,7 @@ public class ContextLoaderListener implements ServletContextListener {
 
         // Instantiate Servlet Objects
         AuthServlet authServlet = new AuthServlet(mapper, userDAO, upDAO);
-        UserServlet userServlet = new UserServlet(userDAO);
+        UserServlet userServlet = new UserServlet(mapper, userDAO);
 
         // registration
         context.addServlet("UserServlet", userServlet).addMapping("/users");
