@@ -36,11 +36,11 @@ public class mainTest {
     }
 
 
-    private static void testPassword() throws SQLException {
+    private static void testPassword(int i) throws SQLException {
         String password = "12345678";
         String enc = encrypt(password);
         UserPrivDAO upDAO = new UserPrivDaoPostgres();
-        UserPriv up = upDAO.getUserInfoById(50025);
+        UserPriv up = upDAO.getUserInfoById(i);
         System.out.println(up.getPassword());
         System.out.println(enc);
     }
