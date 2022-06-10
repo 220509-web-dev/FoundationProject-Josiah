@@ -214,3 +214,5 @@ java.lang.NumberFormatException: For input string: "!"
 	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
 	at java.lang.Thread.run(Thread.java:748)
+Jun 10, 2022 at 03:55:18 CDT
+Unhandled URI posted to: /login-service/users
