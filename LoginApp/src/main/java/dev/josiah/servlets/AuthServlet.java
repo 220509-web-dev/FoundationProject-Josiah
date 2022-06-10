@@ -1,5 +1,6 @@
 package dev.josiah.servlets;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.josiah.complaintDepartment.Exceptions.*;
 import dev.josiah.daos.UserDAO;
@@ -12,6 +13,7 @@ import lombok.AllArgsConstructor;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
@@ -28,7 +30,6 @@ import static dev.josiah.services.ServicePost.register;
 public class AuthServlet extends HttpServlet {
     private final static String name = "AuthServlet";
     private final ObjectMapper mapper;
-    private final ObjectMapper caster;
     private final UserDAO userDAO;
     private final UserPrivDAO upDAO;
     private static final ArrayList<String> supportedDestinations =
@@ -41,21 +42,23 @@ public class AuthServlet extends HttpServlet {
         HashMap<String, Object> errorMessage = new HashMap<>();
         HashMap<String, Object> message = new HashMap<>();
 
-        UserPass userPass = new UserPass();
-        UserInfo userInfo = new UserInfo();
-
         String destination = "none";
         String[] supportedDestinations = {"login", "register"};
 
         // Determine the intended destination
 
-
+        /*
+        // for whatever reason, it only successfully maps the first one regardless of input
         try {
-            userInfo = mapper.readValue(req.getInputStream(), UserInfo.class);
+            ObjectMapper mapper3 = new ObjectMapper();
+            mapper3.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, true);
+            userInfo = mapper3.readValue(req.getInputStream(), UserInfo.class);
             destination = "register";
         } catch (Throwable t) {System.out.println("Couldn't map to UserInfo");}
         try {
-            userPass = mapper.readValue(req.getInputStream(), UserPass.class);
+            ObjectMapper mapper2 = new ObjectMapper();
+            mapper2.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, true);
+            userPass = mapper2.readValue(req.getInputStream(), UserPass.class);
             destination = "login";
         } catch (Throwable t) { System.out.println("Couldn't map to UserPass");}
 
@@ -77,11 +80,31 @@ public class AuthServlet extends HttpServlet {
             resp.getWriter().write(mapper.writeValueAsString(errorMessage));
             return;
         }
+         */
+        String loc = "/login-service/userauth";
+        String uri = req.getRequestURI().replace(loc,"");
+        System.out.println(uri);
+
+        destination = uri.replace("/","");
+        if (!destination.equals("login") && !destination.equals("register")) {
+            resp.setStatus(400);
+            resp.setContentType("application/json");
+            errorMessage.put("code", 400);
+            errorMessage.put("message", "Invalid Request");
+            errorMessage.put("timestamp", LocalDateTime.now().toString());
+
+            resp.getWriter().write(mapper.writeValueAsString(errorMessage));
+            return;
+        }
+
 
         if (destination.equals("login")) {
             try {
-                login(userDAO, upDAO, userPass);
+                UserPass userPass = mapper.readValue(req.getInputStream(), UserPass.class);
+                User user = login(userDAO, upDAO, userPass);
                 resp.setStatus(204);  // logged in, no other content
+                HttpSession session = req.getSession(); // use req.getSession(false) to prevent a session from being made
+                session.setAttribute("auth-user", user);
                 resp.setContentType("application/json");
                 message.put("code", 204); // successful request, but no data to return
                 message.put("message", "Logged in");
@@ -155,17 +178,21 @@ public class AuthServlet extends HttpServlet {
                 return;
             }
         }
-        System.out.println(req.getLocalAddr());
-        System.out.println("@@@@@@@@@@@@^^^^");
+
         if (destination.equals("register")) {
             try {
-                register(caster, userDAO, upDAO, userInfo);
-                userPass = caster.readValue(caster.writeValueAsString(userInfo), UserPass.class);
-                login(userDAO,upDAO,userPass);
+                System.out.println("Flag 1 :)");
+                UserInfo userInfo = mapper.readValue(req.getInputStream(), UserInfo.class);
+                System.out.println("Flag 2 :)");
+                register(userDAO, upDAO, userInfo);
+                UserPass userPass = new UserPass(userInfo.getUsername(),userInfo.getPassword());
+                System.out.println("Registration succeeded...");
+//                login(userDAO,upDAO,userPass);
+//                System.out.println("And Login also");
                 resp.setStatus(204);  // registered, no other content
                 resp.setContentType("application/json");
                 message.put("code", 204); // successful request, but no data to return
-                message.put("message", "Registered and logged in");
+                message.put("message", "Registered");
                 message.put("timestamp", LocalDateTime.now().toString());
                 resp.getWriter().write(mapper.writeValueAsString(message));
                 return;
@@ -209,27 +236,29 @@ public class AuthServlet extends HttpServlet {
                 errorMessage.put("timestamp", LocalDateTime.now().toString());
                 resp.getWriter().write(mapper.writeValueAsString(errorMessage));
                 return;
-            } catch (UserNotFoundException e) {
-                Complain(userInfo.getUsername() + " just registered, but now can't login.");
-                Complain(e);
-                resp.setStatus(404);
-                resp.setContentType("application/json");
-                errorMessage.put("code", 404);
-                errorMessage.put("message", "User not found");
-                errorMessage.put("timestamp", LocalDateTime.now().toString());
-                resp.getWriter().write(mapper.writeValueAsString(errorMessage));
-                return;
-            } catch (InvalidCredentialsException e) {
-                Complain(userInfo.getUsername() + " just registered, but now can't login.");
-                Complain(e);
-                resp.setStatus(401);
-                resp.setContentType("application/json");
-                message.put("code", 401);
-                message.put("message", "Username length was incorrect");
-                message.put("timestamp", LocalDateTime.now().toString());
-                resp.getWriter().write(mapper.writeValueAsString(message));
-                return;
-            }  catch (SQLException e) {
+            }
+//            catch (UserNotFoundException e) {
+//                Complain(" just registered, but now can't login.");
+//                Complain(e);
+//                resp.setStatus(404);
+//                resp.setContentType("application/json");
+//                errorMessage.put("code", 404);
+//                errorMessage.put("message", "User not found");
+//                errorMessage.put("timestamp", LocalDateTime.now().toString());
+//                resp.getWriter().write(mapper.writeValueAsString(errorMessage));
+//                return;
+//            } catch (InvalidCredentialsException e) {
+//                Complain(" just registered, but now can't login.");
+//                Complain(e);
+//                resp.setStatus(401);
+//                resp.setContentType("application/json");
+//                message.put("code", 401);
+//                message.put("message", "Username length was incorrect");
+//                message.put("timestamp", LocalDateTime.now().toString());
+//                resp.getWriter().write(mapper.writeValueAsString(message));
+//                return;
+//            }
+            catch (SQLException e) {
                 resp.setStatus(500);
                 resp.setContentType("application/json");
                 message.put("code", 500);

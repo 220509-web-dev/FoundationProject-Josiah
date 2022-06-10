@@ -18,27 +18,34 @@ import static dev.josiah.services.validation.ValidatePassword.validatePassword;
 import static dev.josiah.services.validation.ValidateUsername.validateUsername;
 
 public class ServicePost {
-    public static void login(UserDAO userDAO, UserPrivDAO upDAO, UserPass userPass) throws IllegalCharacterException, UsernameFormatException, InputWasNullException, ValueOutOfRangeException, SQLException, UserNotFoundException, InvalidCredentialsException {
+    public static User login(UserDAO userDAO, UserPrivDAO upDAO, UserPass userPass) throws IllegalCharacterException, UsernameFormatException, InputWasNullException, ValueOutOfRangeException, SQLException, UserNotFoundException, InvalidCredentialsException {
         String username = userPass.getUsername();
         String password = userPass.getPassword();
         validateUsername(username);
         validatePassword(password);
         User user;
         UserPriv up;
+        System.out.println("finding user:"+username);
         user = userDAO.getUserByUsername(username);
         if (user == null) {
+            System.out.println("Looks like that was null!");
             throw new UserNotFoundException();
         }
+        System.out.println("Finding info for:"+user.getUser_id());
         up = upDAO.getUserInfoById(user.getUser_id());
-        if (user == null) throw new UserNotFoundException();
+        if (up == null) {
+            System.out.println("Looks like that was null");
+            throw new UserNotFoundException();
+        }
         if (!encrypt(password).equals(up.getPassword())) {
             throw new InvalidCredentialsException("Incorrect Password");
         }  // 401 : UNAUTHORIZED; INVALID USER+PASS COMBO
         // 403 USER WAS LOGGED IN AND HAD A TOKEN/SESSION BUT...
         // IS TRYING TO HIT AN ENDPOINT THEY'RE "FORBIDDEN" FROM GOING TO
+        return user;
     }
 
-    public static void register(ObjectMapper caster, UserDAO userDAO, UserPrivDAO upDAO, UserInfo userInfo) throws SQLException, IllegalCharacterException, UsernameFormatException, InputWasNullException, ValueOutOfRangeException, UsernameNotAvailableException, JsonProcessingException {
+    public static void register(UserDAO userDAO, UserPrivDAO upDAO, UserInfo userInfo) throws SQLException, IllegalCharacterException, UsernameFormatException, InputWasNullException, ValueOutOfRangeException, UsernameNotAvailableException, JsonProcessingException {
         String username = userInfo.getUsername();
         String password = userInfo.getPassword();
         validateUsername(username);
@@ -51,13 +58,20 @@ public class ServicePost {
             // 409 : UNIQUENESS CONSTRAINT VIOLATION
             // 409 MEANS "CONFLICT"
         }
-        user = caster.readValue(caster.writeValueAsString(userInfo), User.class);
-        user = userDAO.createUser(user);
-        UserPriv up = new UserPriv(user.getUser_id());
+        User user1 = new User(0,userInfo.getUsername(),
+                userInfo.getFname(),
+                userInfo.getLname(),
+                userInfo.getAddress1(),
+                userInfo.getAddress2(),
+                userInfo.getCity(),
+                userInfo.getState(),
+                userInfo.getPostalcode());
+        user1 = userDAO.createUser(user1);
+        UserPriv up = new UserPriv(user1.getUser_id());
         up.encryptAndSetPassword(password);
+        System.out.println("Making upDAO req:"+up);
         upDAO.createUserInfo(up);
-
-
+        System.out.println("done");
 
     }
 }

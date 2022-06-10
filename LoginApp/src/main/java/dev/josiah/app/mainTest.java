@@ -24,13 +24,19 @@ import static dev.josiah.services.Encrypt.encrypt;
 
 public class mainTest {
 
-    public static void main(String[] args) throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        UserInfo userInfo = new UserInfo("j@Revature.net","pass1234","Josiah","Sparks","One Street","","SA","TX","");
-        User user = mapper.readValue(mapper.writeValueAsString(userInfo), User.class);
-        System.out.println(userInfo);
+    public static void main(String[] args) throws IOException, SQLException {
+        UserDAO userDAO = new UserDaoPostgres();
+        UserPrivDAO upDAO = new UserPrivDaoPostgres();
+        User user = new User(0,"Jsparks109@revature.net","Josiah","","","","","","");
+        String password = "12345678";
+
+        user = userDAO.createUser(user);
         System.out.println(user);
+        user = userDAO.createUser(user);
+        UserPriv up = new UserPriv(user.getUser_id());
+        up.encryptAndSetPassword(password);
+        upDAO.createUserInfo(up);
+
     }
 
     private static void testPassword(int i) throws SQLException {

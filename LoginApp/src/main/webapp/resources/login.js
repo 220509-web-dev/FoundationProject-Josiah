@@ -26,7 +26,7 @@ function login() {
         // If the error message is being displayed, hide it
         errorContainer.setAttribute('hidden', true);
 
-        let respData = fetch('http://localhost:8080/login-service/userauth', {
+        let respData = fetch('http://localhost:8080/login-service/userauth/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
