@@ -20,6 +20,7 @@ import java.util.HashMap;
 
 import static dev.josiah.complaintDepartment.ProblemScribe.Complain;
 import static dev.josiah.services.ServicePost.login;
+import static dev.josiah.services.ServicePost.register;
 
 
 @AllArgsConstructor
@@ -37,11 +38,12 @@ public class AuthServlet extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         UserPass userPass = new UserPass();
-        UserInfo userInfo;
-        // Determine the intended destination
+        UserInfo userInfo = new UserInfo();
+
         String destination = "none";
         String[] supportedDestinations = {"login", "register"};
 
+        // Determine the intended destination
         try {
             userPass = mapper.readValue(req.getInputStream(), UserPass.class);
             destination = "login";
@@ -60,11 +62,11 @@ public class AuthServlet extends HttpServlet {
                 break;
             }
         }
+
+        HashMap<String, Object> errorMessage = new HashMap<>();
         if (!supported) {
             resp.setStatus(400);
             resp.setContentType("application/json");
-
-            HashMap<String, Object> errorMessage = new HashMap<>();
             errorMessage.put("code", 400);
             errorMessage.put("message", "Invalid Request");
             errorMessage.put("timestamp", LocalDateTime.now().toString());
@@ -78,6 +80,7 @@ public class AuthServlet extends HttpServlet {
             try {
                 login(userDAO, upDAO, userPass);
                 resp.setStatus(204);  // logged in, no other content
+                resp.setContentType("application/json");
                 message.put("code", 204); // successful request, but no data to return
                 message.put("message", "Logged in");
                 message.put("timestamp", LocalDateTime.now().toString());
@@ -85,6 +88,7 @@ public class AuthServlet extends HttpServlet {
                 return;
             } catch (UserNotFoundException e) {
                 resp.setStatus(404);
+                resp.setContentType("application/json");
                 message.put("code", 404);
                 message.put("message", "User not found");
                 message.put("timestamp", LocalDateTime.now().toString());
@@ -92,6 +96,7 @@ public class AuthServlet extends HttpServlet {
                 return;
             } catch (IllegalCharacterException e) {
                 resp.setStatus(400);
+                resp.setContentType("application/json");
                 message.put("code", 400);
                 message.put("message", "Input contained an illegal character");
                 message.put("timestamp", LocalDateTime.now().toString());
@@ -99,6 +104,7 @@ public class AuthServlet extends HttpServlet {
                 return;
             } catch (UsernameFormatException e) {
                 resp.setStatus(400);
+                resp.setContentType("application/json");
                 message.put("code", 400);
                 message.put("message", "Username must end with @revature.net");
                 message.put("timestamp", LocalDateTime.now().toString());
@@ -106,6 +112,7 @@ public class AuthServlet extends HttpServlet {
                 return;
             } catch (InputWasNullException e) {
                 resp.setStatus(400);
+                resp.setContentType("application/json");
                 message.put("code", 400);
                 message.put("message", "An input field was left blank");
                 message.put("timestamp", LocalDateTime.now().toString());
@@ -113,6 +120,7 @@ public class AuthServlet extends HttpServlet {
                 return;
             } catch (ValueOutOfRangeException e) {
                 resp.setStatus(400);
+                resp.setContentType("application/json");
                 message.put("code", 400);
                 message.put("message", "Username or password length was too large or small");
                 message.put("timestamp", LocalDateTime.now().toString());
@@ -120,6 +128,7 @@ public class AuthServlet extends HttpServlet {
                 return;
             } catch (InvalidCredentialsException e) {
                 resp.setStatus(401);
+                resp.setContentType("application/json");
                 message.put("code", 401);
                 message.put("message", "Username length was incorrect");
                 message.put("timestamp", LocalDateTime.now().toString());
@@ -127,6 +136,7 @@ public class AuthServlet extends HttpServlet {
                 return;
             } catch (SQLException e) {
                 resp.setStatus(500);
+                resp.setContentType("application/json");
                 message.put("code", 500);
                 message.put("message", "There was a problem with the database");
                 message.put("timestamp", LocalDateTime.now().toString());
@@ -134,6 +144,7 @@ public class AuthServlet extends HttpServlet {
                 return;
             } catch (Throwable t) {
                 Complain(t);
+                resp.setContentType("application/json");
                 resp.setStatus(500);
                 message.put("code", 500);
                 message.put("message", "An unknown error occurred");
@@ -144,13 +155,22 @@ public class AuthServlet extends HttpServlet {
         }
 
         if (destination.equals("register")) {
+            try {
+                register(caster, userDAO, upDAO, userInfo);
 
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            } catch (IllegalCharacterException e) {
+                throw new RuntimeException(e);
+            } catch (UsernameFormatException e) {
+                throw new RuntimeException(e);
+            } catch (InputWasNullException e) {
+                throw new RuntimeException(e);
+            } catch (ValueOutOfRangeException e) {
+                throw new RuntimeException(e);
+            } catch (UsernameNotAvailableException e) {
+                throw new RuntimeException(e);
+            }
         }
-
-//        HashMap<String, Object> errorMessage = new HashMap<>();
-//        errorMessage.put("code", 400);
-//        errorMessage.put("message", "No user found with provided credentials");
-//        errorMessage.put("timestamp", LocalDateTime.now().toString());
-//        resp.getWriter().write(mapper.writeValueAsString(errorMessage));
     }
 }

@@ -43,12 +43,13 @@ public class UserServlet extends HttpServlet {
             System.out.println(potentialId+" being sent from UserServlet to the service layer");
             try {
                 User user = ServiceIdRequest(potentialId, userDAO);
-                resp.setStatus(200);  // unnecessary
                 resp.setContentType("application/json");
+                resp.setStatus(200);  // unnecessary
                 resp.getWriter().write(mapper.writeValueAsString(user));
                 return;
             } catch (UserNotFoundException e) {
                 resp.setStatus(404);  // ANY RESOURCE NOT FOUND IS 404
+                resp.setContentType("application/json");
                 errorMessage.put("code", 404);
                 errorMessage.put("message", "User not found");
                 errorMessage.put("timestamp", LocalDateTime.now().toString());
@@ -56,6 +57,7 @@ public class UserServlet extends HttpServlet {
                 return;
             } catch (InputWasNullException e) {
                 resp.setStatus(400);
+                resp.setContentType("application/json");
                 errorMessage.put("code", 400);
                 errorMessage.put("message", "Form input was blank");
                 errorMessage.put("timestamp", LocalDateTime.now().toString());
@@ -63,6 +65,7 @@ public class UserServlet extends HttpServlet {
                 return;
             } catch (InputNotAnIntegerException e) {
                 resp.setStatus(400);
+                resp.setContentType("application/json");
                 errorMessage.put("code", 400);
                 errorMessage.put("message", "Input must be an integer");
                 errorMessage.put("timestamp", LocalDateTime.now().toString());
@@ -70,6 +73,7 @@ public class UserServlet extends HttpServlet {
                 return;
             } catch (NumberFormatException e) {
                 resp.setStatus(400);
+                resp.setContentType("application/json");
                 errorMessage.put("code", 400);
                 errorMessage.put("message", "Please enter a whole number");
                 errorMessage.put("timestamp", LocalDateTime.now().toString());
@@ -77,6 +81,7 @@ public class UserServlet extends HttpServlet {
                 return;
             } catch (ValueOutOfRangeException e) {
                 resp.setStatus(400);
+                resp.setContentType("application/json");
                 errorMessage.put("code", 400);
                 errorMessage.put("message", "ID inputted was out of bounds");
                 errorMessage.put("timestamp", LocalDateTime.now().toString());
@@ -84,6 +89,7 @@ public class UserServlet extends HttpServlet {
                 return;
             } catch (SQLException e) {
                 resp.setStatus(500); // MAYBE, BUT DEPENDS ON WHAT KIND OF SQL EXCEPTION
+                resp.setContentType("application/json");
                 errorMessage.put("code", 500);
                 errorMessage.put("message", "There was a problem with the database");
                 errorMessage.put("timestamp", LocalDateTime.now().toString());
@@ -92,6 +98,7 @@ public class UserServlet extends HttpServlet {
             } catch (Throwable t) {
                 Complain(t);
                 resp.setStatus(500);
+                resp.setContentType("application/json");
                 errorMessage.put("code", 500);
                 errorMessage.put("message", "An unknown error occurred");
                 errorMessage.put("timestamp", LocalDateTime.now().toString());
@@ -110,6 +117,7 @@ public class UserServlet extends HttpServlet {
                 return;
             } catch (UserNotFoundException e) {
                 resp.setStatus(404);
+                resp.setContentType("application/json");
                 errorMessage.put("code", 404);
                 errorMessage.put("message", "User not found");
                 errorMessage.put("timestamp", LocalDateTime.now().toString());
@@ -117,6 +125,7 @@ public class UserServlet extends HttpServlet {
                 return;
             } catch (InputWasNullException e) {
                 resp.setStatus(400);
+                resp.setContentType("application/json");
                 errorMessage.put("code", 400);
                 errorMessage.put("message", "Form input was blank");
                 errorMessage.put("timestamp", LocalDateTime.now().toString());
@@ -124,6 +133,7 @@ public class UserServlet extends HttpServlet {
                 return;
             } catch (ValueOutOfRangeException e) {
                 resp.setStatus(400);
+                resp.setContentType("application/json");
                 errorMessage.put("code", 400);
                 errorMessage.put("message", "Username length was incorrect");
                 errorMessage.put("timestamp", LocalDateTime.now().toString());
@@ -131,6 +141,7 @@ public class UserServlet extends HttpServlet {
                 return;
             } catch (UsernameFormatException e) {
                 resp.setStatus(400);
+                resp.setContentType("application/json");
                 errorMessage.put("code", 400);
                 errorMessage.put("message", "Username must end with @revature.net");
                 errorMessage.put("timestamp", LocalDateTime.now().toString());
@@ -138,6 +149,7 @@ public class UserServlet extends HttpServlet {
                 return;
             } catch (IllegalCharacterException e) {
                 resp.setStatus(400);
+                resp.setContentType("application/json");
                 errorMessage.put("code", 400);
                 errorMessage.put("message", "Username contained an illegal character");
                 errorMessage.put("timestamp", LocalDateTime.now().toString());
@@ -145,6 +157,7 @@ public class UserServlet extends HttpServlet {
                 return;
             } catch (SQLException e) {
                 resp.setStatus(500);
+                resp.setContentType("application/json");
                 errorMessage.put("code", 500);
                 errorMessage.put("message", "There was a problem with the database");
                 errorMessage.put("timestamp", LocalDateTime.now().toString());
@@ -153,6 +166,7 @@ public class UserServlet extends HttpServlet {
             } catch (Throwable t) {
                 Complain(t);
                 resp.setStatus(500);
+                resp.setContentType("application/json");
                 errorMessage.put("code", 500);
                 errorMessage.put("message", "An unknown error occurred");
                 errorMessage.put("timestamp", LocalDateTime.now().toString());
@@ -165,12 +179,13 @@ public class UserServlet extends HttpServlet {
         System.out.println("UserServlet is forwarding to services request for all user data");
         try {
             List<User> users = ServiceAllUsersRequest(userDAO);
-            resp.setStatus(200);  // unnecessary
             resp.setContentType("application/json");
+            resp.setStatus(200);  // unnecessary
             resp.getWriter().write(mapper.writeValueAsString(users));
             return;
         } catch (UserNotFoundException e) {
             resp.setStatus(204);
+            resp.setContentType("application/json");
             HashMap<String, Object> message = new HashMap<>();
             message.put("code", 204); // successful request, but no data to return
             message.put("message", "No users exist in database");
@@ -179,6 +194,7 @@ public class UserServlet extends HttpServlet {
             return;
         } catch (SQLException e) {
             resp.setStatus(500);
+            resp.setContentType("application/json");
             errorMessage.put("code", 500);
             errorMessage.put("message", "There was a problem with the database");
             errorMessage.put("timestamp", LocalDateTime.now().toString());
@@ -187,6 +203,7 @@ public class UserServlet extends HttpServlet {
         } catch (Throwable t) {
             Complain(t);
             resp.setStatus(500);
+            resp.setContentType("application/json");
             errorMessage.put("code", 500);
             errorMessage.put("message", "An unknown error occurred");
             errorMessage.put("timestamp", LocalDateTime.now().toString());
