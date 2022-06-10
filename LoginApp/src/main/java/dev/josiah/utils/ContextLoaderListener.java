@@ -1,5 +1,6 @@
 package dev.josiah.utils;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.josiah.daos.UserDAO;
 import dev.josiah.daos.UserDaoPostgres;
@@ -17,6 +18,8 @@ public class ContextLoaderListener implements ServletContextListener {
 
         // Instantiate necessary Objects
         ObjectMapper mapper = new ObjectMapper();
+        ObjectMapper caster = new ObjectMapper();
+        caster.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         UserDAO userDAO = new UserDaoPostgres();
         UserPrivDAO upDAO = new UserPrivDaoPostgres();
 
@@ -24,7 +27,7 @@ public class ContextLoaderListener implements ServletContextListener {
         ServletContext context = sce.getServletContext();
 
         // Instantiate Servlet Objects
-        AuthServlet authServlet = new AuthServlet(mapper, userDAO, upDAO);
+        AuthServlet authServlet = new AuthServlet(mapper, caster, userDAO, upDAO);
         UserServlet userServlet = new UserServlet(mapper, userDAO);
 
         // registration

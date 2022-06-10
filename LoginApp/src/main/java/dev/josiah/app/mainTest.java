@@ -2,11 +2,14 @@ package dev.josiah.app;
 
 
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.Iterables;
 import dev.josiah.daos.UserDAO;
 import dev.josiah.daos.UserDaoPostgres;
 import dev.josiah.daos.UserPrivDAO;
 import dev.josiah.daos.UserPrivDaoPostgres;
+import dev.josiah.dtos.UserInfo;
 import dev.josiah.entities.User;
 import dev.josiah.entities.UserPriv;
 
@@ -22,17 +25,14 @@ import static dev.josiah.services.Encrypt.encrypt;
 public class mainTest {
 
     public static void main(String[] args) throws IOException {
-        ArrayList<String> supportedDestinations = new ArrayList<String>(Arrays.asList("login", "register"));
-        String destination = "login";
-        System.out.println(supportedDestinations);
-        Boolean supported = false;
-        for (String loc: supportedDestinations) {
-            if(destination.equals(loc)) {
-                supported = true;
-                break;
-            }
-        }
-        System.out.println(supported);
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        UserInfo userInfo = new UserInfo("j@Revature.net","pass1234","Josiah","Sparks","One Street","","SA","TX","");
+        User user = mapper.readValue(mapper.writeValueAsString(userInfo), User.class);
+        System.out.println(userInfo);
+        System.out.println(user);
+
+
     }
 
 

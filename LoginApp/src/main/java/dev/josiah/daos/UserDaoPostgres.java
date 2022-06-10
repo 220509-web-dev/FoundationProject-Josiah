@@ -26,8 +26,7 @@ public class UserDaoPostgres implements UserDAO{
 
     @Override
     public User createUser(User user) throws SQLException {
-//      try(Connection conn = ConnectionUtil.getConnection()) {
-        try {Connection conn = ConnectionFactory.getInstance().getConnection();
+        try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
             String sql = "insert into "+st+" values (default";
             for (int i = 1; i<c.length;i++) { sql += ",?"; }
             sql += ");";
@@ -62,8 +61,7 @@ public class UserDaoPostgres implements UserDAO{
 
     @Override
     public User getUserById(int id) throws SQLException {
-//      try(Connection conn = ConnectionUtil.getConnection()) {
-        try {Connection conn = ConnectionFactory.getInstance().getConnection();
+        try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
             String sql = "select * from "+st+" where "+c[0]+" = ?";
             sql += ";";
             PreparedStatement ps = conn.prepareStatement(sql);
@@ -97,10 +95,9 @@ public class UserDaoPostgres implements UserDAO{
 
     @Override
     public User getUserByUsername(String username) throws SQLException {
-        // Return type is not an array.
-        // This works because username in DB has unique constraint.
-//      try(Connection conn = ConnectionUtil.getConnection()) {
-        try {Connection conn = ConnectionFactory.getInstance().getConnection();
+        // DB has a unique username constraint
+        // This will find zero or one record
+        try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
             String sql = "select * from "+st+" where "+c[1]+" = ?";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1,username);
@@ -131,8 +128,7 @@ public class UserDaoPostgres implements UserDAO{
 
     @Override
     public List<User> getAllUsers() throws SQLException {
-//      try(Connection conn = ConnectionUtil.getConnection()) {
-        try {Connection conn = ConnectionFactory.getInstance().getConnection();
+        try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
             String sql = "select * from "+st+";";
             PreparedStatement ps = conn.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
@@ -164,8 +160,7 @@ public class UserDaoPostgres implements UserDAO{
 
     @Override
     public User updateUser(User user) throws SQLException {
-//      try(Connection conn = ConnectionUtil.getConnection()) {
-        try {Connection conn = ConnectionFactory.getInstance().getConnection();
+        try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
             String sql = "update "+st+" set ";
             for (int i=1; i<c.length-1;i++) {sql += c[i]+" = ?,";}
             sql += c[c.length-1]+" = ? where "+c[0]+"=?;";
@@ -196,8 +191,7 @@ public class UserDaoPostgres implements UserDAO{
 
     @Override
     public void deleteUserById(int id) throws SQLException {
-//      try(Connection conn = ConnectionUtil.getConnection()) {
-        try {Connection conn = ConnectionFactory.getInstance().getConnection();
+        try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
             String sql = "delete from "+st+" where "+c[0]+" = ?";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, id);

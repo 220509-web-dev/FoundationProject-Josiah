@@ -1,4 +1,11 @@
 ##############################
+## Project Specific
+##############################
+application.properties
+filterlogs.log
+complaints.txt
+
+##############################
 ## Java
 ##############################
 .mtj.tmp/

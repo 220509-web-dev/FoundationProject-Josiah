@@ -6,7 +6,6 @@ import dev.josiah.daos.UserDAO;
 import dev.josiah.daos.UserPrivDAO;
 import dev.josiah.dtos.UserInfo;
 import dev.josiah.dtos.UserPass;
-import dev.josiah.entities.User;
 import lombok.AllArgsConstructor;
 
 import javax.servlet.http.HttpServlet;
@@ -19,13 +18,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
-import static dev.josiah.services.ServiceLogin.login;
-import static dev.josiah.services.ServiceRegisterUser.register;
 
 @AllArgsConstructor
 public class AuthServlet extends HttpServlet {
     private final static String name = "AuthServlet";
     private final ObjectMapper mapper;
+    private final ObjectMapper caster;
     private final UserDAO userDAO;
     private final UserPrivDAO upDAO;
     private static final ArrayList<String> supportedDestinations =
