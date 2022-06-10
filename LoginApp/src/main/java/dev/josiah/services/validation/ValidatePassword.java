@@ -25,9 +25,12 @@ public class ValidatePassword {
             throw new ValueOutOfRangeException("Password length was " + password.length() +
                     ", expected length to be at least " + minLen);
         }
-        if ((cannotContain != null) &&
-                cannotContain.stream().allMatch(t -> password.contains(t))) {
-            throw new UsernameFormatException("Password entered contained an illegal character");
+        if (cannotContain != null) {
+            for (String ch : cannotContain) {
+                if(password.contains(ch)) {
+                    throw new UsernameFormatException("Password entered contained an illegal character");
+                }
+            }
         }
     }
 }

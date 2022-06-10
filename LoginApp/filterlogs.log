@@ -2680,3 +2680,33 @@ Jun 10, 2022 at 02:52:14 CDT
 Request URI: /login-service/users/getbyusername
 Request method: GET
 Request query string: username=*.%21%40revature.net
+Jun 10, 2022 at 03:09:38 CDT
+
+2022-06-10T03:09:38.323
+Request URI: /login-service/login.html
+Request method: GET
+Request query string: null
+Jun 10, 2022 at 03:09:38 CDT
+
+2022-06-10T03:09:38.411
+Request URI: /login-service/resources/floating-labels.css
+Request method: GET
+Request query string: null
+Jun 10, 2022 at 03:09:39 CDT
+
+2022-06-10T03:09:39.823
+Request URI: /login-service/
+Request method: GET
+Request query string: null
+Jun 10, 2022 at 03:09:51 CDT
+
+2022-06-10T03:09:51.703
+Request URI: /login-service/users/getbyusername
+Request method: GET
+Request query string: username=2%40revature.net
+Jun 10, 2022 at 03:10:01 CDT
+
+2022-06-10T03:10:01.007
+Request URI: /login-service/users/getbyusername
+Request method: GET
+Request query string: username=%25%24%21%40revature.net

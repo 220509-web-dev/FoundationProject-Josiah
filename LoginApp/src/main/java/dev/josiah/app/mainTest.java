@@ -1,27 +1,32 @@
 package dev.josiah.app;
 
+
+
+import com.google.common.collect.Iterables;
 import dev.josiah.daos.UserDAO;
 import dev.josiah.daos.UserDaoPostgres;
 import dev.josiah.daos.UserPrivDAO;
 import dev.josiah.daos.UserPrivDaoPostgres;
 import dev.josiah.entities.User;
 import dev.josiah.entities.UserPriv;
-import lombok.SneakyThrows;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.function.Predicate;
 
 import static dev.josiah.services.Encrypt.encrypt;
 
 public class mainTest {
 
     public static void main(String[] args) throws IOException {
-        //(new char[6]).replace("\0", "@");
-        FileWriter writer = new FileWriter("text.txt", true);
+
     }
 
-    @SneakyThrows
-    private static void testPassword() {
+
+    private static void testPassword() throws SQLException {
         String password = "12345678";
         String enc = encrypt(password);
         UserPrivDAO upDAO = new UserPrivDaoPostgres();
@@ -29,8 +34,8 @@ public class mainTest {
         System.out.println(up.getPassword());
         System.out.println(enc);
     }
-    @SneakyThrows
-    private static void createUser() {
+
+    private static void createUser() throws SQLException {
         User user = new User();
         user.setUsername("Jsparks109@revature.net");
         user.setFname("Josiah");

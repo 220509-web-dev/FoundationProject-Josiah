@@ -12,7 +12,7 @@ public class ValidateUsername {
     final private static String userMustEndWith = "@revature.net";
     final private static String userMustStartWith = null;
     final private static ArrayList<String> userCannotContain =
-            new ArrayList<String>(Arrays.asList(" ", "\n", ""+'\u00A0', "!", "*"));
+            new ArrayList<String>(Arrays.asList(" ", "\n", ""+'\u00A0', "!", "*", "%", "$", "(", ")", "#", "^"));
     final private static Integer minNonRequiredChars = 0;
     final private static Integer minLen = ((userMustEndWith == null) ? 0:userMustEndWith.length()) +
             ((userMustStartWith == null) ? 0:userMustStartWith.length()) + minNonRequiredChars;
@@ -45,9 +45,12 @@ public class ValidateUsername {
                     ", but username entered was " + username);
         }
 
-        if ((userCannotContain != null) &&
-                userCannotContain.stream().allMatch(t -> username.contains(t))) {
-            throw new IllegalCharacterException(username+" contained an illegal character");
+        if (userCannotContain != null) {
+            for (String ch : userCannotContain) {
+                if(username.contains(ch)) {
+                    throw new IllegalCharacterException(username+" contained an illegal character");
+                }
+            }
         }
     }
 }
