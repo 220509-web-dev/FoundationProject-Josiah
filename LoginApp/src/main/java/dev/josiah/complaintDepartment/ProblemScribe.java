@@ -1,7 +1,5 @@
 package dev.josiah.complaintDepartment;
 
-import dev.josiah.entities.UserPriv;
-
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
