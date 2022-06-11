@@ -44,7 +44,7 @@ function register() {
             if (Math.floor(resp.status/100) == 2) {
                 errorContainer.setAttribute('hidden', true);
                 feedbackContainer.removeAttribute('hidden');
-                feedbackContainer.innerText = "Registration Successful!";
+                feedbackContainer.innerText = "Registration Successful! You have been logged in.";
                 return;
             }
             if (Math.floor(resp.status/100) >= 4) { // ADD CODE HANDLING

@@ -48,25 +48,8 @@ public class AuthServlet extends HttpServlet {
         String[] supportedDestinations = {"login", "register"};
 
         System.out.println("[LOG] - AuthServlet received a POST request!");
-        System.out.println("Header Expect "+req.getHeader("Expect"));
-        System.out.println("Header Content-Type: "+req.getHeader("Content-Type"));
 
-//        Object object1 = req.getInputStream();
-//        InputStream object2 = (InputStream) object1;
 
-        //System.out.println("HttpServletRequest is type "+req.getClass().getName());
-        // import org.apache.catalina.connector.RequestFacade
-
-        // Determine the intended destination
-/**/
-        // for whatever reason, if the 1st try fails, the 2nd fails no matter what
-        // This happens even when they're switched around...
-
-//        try {
-//            userPass1 = mapper.readValue((InputStream) object1, UserPass.class);
-//            destination = "login";
-//        } catch (Throwable t) { System.out.println("Couldn't map to UserPass");}
-//        ObjectMapper mapper1 = new ObjectMapper();
         try {
             userInfo = mapper.readValue(req.getInputStream(), UserInfo.class);
             System.out.println(userInfo);
@@ -74,7 +57,7 @@ public class AuthServlet extends HttpServlet {
             System.out.println("Couldn't map to UserInfo");
             Complain("Couldn't map to UserInfo");
             Complain(t);
-            Send(500, "Internal Error", resp);  // mapper1 will map no matter what is sent, so this shouldn't happen
+            Send(500, "Internal Error", resp);  // mapper will map no matter what is sent, so this shouldn't happen
             return;
         }
 
@@ -93,18 +76,8 @@ public class AuthServlet extends HttpServlet {
 
         if (!supported) { Send(400, "Invalid Request", resp); return;   }
 
-
-//        String loc = "/login-service/userauth";
-//        String uri = req.getRequestURI().replace(loc,"");
-//        System.out.println(uri);
-//        destination = uri.replace("/","");
-//        if (!destination.equals("login") && !destination.equals("register")) {
-//            Send(400, "Invalid Request", resp); return;
-//        }
-
         if (destination.equals("login")) {
             try {
-//                UserPass userPass = mapper.readValue(req.getInputStream(), UserPass.class);
                 UserPass userPass = new UserPass(userInfo.getUsername(),userInfo.getPassword());
                 System.out.println(userPass);
                 User user = login(userDAO, upDAO, userPass);
@@ -124,25 +97,22 @@ public class AuthServlet extends HttpServlet {
 
         if (destination.equals("register")) {
             try {
-                System.out.println("Flag 1 :)");
-//                UserInfo userInfo = mapper.readValue(req.getInputStream(), UserInfo.class);
-                System.out.println("Flag 2 :)");
                 register(userDAO, upDAO, userInfo);
                 System.out.println("Registration succeeded...");
-//                UserPass userPass = new UserPass(userInfo.getUsername(),userInfo.getPassword());
-//                login(userDAO,upDAO,userPass);  System.out.println("And Login also");
+                UserPass userPass = new UserPass(userInfo.getUsername(),userInfo.getPassword());
+                login(userDAO,upDAO,userPass);  System.out.println("And Login also");
                                                       Send(204, "Registered",                              resp); return; }
             catch (InputWasNullException e) {         Send(400, "Form input was blank",                    resp); return; }
             catch (ValueOutOfRangeException e) {      Send(400, "Username length was incorrect",           resp); return; }
             catch (UsernameFormatException e) {       Send(400, "Username must end with @revature.net",    resp); return; }
             catch (IllegalCharacterException e) {     Send(400, "Username contained an illegal character", resp); return; }
             catch (UsernameNotAvailableException e) { Send(409, "Username already taken!",                 resp); return; }
-//            catch (UserNotFoundException e) {
-//                Complain(" just registered, but now can't login.");
-//                                   Complain(e);     Send(404, "User not found",                          resp); return; }
-//            catch (InvalidCredentialsException e) {
-//                Complain(" just registered, but now can't login.");
-//                                   Complain(e);     Send(401, "Invalid Credentials",                     resp); return; }
+            catch (UserNotFoundException e) {
+                Complain(" just registered, but now can't login.");
+                                     Complain(e);     Send(404, "User not found",                          resp); return; }
+            catch (InvalidCredentialsException e) {
+                Complain(" just registered, but now can't login.");
+                                     Complain(e);     Send(401, "Invalid Credentials",                     resp); return; }
             catch (SQLException e) { Complain(e);     Send(500, "There was a problem with the database",   resp); return; }
             catch (Throwable t) {    Complain(t);     Send(500, "An unknown error occurred",               resp); return; }
         }
