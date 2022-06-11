@@ -16,8 +16,9 @@ public class ContextLoaderListener implements ServletContextListener {
     public void contextInitialized(ServletContextEvent sce) {
         System.out.println("[LOG] - The servlet context was initialized at " + LocalDateTime.now());
 
-        // Instantiate necessary Objects
+        // Instantiate and configure necessary Objects
         ObjectMapper mapper = new ObjectMapper();
+        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         UserDAO userDAO = new UserDaoPostgres();
         UserPrivDAO upDAO = new UserPrivDaoPostgres();
 
@@ -34,7 +35,7 @@ public class ContextLoaderListener implements ServletContextListener {
         // AuthServlet dynamic registration
         ServletRegistration.Dynamic registeredServlet = context.addServlet("AuthServlet", authServlet);
         registeredServlet.setLoadOnStartup(3);
-        registeredServlet.addMapping("/userauth/*");
+        registeredServlet.addMapping("/userauth");
     }
 
     @Override

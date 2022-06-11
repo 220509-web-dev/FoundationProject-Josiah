@@ -8,7 +8,6 @@ import dev.josiah.daos.UserPrivDAO;
 import dev.josiah.dtos.UserInfo;
 import dev.josiah.dtos.UserPass;
 import dev.josiah.entities.User;
-import lombok.AllArgsConstructor;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -44,28 +43,45 @@ public class AuthServlet extends HttpServlet {
 
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        HashMap<String, Object> errorMessage = new HashMap<>();
-        HashMap<String, Object> message = new HashMap<>();
-
+        UserInfo userInfo = new UserInfo();
         String destination = "none";
         String[] supportedDestinations = {"login", "register"};
 
-        // Determine the intended destination
+        System.out.println("[LOG] - AuthServlet received a POST request!");
+        System.out.println("Header Expect "+req.getHeader("Expect"));
+        System.out.println("Header Content-Type: "+req.getHeader("Content-Type"));
 
-        /*
-        // for whatever reason, it only successfully maps the first one regardless of input
+//        Object object1 = req.getInputStream();
+//        InputStream object2 = (InputStream) object1;
+
+        //System.out.println("HttpServletRequest is type "+req.getClass().getName());
+        // import org.apache.catalina.connector.RequestFacade
+
+        // Determine the intended destination
+/**/
+        // for whatever reason, if the 1st try fails, the 2nd fails no matter what
+        // This happens even when they're switched around...
+
+//        try {
+//            userPass1 = mapper.readValue((InputStream) object1, UserPass.class);
+//            destination = "login";
+//        } catch (Throwable t) { System.out.println("Couldn't map to UserPass");}
+//        ObjectMapper mapper1 = new ObjectMapper();
         try {
-            ObjectMapper mapper3 = new ObjectMapper();
-            mapper3.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, true);
-            userInfo = mapper3.readValue(req.getInputStream(), UserInfo.class);
-            destination = "register";
-        } catch (Throwable t) {System.out.println("Couldn't map to UserInfo");}
-        try {
-            ObjectMapper mapper2 = new ObjectMapper();
-            mapper2.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, true);
-            userPass = mapper2.readValue(req.getInputStream(), UserPass.class);
-            destination = "login";
-        } catch (Throwable t) { System.out.println("Couldn't map to UserPass");}
+            userInfo = mapper.readValue(req.getInputStream(), UserInfo.class);
+            System.out.println(userInfo);
+        } catch (Throwable t) {
+            System.out.println("Couldn't map to UserInfo");
+            Complain("Couldn't map to UserInfo");
+            Complain(t);
+            Send(500, "Internal Error", resp);  // mapper1 will map no matter what is sent, so this shouldn't happen
+            return;
+        }
+
+        System.out.println("First Name Property is"+((userInfo.getFname()==null)?"":" not")+" null");
+        System.out.println("First Name property: " + userInfo.getFname());
+        //System.out.println(userInfo);
+        destination = ((userInfo.getFname()==null)?"login":"register");
 
         Boolean supported = false;
         for (String loc: supportedDestinations) {
@@ -76,20 +92,20 @@ public class AuthServlet extends HttpServlet {
         }
 
         if (!supported) { Send(400, "Invalid Request", resp); return;   }
-         */
 
-        String loc = "/login-service/userauth";
-        String uri = req.getRequestURI().replace(loc,"");
-        System.out.println(uri);
 
-        destination = uri.replace("/","");
-        if (!destination.equals("login") && !destination.equals("register")) {
-            Send(400, "Invalid Request", resp); return;
-        }
+//        String loc = "/login-service/userauth";
+//        String uri = req.getRequestURI().replace(loc,"");
+//        System.out.println(uri);
+//        destination = uri.replace("/","");
+//        if (!destination.equals("login") && !destination.equals("register")) {
+//            Send(400, "Invalid Request", resp); return;
+//        }
 
         if (destination.equals("login")) {
             try {
-                UserPass userPass = mapper.readValue(req.getInputStream(), UserPass.class);
+//                UserPass userPass = mapper.readValue(req.getInputStream(), UserPass.class);
+                UserPass userPass = new UserPass(userInfo.getUsername(),userInfo.getPassword());
                 System.out.println(userPass);
                 User user = login(userDAO, upDAO, userPass);
                 //resp.setStatus(204);  // logged in, no other content
@@ -109,7 +125,7 @@ public class AuthServlet extends HttpServlet {
         if (destination.equals("register")) {
             try {
                 System.out.println("Flag 1 :)");
-                UserInfo userInfo = mapper.readValue(req.getInputStream(), UserInfo.class);
+//                UserInfo userInfo = mapper.readValue(req.getInputStream(), UserInfo.class);
                 System.out.println("Flag 2 :)");
                 register(userDAO, upDAO, userInfo);
                 System.out.println("Registration succeeded...");

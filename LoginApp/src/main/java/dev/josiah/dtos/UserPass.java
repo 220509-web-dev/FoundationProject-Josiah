@@ -1,11 +1,14 @@
 package dev.josiah.dtos;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 import java.util.Objects;
 
 public class UserPass {
+    @JsonProperty("username")
     private String username;
+    @JsonProperty("password")
     private String password;
 
     public UserPass() {

@@ -18,20 +18,20 @@ function login() {
     let passwordInput = document.getElementById('login-password');
     let errorContainer = document.getElementById('error-message');
     
-    let username = usernameInput.value;
-    let password = passwordInput.value;
+    let u = usernameInput.value;
+    let p = passwordInput.value;
 
-    if (username && password) {
+    if (u && p) {
         
         // If the error message is being displayed, hide it
         errorContainer.setAttribute('hidden', true);
 
-        let respData = fetch('http://localhost:8080/login-service/userauth/login', {
+        let respData = fetch('http://localhost:8080/login-service/userauth', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
             },
-            body: JSON.stringify({username, password})
+            body: JSON.stringify({u, p})
         }).then(resp => {
             console.log(`Response status: ${resp.status}`);
             console.log(`Response timestamp: ${Date.now()}`);
