@@ -52,12 +52,15 @@ public class ServicePost {
         validatePassword(password);
 
         User user = userDAO.getUserByUsername(username);
+        System.out.println("User is "+((user==null)?"":"not ")+"null");
         if (user != null) {
+            System.out.println("Throwing UsernameNotAvailableException");
             throw new UsernameNotAvailableException();
             // USER NOT AVAILABLE : 409
             // 409 : UNIQUENESS CONSTRAINT VIOLATION
             // 409 MEANS "CONFLICT"
         }
+        System.out.println("Line 63 in ServicePost");
         User user1 = new User(0,userInfo.getUsername(),
                 userInfo.getFname(),
                 userInfo.getLname(),

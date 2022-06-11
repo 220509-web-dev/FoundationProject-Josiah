@@ -26,14 +26,19 @@ import static dev.josiah.services.ServicePost.login;
 import static dev.josiah.services.ServicePost.register;
 
 
-@AllArgsConstructor
 public class AuthServlet extends HttpServlet {
     private final static String name = "AuthServlet";
-    private final ObjectMapper mapper;
+    private static ObjectMapper mapper;
     private final UserDAO userDAO;
     private final UserPrivDAO upDAO;
     private static final ArrayList<String> supportedDestinations =
             new ArrayList<String>(Arrays.asList("login", "register"));
+
+    public AuthServlet(ObjectMapper mapper, UserDAO userDAO, UserPrivDAO upDAO) {
+        this.mapper = mapper;
+        this.userDAO = userDAO;
+        this.upDAO = upDAO;
+    }
 
     @Override public void init() { System.out.println("[LOG] - "+name+" instantiated!"); }
 
@@ -70,113 +75,35 @@ public class AuthServlet extends HttpServlet {
             }
         }
 
-        if (!supported) {
-            resp.setStatus(400);
-            resp.setContentType("application/json");
-            errorMessage.put("code", 400);
-            errorMessage.put("message", "Invalid Request");
-            errorMessage.put("timestamp", LocalDateTime.now().toString());
-
-            resp.getWriter().write(mapper.writeValueAsString(errorMessage));
-            return;
-        }
+        if (!supported) { Send(400, "Invalid Request", resp); return;   }
          */
+
         String loc = "/login-service/userauth";
         String uri = req.getRequestURI().replace(loc,"");
         System.out.println(uri);
 
         destination = uri.replace("/","");
         if (!destination.equals("login") && !destination.equals("register")) {
-            resp.setStatus(400);
-            resp.setContentType("application/json");
-            errorMessage.put("code", 400);
-            errorMessage.put("message", "Invalid Request");
-            errorMessage.put("timestamp", LocalDateTime.now().toString());
-
-            resp.getWriter().write(mapper.writeValueAsString(errorMessage));
-            return;
+            Send(400, "Invalid Request", resp); return;
         }
-
 
         if (destination.equals("login")) {
             try {
                 UserPass userPass = mapper.readValue(req.getInputStream(), UserPass.class);
+                System.out.println(userPass);
                 User user = login(userDAO, upDAO, userPass);
-                resp.setStatus(204);  // logged in, no other content
+                //resp.setStatus(204);  // logged in, no other content
                 HttpSession session = req.getSession(); // use req.getSession(false) to prevent a session from being made
                 session.setAttribute("auth-user", user);
-                resp.setContentType("application/json");
-                message.put("code", 204); // successful request, but no data to return
-                message.put("message", "Logged in");
-                message.put("timestamp", LocalDateTime.now().toString());
-                resp.getWriter().write(mapper.writeValueAsString(message));
-                return;
-            } catch (UserNotFoundException e) {
-                resp.setStatus(404);
-                resp.setContentType("application/json");
-                message.put("code", 404);
-                message.put("message", "User not found");
-                message.put("timestamp", LocalDateTime.now().toString());
-                resp.getWriter().write(mapper.writeValueAsString(message));
-                return;
-            } catch (IllegalCharacterException e) {
-                resp.setStatus(400);
-                resp.setContentType("application/json");
-                message.put("code", 400);
-                message.put("message", "Input contained an illegal character");
-                message.put("timestamp", LocalDateTime.now().toString());
-                resp.getWriter().write(mapper.writeValueAsString(message));
-                return;
-            } catch (UsernameFormatException e) {
-                resp.setStatus(400);
-                resp.setContentType("application/json");
-                message.put("code", 400);
-                message.put("message", "Username must end with @revature.net");
-                message.put("timestamp", LocalDateTime.now().toString());
-                resp.getWriter().write(mapper.writeValueAsString(message));
-                return;
-            } catch (InputWasNullException e) {
-                resp.setStatus(400);
-                resp.setContentType("application/json");
-                message.put("code", 400);
-                message.put("message", "An input field was left blank");
-                message.put("timestamp", LocalDateTime.now().toString());
-                resp.getWriter().write(mapper.writeValueAsString(message));
-                return;
-            } catch (ValueOutOfRangeException e) {
-                resp.setStatus(400);
-                resp.setContentType("application/json");
-                message.put("code", 400);
-                message.put("message", "Username or password length was too large or small");
-                message.put("timestamp", LocalDateTime.now().toString());
-                resp.getWriter().write(mapper.writeValueAsString(message));
-                return;
-            } catch (InvalidCredentialsException e) {
-                resp.setStatus(401);
-                resp.setContentType("application/json");
-                message.put("code", 401);
-                message.put("message", "Username length was incorrect");
-                message.put("timestamp", LocalDateTime.now().toString());
-                resp.getWriter().write(mapper.writeValueAsString(message));
-                return;
-            } catch (SQLException e) {
-                resp.setStatus(500);
-                resp.setContentType("application/json");
-                message.put("code", 500);
-                message.put("message", "There was a problem with the database");
-                message.put("timestamp", LocalDateTime.now().toString());
-                resp.getWriter().write(mapper.writeValueAsString(message));
-                return;
-            } catch (Throwable t) {
-                Complain(t);
-                resp.setContentType("application/json");
-                resp.setStatus(500);
-                message.put("code", 500);
-                message.put("message", "An unknown error occurred");
-                message.put("timestamp", LocalDateTime.now().toString());
-                resp.getWriter().write(mapper.writeValueAsString(message));
-                return;
-            }
+                                                    Send(204, "Logged in",                             resp); return; }
+            catch (UserNotFoundException e) {       Send(404, "User not found",                        resp); return;}
+            catch (IllegalCharacterException e) {   Send(400, "Input contained an illegal character",  resp); return; }
+            catch (UsernameFormatException e) {     Send(400, "Username must end with @revature.net",  resp); return; }
+            catch (InputWasNullException e) {       Send(400, "An input field was left blank",         resp); return; }
+            catch (ValueOutOfRangeException e) {    Send(400, "An input was too long or short",        resp); return; }
+            catch (InvalidCredentialsException e) { Send(401, "Invalid credentials",                   resp); return; }
+            catch (SQLException e) { Complain(e);   Send(500, "There was a problem with the database", resp); return; }
+            catch (Throwable t) {    Complain(t);   Send(500, "An unknown error occurred",             resp); return; }
         }
 
         if (destination.equals("register")) {
@@ -185,97 +112,38 @@ public class AuthServlet extends HttpServlet {
                 UserInfo userInfo = mapper.readValue(req.getInputStream(), UserInfo.class);
                 System.out.println("Flag 2 :)");
                 register(userDAO, upDAO, userInfo);
-                UserPass userPass = new UserPass(userInfo.getUsername(),userInfo.getPassword());
                 System.out.println("Registration succeeded...");
-//                login(userDAO,upDAO,userPass);
-//                System.out.println("And Login also");
-                resp.setStatus(204);  // registered, no other content
-                resp.setContentType("application/json");
-                message.put("code", 204); // successful request, but no data to return
-                message.put("message", "Registered");
-                message.put("timestamp", LocalDateTime.now().toString());
-                resp.getWriter().write(mapper.writeValueAsString(message));
-                return;
-            } catch (InputWasNullException e) {
-                resp.setStatus(400);
-                resp.setContentType("application/json");
-                errorMessage.put("code", 400);
-                errorMessage.put("message", "Form input was blank");
-                errorMessage.put("timestamp", LocalDateTime.now().toString());
-                resp.getWriter().write(mapper.writeValueAsString(errorMessage));
-                return;
-            } catch (ValueOutOfRangeException e) {
-                resp.setStatus(400);
-                resp.setContentType("application/json");
-                errorMessage.put("code", 400);
-                errorMessage.put("message", "Username length was incorrect");
-                errorMessage.put("timestamp", LocalDateTime.now().toString());
-                resp.getWriter().write(mapper.writeValueAsString(errorMessage));
-                return;
-            } catch (UsernameFormatException e) {
-                resp.setStatus(400);
-                resp.setContentType("application/json");
-                errorMessage.put("code", 400);
-                errorMessage.put("message", "Username must end with @revature.net");
-                errorMessage.put("timestamp", LocalDateTime.now().toString());
-                resp.getWriter().write(mapper.writeValueAsString(errorMessage));
-                return;
-            } catch (IllegalCharacterException e) {
-                resp.setStatus(400);
-                resp.setContentType("application/json");
-                errorMessage.put("code", 400);
-                errorMessage.put("message", "Username contained an illegal character");
-                errorMessage.put("timestamp", LocalDateTime.now().toString());
-                resp.getWriter().write(mapper.writeValueAsString(errorMessage));
-                return;
-            } catch (UsernameNotAvailableException e) {
-                resp.setStatus(409);
-                resp.setContentType("application/json");
-                errorMessage.put("code", 409);
-                errorMessage.put("message", "Username already taken!");
-                errorMessage.put("timestamp", LocalDateTime.now().toString());
-                resp.getWriter().write(mapper.writeValueAsString(errorMessage));
-                return;
-            }
+//                UserPass userPass = new UserPass(userInfo.getUsername(),userInfo.getPassword());
+//                login(userDAO,upDAO,userPass);  System.out.println("And Login also");
+                                                      Send(204, "Registered",                              resp); return; }
+            catch (InputWasNullException e) {         Send(400, "Form input was blank",                    resp); return; }
+            catch (ValueOutOfRangeException e) {      Send(400, "Username length was incorrect",           resp); return; }
+            catch (UsernameFormatException e) {       Send(400, "Username must end with @revature.net",    resp); return; }
+            catch (IllegalCharacterException e) {     Send(400, "Username contained an illegal character", resp); return; }
+            catch (UsernameNotAvailableException e) { Send(409, "Username already taken!",                 resp); return; }
 //            catch (UserNotFoundException e) {
 //                Complain(" just registered, but now can't login.");
-//                Complain(e);
-//                resp.setStatus(404);
-//                resp.setContentType("application/json");
-//                errorMessage.put("code", 404);
-//                errorMessage.put("message", "User not found");
-//                errorMessage.put("timestamp", LocalDateTime.now().toString());
-//                resp.getWriter().write(mapper.writeValueAsString(errorMessage));
-//                return;
-//            } catch (InvalidCredentialsException e) {
+//                                   Complain(e);     Send(404, "User not found",                          resp); return; }
+//            catch (InvalidCredentialsException e) {
 //                Complain(" just registered, but now can't login.");
-//                Complain(e);
-//                resp.setStatus(401);
-//                resp.setContentType("application/json");
-//                message.put("code", 401);
-//                message.put("message", "Username length was incorrect");
-//                message.put("timestamp", LocalDateTime.now().toString());
-//                resp.getWriter().write(mapper.writeValueAsString(message));
-//                return;
-//            }
-            catch (SQLException e) {
-                resp.setStatus(500);
-                resp.setContentType("application/json");
-                message.put("code", 500);
-                message.put("message", "There was a problem with the database");
-                message.put("timestamp", LocalDateTime.now().toString());
-                resp.getWriter().write(mapper.writeValueAsString(message));
-                return;
-            } catch (Throwable t) {
-                Complain(t);
-                resp.setContentType("application/json");
-                resp.setStatus(500);
-                message.put("code", 500);
-                message.put("message", "An unknown error occurred");
-                message.put("timestamp", LocalDateTime.now().toString());
-                resp.getWriter().write(mapper.writeValueAsString(message));
-                return;
-            }
+//                                   Complain(e);     Send(401, "Invalid Credentials",                     resp); return; }
+            catch (SQLException e) { Complain(e);     Send(500, "There was a problem with the database",   resp); return; }
+            catch (Throwable t) {    Complain(t);     Send(500, "An unknown error occurred",               resp); return; }
         }
+    }
+    private static void Send(int code, String msg, HttpServletResponse resp) {
+        try {
+            HashMap<String, Object> message = new HashMap<>();
+            resp.setStatus(code);
+            resp.setContentType("application/json");
+            message.put("code", code);
+            message.put("message", msg);
+            message.put("timestamp", LocalDateTime.now().toString());
+            resp.getWriter().write(mapper.writeValueAsString(message));
+        } catch (Throwable t) {
+            Complain(t);
+            System.out.println("Error in "+name+". Can't return anything!");
+        }
+        return;
     }
 }

@@ -48,7 +48,7 @@ function register() {
                 feedbackContainer.innerText = "Registration Successful!";
                 return;
             }
-            if (resp.status == 400) { // ADD CODE HANDLING
+            if (Math.floor(resp.status/100) >= 4) { // ADD CODE HANDLING
                 errorContainer.removeAttribute('hidden');
                 errorContainer.innerText = "Registration failed!";
                 return;
