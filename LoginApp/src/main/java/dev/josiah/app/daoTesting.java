@@ -2,27 +2,19 @@ package dev.josiah.app;
 
 
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.collect.Iterables;
 import dev.josiah.daos.UserDAO;
 import dev.josiah.daos.UserDaoPostgres;
 import dev.josiah.daos.UserPrivDAO;
 import dev.josiah.daos.UserPrivDaoPostgres;
-import dev.josiah.dtos.UserInfo;
 import dev.josiah.entities.User;
 import dev.josiah.entities.UserPriv;
 
-import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.function.Predicate;
 
 import static dev.josiah.services.Encrypt.encrypt;
 
-public class mainTest {
+public class daoTesting {
 
     public static void main(String[] args) throws IOException, SQLException {
         UserDAO userDAO = new UserDaoPostgres();
