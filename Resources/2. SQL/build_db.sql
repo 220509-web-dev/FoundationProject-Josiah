@@ -3,10 +3,9 @@ drop table if exists services;
 drop table if exists users_private;
 drop table if exists users;
 drop schema if exists user_data;
+
 create schema user_data;
 set search_path to user_data;
-
-
 
 create table users (
   user_id int generated always as identity,
@@ -46,3 +45,4 @@ create table services (
   service_id int not null,
   description varchar(255)
 );
+
