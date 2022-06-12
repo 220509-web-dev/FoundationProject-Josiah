@@ -149,7 +149,6 @@ from cards where lower(html_q) like '%java%'
 order by id;
 
 
-/*
 /* Example select statement */
 
 -- Select id, question, and answer from cards table
@@ -164,5 +163,5 @@ where id in
 (select card_id from card_deck where deck_id in
 (select deck_id from decks where owner_id in 
 (select id from users where lower(username) like '%tester%' limit 1))) order by id;
-*/
+
 
