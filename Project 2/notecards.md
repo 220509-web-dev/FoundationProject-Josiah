@@ -7,7 +7,7 @@ This project will implement a notecard service that allows for notecards to be c
 ### Project Design Specifications and Documents
 
 ##### Relational Data Model
-![Relational Model](/imgs/notecardERD)
+![Relational Model](https://raw.githubusercontent.com/220509-web-dev/FoundationProject-Josiah/main/Project%202/imgs/notecardERD.png)
 
 ### Technologies
 
