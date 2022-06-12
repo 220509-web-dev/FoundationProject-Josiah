@@ -103,25 +103,25 @@ insert into cards values
 	<li>alter</li>
 	<li>truncate</li>
 	<li>drop</li>
-	</ol>')
+	</ul>')
 ,	(default, '<h1>What is TCL</h1>', '<h1>Transaction Control Language</h1>
 	<ul>
 	<li>savepoint</li>
 	<li>commit</li>
 	<li>rollback</li>
-	</ol>')
+	</ul>')
 ,	(default, '<h1>What is DML</h1>', '<h1>Data Manipulation Language</h1>
 	<ul>
 	<li>select</li>
 	<li>insert</li>
 	<li>update</li>
 	<li>delete</li>
-	</ol>')
+	</ul>')
 ,	(default, '<h1>What is DCL</h1>', '<h1>Data Control Language</h1>
 	<ul>
 	<li>grant</li>
 	<li>revoke</li>
-	</ol>'
+	</ul>'
 );
 
 insert into cards values 
