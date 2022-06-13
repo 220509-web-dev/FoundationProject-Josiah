@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.josiah.complaintDepartment.Exceptions.*;
 import dev.josiah.daos.UserDAO;
 import dev.josiah.daos.UserPrivDAO;
+import dev.josiah.dtos.Token;
 import dev.josiah.dtos.UserInfo;
 import dev.josiah.dtos.UserPass;
 import dev.josiah.entities.User;
@@ -53,6 +54,7 @@ public class AuthServlet extends HttpServlet {
         String[] supportedDestinations = {"login", "register"};
 
         System.out.println("[LOG] - AuthServlet received a POST request!");
+
         HashMap<String, Object> input = new HashMap<>();
 
         try {
@@ -139,7 +141,7 @@ public class AuthServlet extends HttpServlet {
                 User user = login(userDAO, upDAO, userPass);
                 //resp.setStatus(204);  // logged in, no other content
                 HttpSession session = req.getSession(); // use req.getSession(false) to prevent a session from being made
-                session.setAttribute("auth-user", user);
+                session.setAttribute("auth-user", new Token(userPass.getUsername(), userPass.getPassword()));
                                                     Send(204, "Logged in",                             resp); return; }
             catch (UserNotFoundException e) {       Send(404, "User not found",                        resp); return;}
             catch (IllegalCharacterException e) {   Send(400, "Input contained an illegal character",  resp); return; }

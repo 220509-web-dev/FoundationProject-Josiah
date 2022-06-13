@@ -40,8 +40,7 @@ public class ServicePost {
         if (!encrypt(password).equals(up.getPassword())) {
             throw new InvalidCredentialsException("Incorrect Password");
         }  // 401 : UNAUTHORIZED; INVALID USER+PASS COMBO
-        // 403 USER WAS LOGGED IN AND HAD A TOKEN/SESSION BUT...
-        // IS TRYING TO HIT AN ENDPOINT THEY'RE "FORBIDDEN" FROM GOING TO
+
         return user;
     }
 
