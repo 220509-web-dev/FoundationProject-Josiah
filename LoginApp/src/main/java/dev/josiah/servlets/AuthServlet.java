@@ -186,6 +186,13 @@ public class AuthServlet extends HttpServlet {
             catch (Throwable t) {    Complain(t);     Send(500, "An unknown error occurred",               resp); return; }
         }
     }
+
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        System.out.println("[LOG] "+name+" received a DELETE request.");
+        // TODO : Invalidate current session
+    }
+
     private static void Send(int code, String msg, HttpServletResponse resp) {
         try {
             HashMap<String, Object> message = new HashMap<>();
