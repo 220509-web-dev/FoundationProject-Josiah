@@ -188,9 +188,15 @@ public class AuthServlet extends HttpServlet {
     }
 
     @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) {
+        HttpSession session = req.getSession(false);
         System.out.println("[LOG] "+name+" received a DELETE request.");
-        // TODO : Invalidate current session
+
+        if (session != null) {
+            session.invalidate(); // Invalidate current session
+        }
+
+        resp.setStatus(204);
     }
 
     private static void Send(int code, String msg, HttpServletResponse resp) {
