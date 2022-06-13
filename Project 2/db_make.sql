@@ -5,15 +5,22 @@ drop table if exists cards;
 drop table if exists decks;
 drop table if exists userp;
 drop table if exists users;
+drop table if exists roles;
 drop schema if exists notecard;
 create schema notecard;
 set search_path to notecard;
+
+create table roles (
+	role_id int unique not null
+,	title varchar(32) not null
+);
 
 create table users (
 	id int generated always as identity
 ,	username varchar(32) not null
 ,	fname varchar (16) not null
 ,	lname varchar (16) not null
+,	role int not null default 1
 ,	creationdate varchar(20) default current_time
 ,	creationtime varchar(20) default current_time
 	
@@ -26,8 +33,14 @@ create table users (
 	
 ,	constraint users_username_length_min
 	check(length(username) >= 15)
+
+,	constraint user_roles_fkey
+	foreign key (id)
+	references roles(role_id)
 );
 CREATE UNIQUE INDEX username_unique_idx on users (LOWER(username));  
+
+
 
 create table userp (
 	id int primary key
@@ -86,8 +99,11 @@ create table ratings (
 
 
 /* Insert example data */
+
+insert into roles values (1,'awaiting approval'), (2, 'basic user'), (2,'Admin');
+
 insert into users values 
-	(default, 'Tester@revature.net', 'Tester', 'Testerson', default, default);
+	(default, 'Tester@revature.net', 'Tester', 'Testerson', default, default, default);
 
 insert into userp values 
 	((select id from users where lower(username) like '%tester%' limit 1), 'abcd');
