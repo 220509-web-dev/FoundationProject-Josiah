@@ -1,7 +1,5 @@
 package dev.josiah.app;
 
-
-
 import dev.josiah.daos.UserDAO;
 import dev.josiah.daos.UserDaoPostgres;
 import dev.josiah.daos.UserPrivDAO;
@@ -18,16 +16,19 @@ public class daoTesting {
 
     public static void main(String[] args) throws IOException, SQLException {
         UserDAO userDAO = new UserDaoPostgres();
-        UserPrivDAO upDAO = new UserPrivDaoPostgres();
-        User user = new User(0,"Jsparks109@revature.net","Josiah","","","","","","");
-        String password = "12345678";
-
-        user = userDAO.createUser(user);
-        System.out.println(user);
-        user = userDAO.createUser(user);
-        UserPriv up = new UserPriv(user.getUser_id());
-        up.encryptAndSetPassword(password);
-        upDAO.createUserInfo(up);
+        System.out.println(userDAO.getUserByUsername("Jsparks109@revature.net"));
+        System.out.println(userDAO.getAllUsers().size());
+//        UserDAO userDAO = new UserDaoPostgres();
+//        UserPrivDAO upDAO = new UserPrivDaoPostgres();
+//        User user = new User(0,"Jsparks109@revature.net","Josiah","","","","","","");
+//        String password = "12345678";
+//
+//        user = userDAO.createUser(user);
+//        System.out.println(user);
+//        user = userDAO.createUser(user);
+//        UserPriv up = new UserPriv(user.getUser_id());
+//        up.encryptAndSetPassword(password);
+//        upDAO.createUserInfo(up);
 
     }
 

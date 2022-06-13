@@ -6,6 +6,7 @@ import dev.josiah.daos.UserDAO;
 import dev.josiah.entities.User;
 import lombok.AllArgsConstructor;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -30,6 +31,12 @@ public class UserServlet extends HttpServlet {
     }
 
     @Override public void init() { System.out.println("[LOG] - "+name+" instantiated!"); }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        Send(405,"Method not allowed", resp);
+        return;
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {

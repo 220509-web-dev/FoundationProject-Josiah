@@ -1,6 +1,5 @@
 package dev.josiah.servlets;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.josiah.complaintDepartment.Exceptions.*;
 import dev.josiah.daos.UserDAO;
@@ -9,6 +8,7 @@ import dev.josiah.dtos.UserInfo;
 import dev.josiah.dtos.UserPass;
 import dev.josiah.entities.User;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -42,29 +42,84 @@ public class AuthServlet extends HttpServlet {
     @Override public void init() { System.out.println("[LOG] - "+name+" instantiated!"); }
 
     @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        Send(405,"Method not allowed", resp);
+        return;
+    }
+
+    @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        UserInfo userInfo = new UserInfo();
         String destination = "none";
         String[] supportedDestinations = {"login", "register"};
 
         System.out.println("[LOG] - AuthServlet received a POST request!");
-
+        HashMap<String, Object> input = new HashMap<>();
 
         try {
-            userInfo = mapper.readValue(req.getInputStream(), UserInfo.class);
-            System.out.println(userInfo);
+//            userInfo = mapper.readValue(req.getInputStream(), UserInfo.class);
+            input = mapper.readValue(req.getInputStream(), HashMap.class);
+//            userInfo = mapper.readValue((DataInput) input, UserInfo.class);
+            System.out.println("[LOG] - AuthServlet received input:");
+            System.out.println(new String(new char[20]).replace("\0", "*"));
+            for (String name: input.keySet()) {
+                String key = name.toString();
+                String value = input.get(name).toString();
+                System.out.println(key + " " + value);
+            }
+            System.out.println(new String(new char[20]).replace("\0", "*"));
+            //System.out.println(userInfo);
         } catch (Throwable t) {
-            System.out.println("Couldn't map to UserInfo");
-            Complain("Couldn't map to UserInfo");
+            System.out.println("Couldn't map Input");
+            Complain("Couldn't map Input");
             Complain(t);
-            Send(500, "Internal Error", resp);  // mapper will map no matter what is sent, so this shouldn't happen
+            Send(400, "Bad Input", resp);  // mapper will map legitimate requests, so this shouldn't happen
             return;
         }
 
-        System.out.println("First Name Property is"+((userInfo.getFname()==null)?"":" not")+" null");
-        System.out.println("First Name property: " + userInfo.getFname());
-        //System.out.println(userInfo);
-        destination = ((userInfo.getFname()==null)?"login":"register");
+        // This code is lengthy and doesn't employ abstraction
+        // it's just to make use of the ObjectMapper
+        String[] regRequired = {"u","p","f","l","a1","a2","c","s","z"};
+        String[] logRequired = {"u","p"};
+        Boolean isRegister = true;
+        Boolean isLogin = true;
+
+        for (String name: input.keySet()) {
+            Boolean found = false;
+            for (String s : regRequired) {
+                if (s.equals(name)) {
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                isRegister = false;
+                break;
+            }
+        }
+        for (String name: input.keySet()) {
+            Boolean found = false;
+            for (String s : logRequired) {
+                if (s.equals(name)) {
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                isLogin = false;
+                break;
+            }
+        }
+
+        if (isRegister && input.keySet().size()!=regRequired.length) isRegister=false;
+        if (isLogin && input.keySet().size()!=logRequired.length) isLogin=false;
+
+        if(isLogin) destination = "login";
+        if(isRegister) destination = "register";
+        if(isLogin && isRegister) {
+            Send(500, "We messed up", resp);
+            return;
+        }
+        System.out.println(isLogin + " and " + isRegister);
 
         Boolean supported = false;
         for (String loc: supportedDestinations) {
@@ -78,7 +133,8 @@ public class AuthServlet extends HttpServlet {
 
         if (destination.equals("login")) {
             try {
-                UserPass userPass = new UserPass(userInfo.getUsername(),userInfo.getPassword());
+                UserPass userPass = new UserPass(input.get("u").toString(), input.get("p").toString());
+                // check for active sessions
                 System.out.println(userPass);
                 User user = login(userDAO, upDAO, userPass);
                 //resp.setStatus(204);  // logged in, no other content
@@ -97,6 +153,17 @@ public class AuthServlet extends HttpServlet {
 
         if (destination.equals("register")) {
             try {
+                UserInfo userInfo = new UserInfo(
+                        input.get("u").toString(),
+                        input.get("p").toString(),
+                        input.get("f").toString(),
+                        input.get("l").toString(),
+                        input.get("a1").toString(),
+                        input.get("a2").toString(),
+                        input.get("c").toString(),
+                        input.get("s").toString(),
+                        input.get("z").toString()
+                        );
                 register(userDAO, upDAO, userInfo);
                 System.out.println("Registration succeeded...");
                 UserPass userPass = new UserPass(userInfo.getUsername(),userInfo.getPassword());
