@@ -2,20 +2,17 @@ package dev.josiah.entities;
 
 import lombok.*;
 
-import java.util.Objects;
-
 @Getter
 @Setter
 @ToString
 @AllArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode
-public class User {
-    private int id;
-    private String username;
-    private String fname;
-    private String lname;
+public class Rating {
+    private int card_id;
+    private int user_id;
+    private Boolean seeagain;
+    private double rating;
     private String creationdate;
     private String creationtime;
-
-    public User() { super(); }
 }
