@@ -2,6 +2,9 @@ package dev.josiah.entities;
 
 import lombok.*;
 
+import java.util.List;
+
+
 @Getter
 @Setter
 @ToString
@@ -9,6 +12,6 @@ import lombok.*;
 @NoArgsConstructor
 @EqualsAndHashCode
 public class CardDeck {
-    private int card_id;
+    private List<Integer> card_ids;
     private int deck_id;
 }

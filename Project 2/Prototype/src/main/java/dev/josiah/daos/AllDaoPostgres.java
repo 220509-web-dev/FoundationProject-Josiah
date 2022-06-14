@@ -701,57 +701,232 @@ public class AllDaoPostgres implements AllDAO {
     }
 
     @Override
-    public void deleteRatingById(int id) throws SQLException {
-
+    public void deleteRatingByIds(int card_id, int user_id) throws SQLException {
+        try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
+            String sql = "delete from "+t[0]+" where "+t0c[0]+"=? and "+t0c[1]+"=?;";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, card_id);
+            ps.setInt(2, user_id);
+            ps.execute();
+        } catch (SQLException e) {
+            Complain(e);
+            throw new SQLException(e);
+        } catch (Throwable t) {
+            Complain(t);
+            throw new RuntimeException(t);
+        }
     }
 
     @Override
     public Deck createDeck(Deck deck) throws SQLException {
+        try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
+            String sql = "insert into "+t[3]+" values (default";
+            for (int i = 1; i<t3c.length;i++) { sql += ",?"; }
+            sql += ");";
+            PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
+            ps.setInt(1, deck.getOwner_id());
+            ps.setString(2, deck.getDeckname());
+
+            ps.execute();
+
+            ResultSet rs = ps.getGeneratedKeys();
+            rs.next();
+            int generatedID = rs.getInt(t3c[0]);
+
+            deck.setDeck_id(generatedID);
+            return deck;
+        } catch (SQLException e) {
+            Complain(e);
+            throw new SQLException(e);
+        } catch (Throwable t) {
+            Complain(t);
+            throw new RuntimeException(t);
+        }
+        //return null;
+    }
+
+    @Override
+    public Deck getDeckByDeckId(int id) throws SQLException {
+        try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
+            String sql = "select * from "+t[3]+" where "+t3c[0]+" = ?;";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1,id); // indexed from 1 rather than 0
+            ResultSet rs = ps.executeQuery();
+
+            // Get first record
+            if (rs.next()) {
+                Deck deck = new Deck();
+                deck.setDeck_id(id);
+                deck.setOwner_id( rs.getInt(t3c[1]));
+                deck.setDeckname( rs.getString(t3c[2]));
+                return deck;
+            }
+
+        } catch (SQLException e) {
+            Complain(e);
+            throw new SQLException(e);
+        } catch (Throwable t) {
+            Complain(t);
+            throw new RuntimeException(t);
+        }
         return null;
     }
 
     @Override
-    public Deck getDeckById(int id) throws SQLException {
-        return null;
+    public List<Deck> getDeckByUserId(int id) throws SQLException {
+        try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
+            String sql = "select * from "+t[3]+" where "+t3c[1]+"=?;";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1,id); // indexed from 1 rather than 0
+            ResultSet rs = ps.executeQuery();
+
+            List<Deck> decks = new ArrayList<Deck>();
+            while (rs.next()) {
+                Deck deck = new Deck();
+                deck.setDeck_id(    rs.getInt(    t3c[0]));
+                deck.setOwner_id(   rs.getInt(    t3c[1]));
+                deck.setDeckname(   rs.getString( t3c[2]));
+                decks.add(deck);
+            }
+            return decks;
+        } catch (SQLException e) {
+            Complain(e);
+            throw new SQLException(e);
+        } catch (Throwable t) {
+            Complain(t);
+            throw new RuntimeException(t);
+        }
     }
 
     @Override
     public List<Deck> getAllDeck() throws SQLException {
-        return null;
+        try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
+            String sql = "select * from "+t[3]+";";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            List<Deck> decks = new ArrayList<Deck>();
+            while (rs.next()) {
+                Deck deck = new Deck();
+                deck.setDeck_id(    rs.getInt(    t3c[0]));
+                deck.setOwner_id(   rs.getInt(    t3c[1]));
+                deck.setDeckname(   rs.getString( t3c[2]));
+                decks.add(deck);
+            }
+            return decks;
+        } catch (SQLException e) {
+            Complain(e);
+            throw new SQLException(e);
+        } catch (Throwable t) {
+            Complain(t);
+            throw new RuntimeException(t);
+        }
     }
 
     @Override
     public void updateDeck(Deck deck) throws SQLException {
-        return;
+        try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
+            String sql = "update "+t[3]+" set ";
+            for (int i=1; i<t3c.length-1;i++) {sql += t3c[i]+" = ?,";}
+            sql += t3c[t3c.length-1]+" = ? where "+t3c[0]+"=?;";
+            PreparedStatement ps = conn.prepareStatement(sql);
+
+            ps.setInt(1, deck.getOwner_id());
+            ps.setString(2, deck.getDeckname());
+            ps.setInt(3, deck.getDeck_id());
+            ps.execute();
+
+        } catch (SQLException e) {
+            Complain(e);
+            throw new SQLException(e);
+        } catch (Throwable t) {
+            Complain(t);
+            throw new RuntimeException(t);
+        }
+        //return null;
     }
 
     @Override
     public void deleteDeckById(int id) throws SQLException {
-
+        try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
+            String sql = "delete from "+t[3]+" where "+t3c[0]+" = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+            ps.execute();
+        } catch (SQLException e) {
+            Complain(e);
+            throw new SQLException(e);
+        } catch (Throwable t) {
+            Complain(t);
+            throw new RuntimeException(t);
+        }
     }
 
     @Override
-    public void createCardDeck(CardDeck cardDeck) throws SQLException {
+    public void addCardToCardDeck(Card card, Deck deck) throws SQLException {
+        try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
+            String sql = "insert into "+t[1]+" values (?, ?);";
+            PreparedStatement ps = conn.prepareStatement(sql);
 
+            ps.setInt(1, card.getId());
+            ps.setInt(2, deck.getDeck_id());
+
+            ps.execute();
+        } catch (SQLException e) {
+            Complain(e);
+            throw new SQLException(e);
+        } catch (Throwable t) {
+            Complain(t);
+            throw new RuntimeException(t);
+        }
     }
 
     @Override
-    public CardDeck getCardDeckById(int id) throws SQLException {
-        return null;
-    }
-
-    @Override
-    public List<CardDeck> getAllCardDeck() throws SQLException {
-        return null;
-    }
-
-    @Override
-    public void updateCardDeck(CardDeck cardDeck) throws SQLException {
-        return;
-    }
-
-    @Override
-    public void deleteCardDeckById(int id) throws SQLException {
-
+    public List<Card> getCardsByDeckId(int id) throws SQLException {
+        try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
+            String sql = "select * from "+t[2]+" where "+t2c[0]+" in "+
+                    "(select "+t1c[0]+" from "+t[1]+" where "+t1c[1]+" = ?);";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            List<Card> cards = new ArrayList<Card>();
+            while (rs.next()) {
+                Card card = new Card();
+                card.setId(rs.getInt(t2c[0]));
+                card.setHtml_q(rs.getString(t2c[1]));
+                card.setHtml_a(rs.getString(t2c[2]));
+                cards.add(card);
+            }
+            return cards;
+        } catch (SQLException e) {
+            Complain(e);
+            throw new SQLException(e);
+        } catch (Throwable t) {
+            Complain(t);
+            throw new RuntimeException(t);
+        }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

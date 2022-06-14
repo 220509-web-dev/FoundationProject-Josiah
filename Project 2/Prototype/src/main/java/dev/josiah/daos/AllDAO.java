@@ -36,18 +36,23 @@ public interface AllDAO {
     List<Rating> getRatingsByUserId(int id) throws SQLException;
     List<Rating> getAllRating() throws SQLException;
     void updateRating(Rating rating) throws SQLException;
-    void deleteRatingById(int id) throws SQLException;
+    void deleteRatingByIds(int card_id, int user_id) throws SQLException;
 
     Deck createDeck(Deck deck) throws SQLException; // auto-incrementing PKey
-    Deck getDeckById(int id) throws SQLException;
+    Deck getDeckByDeckId(int id) throws SQLException;
+    List<Deck> getDeckByUserId(int id) throws SQLException;
     List<Deck> getAllDeck() throws SQLException;
     void updateDeck(Deck deck) throws SQLException;
     void deleteDeckById(int id) throws SQLException;
 
-    void createCardDeck(CardDeck cardDeck) throws SQLException;
-    CardDeck getCardDeckById(int id) throws SQLException;
-    List<CardDeck> getAllCardDeck() throws SQLException;
-    void updateCardDeck(CardDeck cardDeck) throws SQLException;
-    void deleteCardDeckById(int id) throws SQLException;
+    void addCardToCardDeck(Card card, Deck deck) throws SQLException;
+    //void removeCardFromCardDeck(Card card, Deck deck) throws SQLException;
+    List<Card> getCardsByDeckId(int id) throws SQLException;
+
+
+//    CardDeck getCardDeckByDeckId(int id) throws SQLException;
+//    List<CardDeck> getAllCardDeck() throws SQLException;
+//    void updateCardDeck(CardDeck cardDeck) throws SQLException;
+//    void deleteCardDeckById(int id) throws SQLException;
 }
 
