@@ -2,8 +2,7 @@ package dev.josiah.servlets;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.josiah.complaintDepartment.Exceptions.*;
-import dev.josiah.daos.UserDAO;
-import dev.josiah.daos.UserPrivDAO;
+import dev.josiah.daos.AllDAO;
 import dev.josiah.dtos.Token;
 import dev.josiah.dtos.UserInfo;
 import dev.josiah.dtos.UserPass;
@@ -29,15 +28,13 @@ import static dev.josiah.services.ServicePost.register;
 public class AuthServlet extends HttpServlet {
     private final static String name = "AuthServlet";
     private static ObjectMapper mapper;
-    private final UserDAO userDAO;
-    private final UserPrivDAO upDAO;
+    private final AllDAO allDAO;
     private static final ArrayList<String> supportedDestinations =
             new ArrayList<String>(Arrays.asList("login", "register"));
 
-    public AuthServlet(ObjectMapper mapper, UserDAO userDAO, UserPrivDAO upDAO) {
+    public AuthServlet(ObjectMapper mapper, AllDAO allDAO) {
         this.mapper = mapper;
-        this.userDAO = userDAO;
-        this.upDAO = upDAO;
+        this.allDAO = allDAO;
     }
 
     @Override public void init() { System.out.println("[LOG] - "+name+" instantiated!"); }
@@ -138,7 +135,7 @@ public class AuthServlet extends HttpServlet {
                 UserPass userPass = new UserPass(input.get("u").toString(), input.get("p").toString());
                 // check for active sessions
                 System.out.println(userPass);
-                User user = login(userDAO, upDAO, userPass);
+                User user = login(allDAO, userPass);
                 //resp.setStatus(204);  // logged in, no other content
                 HttpSession session = req.getSession(); // use req.getSession(false) to prevent a session from being made
                 session.setAttribute("auth-user", new Token(userPass.getUsername(), userPass.getPassword()));
@@ -166,10 +163,10 @@ public class AuthServlet extends HttpServlet {
                         input.get("s").toString(),
                         input.get("z").toString()
                         );
-                register(userDAO, upDAO, userInfo);
+                register(allDAO, userInfo);
                 System.out.println("Registration succeeded...");
                 UserPass userPass = new UserPass(userInfo.getUsername(),userInfo.getPassword());
-                login(userDAO,upDAO,userPass);  System.out.println("And Login also");
+                login(allDAO, userPass);  System.out.println("And Login also");
                                                       Send(204, "Registered",                              resp); return; }
             catch (InputWasNullException e) {         Send(400, "Form input was blank",                    resp); return; }
             catch (ValueOutOfRangeException e) {      Send(400, "Username length was incorrect",           resp); return; }

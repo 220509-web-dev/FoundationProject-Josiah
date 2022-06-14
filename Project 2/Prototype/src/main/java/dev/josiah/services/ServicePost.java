@@ -1,11 +1,8 @@
 package dev.josiah.services;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.josiah.complaintDepartment.Exceptions.*;
-import dev.josiah.daos.UserDAO;
-import dev.josiah.daos.UserPrivDAO;
+import dev.josiah.daos.AllDAO;
 import dev.josiah.dtos.UserInfo;
 import dev.josiah.dtos.UserPass;
 import dev.josiah.entities.User;
@@ -18,7 +15,7 @@ import static dev.josiah.services.validation.ValidatePassword.validatePassword;
 import static dev.josiah.services.validation.ValidateUsername.validateUsername;
 
 public class ServicePost {
-    public static User login(UserDAO userDAO, UserPrivDAO upDAO, UserPass userPass) throws IllegalCharacterException, UsernameFormatException, InputWasNullException, ValueOutOfRangeException, SQLException, UserNotFoundException, InvalidCredentialsException {
+    public static User login(AllDAO allDAO, UserPass userPass) throws IllegalCharacterException, UsernameFormatException, InputWasNullException, ValueOutOfRangeException, SQLException, UserNotFoundException, InvalidCredentialsException {
         String username = userPass.getUsername();
         String password = userPass.getPassword();
         validateUsername(username);
@@ -26,13 +23,13 @@ public class ServicePost {
         User user;
         UserPriv up;
         System.out.println("finding user:"+username);
-        user = userDAO.getUserByUsername(username);
+        user = allDAO.getUserByUsername(username);
         if (user == null) {
             System.out.println("Looks like that was null!");
             throw new UserNotFoundException();
         }
-        System.out.println("Finding info for:"+user.getUser_id());
-        up = upDAO.getUserInfoById(user.getUser_id());
+        System.out.println("Finding info for:"+user.getId());
+        up = allDAO.getUserInfoById(user.getId());
         if (up == null) {
             System.out.println("Looks like that was null");
             throw new UserNotFoundException();
@@ -44,13 +41,13 @@ public class ServicePost {
         return user;
     }
 
-    public static void register(UserDAO userDAO, UserPrivDAO upDAO, UserInfo userInfo) throws SQLException, IllegalCharacterException, UsernameFormatException, InputWasNullException, ValueOutOfRangeException, UsernameNotAvailableException, JsonProcessingException {
+    public static void register(AllDAO allDAO, UserInfo userInfo) throws SQLException, IllegalCharacterException, UsernameFormatException, InputWasNullException, ValueOutOfRangeException, UsernameNotAvailableException, JsonProcessingException {
         String username = userInfo.getUsername();
         String password = userInfo.getPassword();
         validateUsername(username);
         validatePassword(password);
 
-        User user = userDAO.getUserByUsername(username);
+        User user = allDAO.getUserByUsername(username);
         System.out.println("User is "+((user==null)?"":"not ")+"null");
         if (user != null) {
             System.out.println("Throwing UsernameNotAvailableException");
@@ -62,17 +59,13 @@ public class ServicePost {
         System.out.println("Line 63 in ServicePost");
         User user1 = new User(0,userInfo.getUsername(),
                 userInfo.getFname(),
-                userInfo.getLname(),
-                userInfo.getAddress1(),
-                userInfo.getAddress2(),
-                userInfo.getCity(),
-                userInfo.getState(),
-                userInfo.getPostalcode());
-        user1 = userDAO.createUser(user1);
-        UserPriv up = new UserPriv(user1.getUser_id());
+                userInfo.getLname()
+        );
+        user1 = allDAO.createUser(user1);
+        UserPriv up = new UserPriv(user1.getId());
         up.encryptAndSetPassword(password);
         System.out.println("Making upDAO req:"+up);
-        upDAO.createUserInfo(up);
+        allDAO.createUserInfo(up);
         System.out.println("done");
 
     }

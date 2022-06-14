@@ -1,9 +1,7 @@
 package dev.josiah.app;
 
-import dev.josiah.daos.UserDAO;
-import dev.josiah.daos.UserDaoPostgres;
-import dev.josiah.daos.UserPrivDAO;
-import dev.josiah.daos.UserPrivDaoPostgres;
+import dev.josiah.daos.AllDAO;
+import dev.josiah.daos.AllDaoPostgres;
 import dev.josiah.entities.User;
 import dev.josiah.entities.UserPriv;
 import lombok.SneakyThrows;
@@ -90,7 +88,7 @@ public class App {
     }
     @SneakyThrows
     public static Boolean validate(String username) {
-        UserDAO userDAO = new UserDaoPostgres();
+        AllDAO userDAO = new AllDaoPostgres();
         User u = userDAO.getUserByUsername(username);
         if (u == null) return true;  // username available!
         return false; // username not available.
@@ -100,7 +98,7 @@ public class App {
         String[] fields;
         String[] errors = new String[5];
         int error_ind = 0;
-        UserDAO userDAO = new UserDaoPostgres();
+        AllDAO userDAO = new AllDaoPostgres();
         User u = userDAO.getUserByUsername(username);
 
         if (u == null) {
@@ -108,8 +106,8 @@ public class App {
             error_ind++;
             return to_nlsv(errors, error_ind-1);
         }
-        UserPrivDAO userpDAO = new UserPrivDaoPostgres();
-        UserPriv up = userpDAO.getUserInfoById(u.getUser_id());
+        AllDAO userpDAO = new AllDaoPostgres();
+        UserPriv up = userpDAO.getUserInfoById(u.getId());
         UserPriv test = new UserPriv();
         test.encryptAndSetPassword(password);
         if (up.getPassword().equals(test.getPassword())) return "";
@@ -134,14 +132,13 @@ public class App {
     }
     @SneakyThrows
     public static void Store(String first, String last, String username, String password) {
-        User u = new User(1, username, first, last, "null","null","null","null","null");
-        UserDAO userDAO = new UserDaoPostgres();
+        User u = new User(1, username, first, last, "null","null");
+        AllDAO userDAO = new AllDaoPostgres();
         u = userDAO.createUser(u);
 
-        UserPriv up = new UserPriv(u.getUser_id());
-        up.setSocial_sn("null");
+        UserPriv up = new UserPriv(u.getId());
         up.encryptAndSetPassword(password);
-        UserPrivDAO userpDAO = new UserPrivDaoPostgres();
+        AllDAO userpDAO = new AllDaoPostgres();
         userpDAO.createUserInfo(up);
     }
 
@@ -257,7 +254,7 @@ public class App {
 
         /*
         // test createUser
-        UserDAO userDAO = new UserDaoPostgres();
+        AllDAO userDAO = new AllDaoPostgres();
         User u = new User(1, "tester123@revature.net","Tester","McTesterson",
                 "100 A Street", "Apt 1","Cityville","TX","99999");
         System.out.println(u.toString());
@@ -268,21 +265,21 @@ public class App {
 
         /*
         // test getUserById
-        UserDAO userDAO = new UserDaoPostgres();
+        AllDAO userDAO = new AllDaoPostgres();
         User u = userDAO.getUserById(22222);
         System.out.println(u.toString());
         */
 
         /*
         // test getAllUsers
-        UserDAO userDAO = new UserDaoPostgres();
+        AllDAO userDAO = new AllDaoPostgres();
         List<User> us = userDAO.getAllUsers();
         System.out.println(us);
         */
 
         /*
         // test updateUser
-        UserDAO userDAO = new UserDaoPostgres();
+        AllDAO userDAO = new AllDaoPostgres();
         User u = new User(54840, "tester123@revature.net","Tester","McTesterson",
                 "100 A Street", "Apt 1","Cityville","TX","99999");
         u.setState("TN");
@@ -293,7 +290,7 @@ public class App {
 
         /*
         // test deleteUserById
-        UserDAO userDAO = new UserDaoPostgres();
+        AllDAO userDAO = new AllDaoPostgres();
         userDAO.deleteUserById(54842);
         */
 
@@ -306,29 +303,27 @@ public class App {
 
         /**/
         String uname = "tester1234@revature.net";
-        User u = new User(1, uname,"Tester","McTesterson",
-                "100 A Street", "Apt 1","Cityville","TX","99999");
+        User u = new User(1,"Tester@revature.net","Tester","Testerson","","");
         System.out.println(u.toString());
 
-        UserDAO userDAO = new UserDaoPostgres();
+        AllDAO userDAO = new AllDaoPostgres();
         u = userDAO.createUser(u);
         System.out.println(u.toString());
 
-        UserPriv userp = new UserPriv(u.getUser_id());
-        userp.setSocial_sn("12345678");
+        UserPriv userp = new UserPriv(u.getId());
         userp.encryptAndSetPassword("password1");
 
-        UserPrivDaoPostgres userpDAO = new UserPrivDaoPostgres();
+        AllDaoPostgres userpDAO = new AllDaoPostgres();
         userpDAO.createUserInfo(userp);
 
         User test1 = userDAO.getUserByUsername(uname);
-        UserPriv test2 = userpDAO.getUserInfoById(test1.getUser_id());
+        UserPriv test2 = userpDAO.getUserInfoById(test1.getId());
         System.out.println("***************************************");
         System.out.println(test1.toString());
         System.out.println(test2.toString());
 
-        userpDAO.deleteUserInfoById(test1.getUser_id());
-        userDAO.deleteUserById(test1.getUser_id());
+        userpDAO.deleteUserInfoById(test1.getId());
+        userDAO.deleteUserById(test1.getId());
         test1 = userDAO.getUserByUsername(uname);
         if(test1 == null) System.out.println("test1 is null");
         else System.out.println(test1.toString());

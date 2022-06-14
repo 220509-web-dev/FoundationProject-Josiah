@@ -2,9 +2,8 @@ package dev.josiah.servlets;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.josiah.complaintDepartment.Exceptions.*;
-import dev.josiah.daos.UserDAO;
+import dev.josiah.daos.AllDAO;
 import dev.josiah.entities.User;
-import lombok.AllArgsConstructor;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -23,11 +22,11 @@ import static dev.josiah.services.ServiceGet.*;
 public class UserServlet extends HttpServlet {
     private final static String name = "UserServlet";
     private static ObjectMapper mapper;
-    private final UserDAO userDAO;
+    private final AllDAO allDAO;
 
-    public UserServlet(ObjectMapper mapper, UserDAO userDAO) {
+    public UserServlet(ObjectMapper mapper, AllDAO allDAO) {
         this.mapper = mapper;
-        this.userDAO = userDAO;
+        this.allDAO = allDAO;
     }
 
     @Override public void init() { System.out.println("[LOG] - "+name+" instantiated!"); }
@@ -52,7 +51,7 @@ public class UserServlet extends HttpServlet {
         // TODO : Should instead be returning a webpage with the message or result nested
         if (potentialId != null) {
             System.out.println(potentialId+" being sent from UserServlet to the service layer");
-            try { User user = ServiceIdRequest(potentialId, userDAO);
+            try { User user = ServiceIdRequest(potentialId, allDAO);
                                                    Send(200, mapper.writeValueAsString(user),         resp); return; }
             catch (UserNotFoundException e) {      Send(404, "User not found",                        resp); return; }
                 // ANY RESOURCE NOT FOUND IS 404
@@ -67,7 +66,7 @@ public class UserServlet extends HttpServlet {
 
         if(potentialUsername != null) {
             System.out.println(potentialUsername + " being sent from UserServlet to the service layer");
-            try { User user = ServiceUsernameRequest(potentialUsername, userDAO);
+            try { User user = ServiceUsernameRequest(potentialUsername, allDAO);
                                                   Send(200, mapper.writeValueAsString(user),           resp); return; }
             catch (UserNotFoundException e) {     Send(404, "User not found",                          resp); return; }
             catch (InputWasNullException e) {     Send(400, "Form input was blank",                    resp); return; }
@@ -80,7 +79,7 @@ public class UserServlet extends HttpServlet {
 
 
         System.out.println("UserServlet is forwarding to services request for all user data");
-        try { List<User> users = ServiceAllUsersRequest(userDAO);
+        try { List<User> users = ServiceAllUsersRequest(allDAO);
                                               Send(200, mapper.writeValueAsString(users),        resp); return; }
         catch (UserNotFoundException e) {     Send(204, "No users exist in database",            resp); return; }
         // 204 because it's a successful request, but no data to return

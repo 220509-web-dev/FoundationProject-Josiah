@@ -18,4 +18,13 @@ public class User {
     private String creationtime;
 
     public User() { super(); }
+
+    public User(int id, String username, String fname, String lname) {
+        this.id = id;
+        this.username = username;
+        this.fname = fname;
+        this.lname = lname;
+        this.creationdate = null;
+        this.creationtime = null;
+    }
 }
