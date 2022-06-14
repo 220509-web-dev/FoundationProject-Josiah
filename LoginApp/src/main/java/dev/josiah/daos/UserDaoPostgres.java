@@ -40,7 +40,6 @@ public class UserDaoPostgres implements UserDAO{
             ps.setString(6, user.getCity());
             ps.setString(7, user.getState());
             ps.setString(8, user.getPostalcode());
-
             ps.execute();
 
             ResultSet rs = ps.getGeneratedKeys();

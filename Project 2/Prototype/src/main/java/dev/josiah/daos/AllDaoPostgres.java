@@ -5,7 +5,78 @@ import dev.josiah.entities.*;
 import java.sql.SQLException;
 import java.util.List;
 
+//drop table if exists ratings;
+//        drop table if exists card_deck;
+//        drop table if exists cards;
+//        drop table if exists decks;
+//        drop table if exists userp;
+//        drop table if exists users;
+//        drop table if exists roles;
+
 public class AllDaoPostgres implements AllDAO {
+    final private String sn = "notecard.";  // Schema name
+    final private String t1 = "ratings";
+    final private String t2 = "card_deck";
+    final private String t3 = "cards";
+    final private String t4 = "decks";
+    final private String t5 = "userp";
+    final private String t6 = "users";
+    final private String t7 = "roles";
+    final private String[] t = {
+            sn+t1,
+            sn+t2,
+            sn+t3,
+            sn+t4,
+            sn+t5,
+            sn+t6,
+            sn+t7
+    };
+
+
+    // ratings table
+    final private String t1c0 = "card_id";
+    final private String t1c1 = "user_id";
+    final private String t1c2 = "seeagain";
+    final private String t1c3 = "rating";
+    final private String t1c4 = "creationdate";
+    final private String t1c5 = "creationtime";
+    final private String[] t1c = {t1c0,t1c1,t1c2,t1c3,t1c4,t1c5};
+
+    // card_deck table
+    final private String t2c0 = "card_id";
+    final private String t2c1 = "deck_id";
+    final private String[] t2c = {t2c0,t2c1};
+
+    // cards table
+    final private String t3c0 = "id";
+    final private String t3c1 = "html_q";
+    final private String t3c2 = "html_a";
+    final private String[] t3c = {t3c0,t3c1,t3c2};
+
+    // decks table
+    final private String t4c0 = "deck_id";
+    final private String t4c1 = "owner_id";
+    final private String t4c2 = "deckname";
+    final private String[] t4c = {t4c0,t4c1,t4c2};
+
+    // userp table
+    final private String t5c0 = "id";
+    final private String t5c1 = "password";
+    final private String[] t5c = {t5c0,t5c1};
+
+    // users table
+    final private String t6c0 = "id";
+    final private String t6c1 = "username";
+    final private String t6c2 = "fname";
+    final private String t6c3 = "lname";
+    final private String t6c4 = "creationdate";
+    final private String t6c5 = "creationtime";
+    final private String[] t6c = {t6c0,t6c1,t6c2,t6c3,t6c4,t6c5};
+
+    // roles table
+    final private String t7c0 = "role_id";
+    final private String t7c1 = "title";
+    final private String[] t7c = {t7c0,t7c1};
 
     @Override
     public User createUser(User user) throws SQLException {
