@@ -9,14 +9,6 @@ import java.util.List;
 
 import static dev.josiah.complaintDepartment.ProblemScribe.Complain;
 
-//drop table if exists ratings;
-//        drop table if exists card_deck;
-//        drop table if exists cards;
-//        drop table if exists decks;
-//        drop table if exists userp;
-//        drop table if exists users;
-//        drop table if exists roles;
-
 public class AllDaoPostgres implements AllDAO {
     final private String sn = "notecard.";  // Schema name
 
@@ -349,71 +341,363 @@ public class AllDaoPostgres implements AllDAO {
 
     @Override
     public void createUserRole(Role role) throws SQLException {
+        try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
+            String sql = "insert into "+t[6]+" values (";
+            for (int i = 1; i<t6c.length-1;i++) { sql += "?,"; }
+            sql += "?);";
+            PreparedStatement ps = conn.prepareStatement(sql);
 
+            ps.setInt(1, role.getRole_id());
+            ps.setString(2, role.getTitle());
+            ps.execute();
+
+        } catch (SQLException e) {
+            Complain(e);
+            throw new SQLException(e);
+        } catch (Throwable t) {
+            Complain(t);
+            throw new RuntimeException(t);
+        }
     }
 
     @Override
     public Role getUserRoleById(int id) throws SQLException {
+        try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
+            String sql = "select * from "+t[6]+" where "+t6c[0]+" = ?;";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1,id); // indexed from 1 rather than 0
+            ResultSet rs = ps.executeQuery();
+
+            // Get first record
+            if (rs.next()) {
+                Role role = new Role();
+                role.setRole_id(id);
+                role.setTitle(   rs.getString(t6c[1]));
+                return role;
+            }
+
+        } catch (SQLException e) {
+            Complain(e);
+            throw new SQLException(e);
+        } catch (Throwable t) {
+            Complain(t);
+            throw new RuntimeException(t);
+        }
         return null;
     }
 
     @Override
     public List<Role> getAllUserRole() throws SQLException {
-        return null;
+        try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
+            String sql = "select * from "+t[6]+";";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            List<Role> roles = new ArrayList<Role>();
+            while (rs.next()) {
+                Role role = new Role();
+                role.setRole_id(    rs.getInt(   t6c[0]));
+                role.setTitle(      rs.getString(t6c[1]));
+                roles.add(role);
+            }
+            return roles;
+        } catch (SQLException e) {
+            Complain(e);
+            throw new SQLException(e);
+        } catch (Throwable t) {
+            Complain(t);
+            throw new RuntimeException(t);
+        }
+        //return null;
     }
 
     @Override
-    public void updateUserRole(Role userp) throws SQLException {
+    public void updateUserRole(Role role) throws SQLException {
+        try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
+            String sql = "update "+t[6]+" set ";
+            for (int i=1; i<t6c.length-1;i++) {sql += t6c[i]+" = ?,";}
+            sql += t6c[t6c.length-1]+" = ? where "+t6c[0]+"=?;";
+            PreparedStatement ps = conn.prepareStatement(sql);
+
+            ps.setInt(1, role.getRole_id());
+            ps.setString(2, role.getTitle());
+            ps.execute();
+
+        } catch (SQLException e) {
+            Complain(e);
+            throw new SQLException(e);
+        } catch (Throwable t) {
+            Complain(t);
+            throw new RuntimeException(t);
+        }
+        //return null;
     }
 
     @Override
     public void deleteUserRoleById(int id) throws SQLException {
-
+        try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
+            String sql = "delete from "+t[6]+" where "+t6c[0]+" = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+            ps.execute();
+        } catch (SQLException e) {
+            Complain(e);
+            throw new SQLException(e);
+        } catch (Throwable t) {
+            Complain(t);
+            throw new RuntimeException(t);
+        }
     }
 
     @Override
-    public void createCard(Card card) throws SQLException {
+    public Card createCard(Card card) throws SQLException {
+        try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
+            String sql = "insert into "+t[2]+" values (default";
+            for (int i = 1; i<t2c.length;i++) { sql += ",?"; }
+            sql += ");";
+            PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
+            ps.setString(1, card.getHtml_q());
+            ps.setString(2, card.getHtml_a());
+            ps.execute();
+
+            ResultSet rs = ps.getGeneratedKeys();
+            rs.next();
+            int generatedID = rs.getInt(t2c[0]);
+
+            card.setId(generatedID);
+            return card;
+
+        } catch (SQLException e) {
+            Complain(e);
+            throw new SQLException(e);
+        } catch (Throwable t) {
+            Complain(t);
+            throw new RuntimeException(t);
+        }
     }
 
     @Override
     public Card getCardById(int id) throws SQLException {
+        try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
+            String sql = "select * from "+t[2]+" where "+t2c[0]+" = ?;";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1,id); // indexed from 1 rather than 0
+            ResultSet rs = ps.executeQuery();
+
+            // Get first record
+            if (rs.next()) {
+                Card card = new Card();
+                card.setId(id);
+                card.setHtml_q( rs.getString(t2c[1]));
+                card.setHtml_a( rs.getString(t2c[2]));
+
+                return card;
+            }
+
+        } catch (SQLException e) {
+            Complain(e);
+            throw new SQLException(e);
+        } catch (Throwable t) {
+            Complain(t);
+            throw new RuntimeException(t);
+        }
         return null;
     }
 
     @Override
     public List<Card> getAllCard() throws SQLException {
-        return null;
+        try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
+            String sql = "select * from "+t[2]+";";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            List<Card> cards = new ArrayList<Card>();
+            while (rs.next()) {
+                Card card = new Card();
+                card.setId(     rs.getInt(   t2c[0]));
+                card.setHtml_q( rs.getString(t2c[1]));
+                card.setHtml_a( rs.getString(t2c[2]));
+                cards.add(card);
+            }
+            return cards;
+        } catch (SQLException e) {
+            Complain(e);
+            throw new SQLException(e);
+        } catch (Throwable t) {
+            Complain(t);
+            throw new RuntimeException(t);
+        }
     }
 
     @Override
     public void updateCard(Card card) throws SQLException {
-        return;
+        try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
+            String sql = "update "+t[2]+" set ";
+            for (int i=1; i<t2c.length-1;i++) {sql += t2c[i]+" = ?,";}
+            sql += t2c[t2c.length-1]+" = ? where "+t2c[0]+"=?;";
+            PreparedStatement ps = conn.prepareStatement(sql);
+
+            ps.setString(1, card.getHtml_q());
+            ps.setString(2, card.getHtml_a());
+
+            ps.execute();
+
+        } catch (SQLException e) {
+            Complain(e);
+            throw new SQLException(e);
+        } catch (Throwable t) {
+            Complain(t);
+            throw new RuntimeException(t);
+        }
     }
 
     @Override
     public void deleteCardById(int id) throws SQLException {
-
+        try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
+            String sql = "delete from "+t[2]+" where "+t2c[0]+" = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+            ps.execute();
+        } catch (SQLException e) {
+            Complain(e);
+            throw new SQLException(e);
+        } catch (Throwable t) {
+            Complain(t);
+            throw new RuntimeException(t);
+        }
     }
 
     @Override
     public void createRating(Rating rating) throws SQLException {
+        try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
+            String sql = "insert into "+t[0]+" values (";
+            for (int i = 1; i<t0c.length-3;i++) { sql += "?,"; }
+            sql += "cast(? as real), default, default);";
+            PreparedStatement ps = conn.prepareStatement(sql);
 
+            ps.setInt(1, rating.getCard_id());
+            ps.setInt(2, rating.getUser_id());
+            ps.setBoolean(3, rating.getSeeagain());
+            ps.setDouble(4, rating.getRating());
+            ps.execute();
+
+        } catch (SQLException e) {
+            Complain(e);
+            throw new SQLException(e);
+        } catch (Throwable t) {
+            Complain(t);
+            throw new RuntimeException(t);
+        }
+        //return null;
     }
 
     @Override
-    public Rating getRatingById(int id) throws SQLException {
-        return null;
+    public List<Rating> getRatingsByCardId(int id) throws SQLException {
+        try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
+            String sql = "select * from "+t[0]+" where "+t0c[0]+" = ?;";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            List<Rating> ratings = new ArrayList<Rating>();
+            while (rs.next()) {
+                Rating rating = new Rating();
+                rating.setCard_id(        rs.getInt(     t0c[0]));
+                rating.setUser_id(        rs.getInt(     t0c[1]));
+                rating.setSeeagain(       rs.getBoolean( t0c[2]));
+                rating.setRating(         rs.getDouble(  t0c[3]));
+                rating.setCreationdate(   rs.getString(  t0c[4]));
+                rating.setCreationtime(   rs.getString(  t0c[5]));
+                ratings.add(rating);
+            }
+            return ratings;
+        } catch (SQLException e) {
+            Complain(e);
+            throw new SQLException(e);
+        } catch (Throwable t) {
+            Complain(t);
+            throw new RuntimeException(t);
+        }
+    }
+
+    @Override
+    public List<Rating> getRatingsByUserId(int id) throws SQLException {
+        try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
+            String sql = "select * from "+t[0]+" where "+t0c[1]+" = ?;";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            List<Rating> ratings = new ArrayList<Rating>();
+            while (rs.next()) {
+                Rating rating = new Rating();
+                rating.setCard_id(        rs.getInt(     t0c[0]));
+                rating.setUser_id(        rs.getInt(     t0c[1]));
+                rating.setSeeagain(       rs.getBoolean( t0c[2]));
+                rating.setRating(         rs.getDouble(  t0c[3]));
+                rating.setCreationdate(   rs.getString(  t0c[4]));
+                rating.setCreationtime(   rs.getString(  t0c[5]));
+                ratings.add(rating);
+            }
+            return ratings;
+        } catch (SQLException e) {
+            Complain(e);
+            throw new SQLException(e);
+        } catch (Throwable t) {
+            Complain(t);
+            throw new RuntimeException(t);
+        }
     }
 
     @Override
     public List<Rating> getAllRating() throws SQLException {
-        return null;
+        try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
+            String sql = "select * from "+t[0]+";";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            List<Rating> ratings = new ArrayList<Rating>();
+            while (rs.next()) {
+                Rating rating = new Rating();
+                rating.setCard_id(        rs.getInt(     t0c[0]));
+                rating.setUser_id(        rs.getInt(     t0c[1]));
+                rating.setSeeagain(       rs.getBoolean( t0c[2]));
+                rating.setRating(         rs.getDouble(  t0c[3]));
+                rating.setCreationdate(   rs.getString(  t0c[4]));
+                rating.setCreationtime(   rs.getString(  t0c[5]));
+                ratings.add(rating);
+            }
+            return ratings;
+        } catch (SQLException e) {
+            Complain(e);
+            throw new SQLException(e);
+        } catch (Throwable t) {
+            Complain(t);
+            throw new RuntimeException(t);
+        }
     }
 
     @Override
     public void updateRating(Rating rating) throws SQLException {
-        return;
+        try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
+            String sql = "update "+t[0]+" set ";
+            for (int i=0; i<t0c.length-2;i++) {sql += t0c[i]+" = ?,";}
+            sql += t0c[t0c.length-2]+" = ? where "+t0c[0]+"=?;";
+            PreparedStatement ps = conn.prepareStatement(sql);
+
+            ps.setInt(1, rating.getCard_id());
+            ps.setInt(2, rating.getUser_id());
+            ps.setBoolean(3, rating.getSeeagain());
+            ps.setDouble(4, rating.getRating());
+
+            ps.execute();
+
+        } catch (SQLException e) {
+            Complain(e);
+            throw new SQLException(e);
+        } catch (Throwable t) {
+            Complain(t);
+            throw new RuntimeException(t);
+        }
     }
 
     @Override
@@ -422,8 +706,8 @@ public class AllDaoPostgres implements AllDAO {
     }
 
     @Override
-    public void createDeck(Deck deck) throws SQLException {
-
+    public Deck createDeck(Deck deck) throws SQLException {
+        return null;
     }
 
     @Override
