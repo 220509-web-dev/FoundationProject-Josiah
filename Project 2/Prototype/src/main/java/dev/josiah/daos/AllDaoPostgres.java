@@ -4,6 +4,7 @@ import dev.josiah.entities.*;
 import dev.josiah.utils.ConnectionFactory;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 import static dev.josiah.complaintDepartment.ProblemScribe.Complain;
@@ -18,6 +19,8 @@ import static dev.josiah.complaintDepartment.ProblemScribe.Complain;
 
 public class AllDaoPostgres implements AllDAO {
     final private String sn = "notecard.";  // Schema name
+
+    //table names
     final private String t0 = "ratings";
     final private String t1 = "card_deck";
     final private String t2 = "cards";
@@ -26,15 +29,14 @@ public class AllDaoPostgres implements AllDAO {
     final private String t5 = "users";
     final private String t6 = "roles";
     final private String[] t = {
-            sn+t0,
-            sn+t1,
-            sn+t2,
-            sn+t3,
-            sn+t4,
-            sn+t5,
-            sn+t6
+            sn+t0, // ratings   is t[0]
+            sn+t1, // card_deck is t[1]
+            sn+t2, // cards     is t[2]
+            sn+t3, // decks     is t[3]
+            sn+t4, // userp     is t[4]
+            sn+t5, // users     is t[5]
+            sn+t6  // roles     is t[6]
     };
-
 
     // ratings table
     final private String t0c0 = "card_id";
@@ -84,26 +86,21 @@ public class AllDaoPostgres implements AllDAO {
     @Override
     public User createUser(User user) throws SQLException {
         try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
-            String sql = "insert into "+st+" values (default";
-            for (int i = 1; i<c.length;i++) { sql += ",?"; }
-            sql += ");";
+            String sql = "insert into "+t[5]+" values (default";
+            for (int i = 1; i<t5c.length-2;i++) { sql += ",?"; }
+            sql += ",default,default);";
             PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
             ps.setString(1, user.getUsername());
             ps.setString(2, user.getFname());
             ps.setString(3, user.getLname());
-            ps.setString(4, user.getAddress1());
-            ps.setString(5, user.getAddress2());
-            ps.setString(6, user.getCity());
-            ps.setString(7, user.getState());
-            ps.setString(8, user.getPostalcode());
             ps.execute();
 
             ResultSet rs = ps.getGeneratedKeys();
             rs.next();
-            int generatedID = rs.getInt(c[0]);
+            int generatedID = rs.getInt(t5c[0]);
 
-            user.setUser_id(generatedID);
+            user.setId(generatedID);
             return user;
         } catch (SQLException e) {
             Complain(e);
@@ -117,52 +114,237 @@ public class AllDaoPostgres implements AllDAO {
 
     @Override
     public User getUserById(int id) throws SQLException {
+        try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
+            String sql = "select * from "+t[5]+" where "+t5c[0]+" = ?;";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1,id); // indexed from 1 rather than 0
+            ResultSet rs = ps.executeQuery();
+
+            // Get first record
+            if (rs.next()) {
+                User user = new User();
+                user.setId(id);
+                user.setUsername(       rs.getString(t5c[1]));
+                user.setFname(          rs.getString(t5c[2]));
+                user.setLname(          rs.getString(t5c[3]));
+                user.setCreationdate(   rs.getString(t5c[4]));
+                user.setCreationtime(   rs.getString(t5c[5]));
+                return user;
+            }
+
+        } catch (SQLException e) {
+            Complain(e);
+            throw new SQLException(e);
+        } catch (Throwable t) {
+            Complain(t);
+            throw new RuntimeException(t);
+        }
         return null;
     }
 
     @Override
     public User getUserByUsername(String username) throws SQLException {
+        try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
+            username = username.toLowerCase(); // DB has case-insensitive uniqueness constraint
+            String sql = "select * from "+t[5]+" where lower("+t5c[1]+") = ?;";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1,username);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                User user = new User();
+                user.setId(             rs.getInt(   t5c[0]));
+                user.setUsername(       rs.getString(t5c[1]));
+                user.setFname(          rs.getString(t5c[2]));
+                user.setLname(          rs.getString(t5c[3]));
+                user.setCreationdate(   rs.getString(t5c[4]));
+                user.setCreationtime(   rs.getString(t5c[5]));
+                return user;
+            }
+
+        } catch (SQLException e) {
+            Complain(e);
+            throw new SQLException(e);
+        } catch (Throwable t) {
+            Complain(t);
+            throw new RuntimeException(t);
+        }
         return null;
     }
 
     @Override
     public List<User> getAllUsers() throws SQLException {
-        return null;
+        try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
+            String sql = "select * from "+t[5]+";";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            List<User> users = new ArrayList<User>();
+            while (rs.next()) {
+                User user = new User();
+                user.setId(             rs.getInt(   t5c[0]));
+                user.setUsername(       rs.getString(t5c[1]));
+                user.setFname(          rs.getString(t5c[2]));
+                user.setLname(          rs.getString(t5c[3]));
+                user.setCreationdate(   rs.getString(t5c[4]));
+                user.setCreationtime(   rs.getString(t5c[5]));
+                users.add(user);
+            }
+            return users;
+        } catch (SQLException e) {
+            Complain(e);
+            throw new SQLException(e);
+        } catch (Throwable t) {
+            Complain(t);
+            throw new RuntimeException(t);
+        }
+        //return null;
     }
 
     @Override
-    public User updateUser(User user) throws SQLException {
-        return null;
+    public void updateUser(User user) throws SQLException {
+        try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
+            String sql = "update "+t[5]+" set ";
+            for (int i=1; i<t5c.length-3;i++) {sql += t5c[i]+" = ?,";}
+            sql += t5c[t5c.length-3]+" = ? where "+t5c[0]+"=?;";
+            PreparedStatement ps = conn.prepareStatement(sql);
+
+            ps.setString(1, user.getUsername());
+            ps.setString(2, user.getFname());
+            ps.setString(3, user.getLname());
+            ps.execute();
+
+        } catch (SQLException e) {
+            Complain(e);
+            throw new SQLException(e);
+        } catch (Throwable t) {
+            Complain(t);
+            throw new RuntimeException(t);
+        }
     }
 
     @Override
     public void deleteUserById(int id) throws SQLException {
-
+        try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
+            String sql = "delete from "+t[5]+" where "+t5c[0]+" = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+            ps.execute();
+        } catch (SQLException e) {
+            Complain(e);
+            throw new SQLException(e);
+        } catch (Throwable t) {
+            Complain(t);
+            throw new RuntimeException(t);
+        }
     }
 
     @Override
     public void createUserInfo(UserPriv userp) throws SQLException {
+        try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
+            String sql = "insert into "+t[4]+" values (";
+            for (int i = 0; i<t4c.length-1;i++) { sql += "?,"; }
+            sql += "?);";
+            PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            ps.setInt(1, userp.getId());
+            ps.setString(2, userp.getPassword());
+            ps.execute();
 
+        } catch (SQLException e) {
+            Complain(e);
+            throw new SQLException(e);
+        } catch (Throwable t) {
+            Complain(t);
+            throw new RuntimeException(t);
+        }
     }
 
     @Override
     public UserPriv getUserInfoById(int id) throws SQLException {
+        try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
+            String sql = "select * from "+t[4]+" where "+t4c[0]+" = ? ;";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1,id); // indexed from 1 rather than 0
+            ResultSet rs = ps.executeQuery();
+
+            // Get first record
+            if (rs.next()) {
+                UserPriv userp = new UserPriv();
+                userp.setId(   rs.getInt(t4c[0]));
+                userp.setPassword( rs.getString(t4c[1]));
+                return userp;
+            }
+        } catch (SQLException e) {
+            Complain(e);
+            throw new SQLException(e);
+        } catch (Throwable t) {
+            Complain(t);
+            throw new RuntimeException(t);
+        }
         return null;
     }
 
     @Override
     public List<UserPriv> getAllUserInfo() throws SQLException {
+        try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
+            String sql = "select * from "+t[4]+";";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            List<UserPriv> userps = new ArrayList<UserPriv>();
+            boolean results = false;
+            while (rs.next()) {
+                results = true;
+                UserPriv userp = new UserPriv();
+                userp.setId(       rs.getInt(   t4c[0]));
+                userp.setPassword( rs.getString(t4c[1]));
+                userps.add(userp);
+            }
+            if (results) return userps;
+        } catch (SQLException e) {
+            Complain(e);
+            throw new SQLException(e);
+        } catch (Throwable t) {
+            Complain(t);
+            throw new RuntimeException(t);
+        }
         return null;
     }
 
     @Override
-    public UserPriv updateUserInfo(UserPriv userp) throws SQLException {
-        return null;
+    public void updateUserInfo(UserPriv userp) throws SQLException {
+        try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
+            String sql = "update "+t[4]+" set ";
+            for (int i = 1; i< t4c.length-1; i++) {sql += t4c[i]+" = ?,";}
+            sql += t4c[t4c.length-1]+" = ? where "+ t4c[0]+"=?;";
+            PreparedStatement ps = conn.prepareStatement(sql);
+
+            ps.setString( 1, userp.getPassword());
+            ps.setInt(    2, userp.getId());
+            ps.execute();
+
+        } catch (SQLException e) {
+            Complain(e);
+            throw new SQLException(e);
+        } catch (Throwable t) {
+            Complain(t);
+            throw new RuntimeException(t);
+        }
     }
 
     @Override
     public void deleteUserInfoById(int id) throws SQLException {
-
+        try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
+            String sql = "delete from "+t[4]+" where "+ t4c[0]+" = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+            ps.execute();
+        } catch (SQLException e) {
+            Complain(e);
+            throw new SQLException(e);
+        } catch (Throwable t) {
+            Complain(t);
+            throw new RuntimeException(t);
+        }
     }
 
     @Override
@@ -181,8 +363,7 @@ public class AllDaoPostgres implements AllDAO {
     }
 
     @Override
-    public Role updateUserRole(Role userp) throws SQLException {
-        return null;
+    public void updateUserRole(Role userp) throws SQLException {
     }
 
     @Override
@@ -206,8 +387,8 @@ public class AllDaoPostgres implements AllDAO {
     }
 
     @Override
-    public Card updateCard(Card card) throws SQLException {
-        return null;
+    public void updateCard(Card card) throws SQLException {
+        return;
     }
 
     @Override
@@ -231,8 +412,8 @@ public class AllDaoPostgres implements AllDAO {
     }
 
     @Override
-    public Rating updateRating(Rating rating) throws SQLException {
-        return null;
+    public void updateRating(Rating rating) throws SQLException {
+        return;
     }
 
     @Override
@@ -256,8 +437,8 @@ public class AllDaoPostgres implements AllDAO {
     }
 
     @Override
-    public Deck updateDeck(Deck deck) throws SQLException {
-        return null;
+    public void updateDeck(Deck deck) throws SQLException {
+        return;
     }
 
     @Override
@@ -281,8 +462,8 @@ public class AllDaoPostgres implements AllDAO {
     }
 
     @Override
-    public CardDeck updateCardDeck(CardDeck cardDeck) throws SQLException {
-        return null;
+    public void updateCardDeck(CardDeck cardDeck) throws SQLException {
+        return;
     }
 
     @Override
