@@ -77,7 +77,7 @@ public class AuthServlet extends HttpServlet {
 
         // This code is lengthy and doesn't employ abstraction
         // it's just to make use of the ObjectMapper
-        String[] regRequired = {"u","p","f","l","a1","a2","c","s","z"};
+        String[] regRequired = {"u","p","f","l"};
         String[] logRequired = {"u","p"};
         Boolean isRegister = true;
         Boolean isLogin = true;
@@ -156,12 +156,7 @@ public class AuthServlet extends HttpServlet {
                         input.get("u").toString(),
                         input.get("p").toString(),
                         input.get("f").toString(),
-                        input.get("l").toString(),
-                        input.get("a1").toString(),
-                        input.get("a2").toString(),
-                        input.get("c").toString(),
-                        input.get("s").toString(),
-                        input.get("z").toString()
+                        input.get("l").toString()
                         );
                 register(allDAO, userInfo);
                 System.out.println("Registration succeeded...");

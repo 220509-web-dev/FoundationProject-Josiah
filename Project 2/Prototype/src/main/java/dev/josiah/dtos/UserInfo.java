@@ -36,21 +36,6 @@ public class UserInfo {
     @JsonProperty("l")
     private String lname;
 
-    @JsonProperty("a1")
-    private String address1;
-
-    @JsonProperty("a2")
-    private String address2;
-
-    @JsonProperty("c")
-    private String city;
-
-    @JsonProperty("s")
-    private String state;
-
-    @JsonProperty("z")
-    private String postalcode;
-
     public UserInfo() {
     super();}
 
