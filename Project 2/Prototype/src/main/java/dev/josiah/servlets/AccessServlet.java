@@ -62,6 +62,7 @@ public class AccessServlet extends HttpServlet {
         // IS TRYING TO HIT AN ENDPOINT THEY'RE "FORBIDDEN" FROM GOING TO
 
         String todo = "Here goes things the user can access when logged in!";
+        // TODO : UI for Project 2 user stories
 
     }
 
