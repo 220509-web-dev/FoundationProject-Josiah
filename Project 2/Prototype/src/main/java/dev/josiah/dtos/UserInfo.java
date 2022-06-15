@@ -18,7 +18,6 @@ user_id int generated always as identity,
   postalcode varchar(20),
  */
 
-@AllArgsConstructor
 @Getter
 @Setter
 @EqualsAndHashCode
@@ -36,7 +35,12 @@ public class UserInfo {
     @JsonProperty("l")
     private String lname;
 
-    public UserInfo() {
-    super();}
+    public UserInfo() { super(); }
 
+    public UserInfo(String username, String password, String fname, String lname) {
+        this.username = username;
+        this.password = password;
+        this.fname = fname;
+        this.lname = lname;
+    }
 }

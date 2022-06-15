@@ -13,4 +13,5 @@ function logout() {
             },
             body: JSON.stringify({})
         })
+    }
 }

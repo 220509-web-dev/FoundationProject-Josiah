@@ -3,12 +3,17 @@ window.onload = function() {
     let button = document.getElementById('login-button');
     button.addEventListener('click', login);
 
+    let button1 = document.getElementById('logout-btn');
+    button1.addEventListener('click', logout);
+
     let passwordField = document.getElementById('login-password');
     passwordField.addEventListener('keyup', function(e) {
         if (e.key === 'Enter') {
             login();
         }
     });
+
+
 }
 
 function login() {
@@ -36,11 +41,17 @@ function login() {
             console.log(`Response status: ${resp.status}`);
             console.log(`Response timestamp: ${Date.now()}`);
 
+            if(resp.status == 406) {
+                errorContainer.removeAttribute('hidden');
+                errorContainer.innerText = "Already Logged in!";
+                return;
+            }
             if (Math.floor(resp.status/100) != 2) {
                 errorContainer.removeAttribute('hidden');
                 errorContainer.innerText = "Login failed!";
                 return;
             }
+
 
             return resp.json();
         })
@@ -59,5 +70,17 @@ function login() {
         // Show the error message
         errorContainer.removeAttribute('hidden');
         errorContainer.innerText = "You must provide a username and password!";
+    }
+}
+
+function logout() {
+    if (true) {
+        let respData = fetch('http://localhost:8080/notecard/userauth', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({})
+        })
     }
 }

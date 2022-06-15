@@ -65,9 +65,14 @@ This project will implement a notecard service that allows for notecards to be c
 
 ### Suggested Bonus Features
 - Responsive and intuitive UI allowing for optimal study of notecards
+- Users able to filter all cards by keywords
+- Sleek and smooth User Experience (UI) such as drag-and-drop ability.
+- Ability for users to share notecards or notecard decks with other users to be added to their own collection
+- Account setting for "light mode" or "dark mode"
+- Admin view of accounts and a validation barrier to registration where accounts can only begin adding cards upon account validation.
 
 #### Project Presentation 
-- 08Jul2022
+- Jul 8 , 2022
 
 ## Minimal Viable Product Requirements (End-to-end completion)
 - Functional: Users can register for an account with the system

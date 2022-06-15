@@ -50,7 +50,7 @@ public class AuthServlet extends HttpServlet {
         String destination = "none";
         String[] supportedDestinations = {"login", "register"};
 
-        System.out.println("[LOG] - AuthServlet received a POST request!");
+        System.out.println("[LOG] - "+name+" received a POST request!");
 
         HashMap<String, Object> input = new HashMap<>();
 
