@@ -59,7 +59,7 @@ This project will implement a notecard service that allows users to login and fo
 - User passwords will be hashed by the system before persisting them to the data source
 - Errors and exceptions are handled properly and their details are obfuscated from the user
 - The system conforms to RESTful architecture constraints
-- The system's is tested with at least 80% line coverage in all service and utility classes
+- The system is tested with at least 80% line coverage in all service and utility classes
 - The system's data schema and component design is documented and diagrammed 
 - The system keeps detailed logs on info, error, and fatal events that occur 
 - UI and API builds and deployments are automated using a CI/CD pipeline
@@ -68,12 +68,12 @@ This project will implement a notecard service that allows users to login and fo
 
 ### Suggested Bonus Features
 - Responsive and intuitive UI allowing for optimal study of notecards
-- Users able to filter all cards by keywords
+- Users are able to filter all cards by keywords
 - Sleek and smooth User Experience (UI) such as drag-and-drop ability.
 - Ability for users to share notecards or notecard decks with other users to be added to their own collection
 - Account setting for "light mode" or "dark mode"
 - Admin view of accounts and a validation barrier to registration where accounts can only begin adding cards upon account validation.
-- Admin can delete cards
+- Admin can delete any cards
 - Users can select an option to stop seeing a card 
 - Users can rate cards on a sliding scale from 0 to 10 inclusive
 - The probability of a user seeing a card they rated is a function of their ratings of it
