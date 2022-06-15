@@ -2,7 +2,7 @@
 
 ## Project Description
 
-This project will implement a notecard service that allows for notecards to be created, browsed, stored in decks, and rated on a sliding scale that will influence the likelihood of seeing the card in future draws from the notecard deck. 
+This project will implement a notecard service that allows users to login and for notecards to be created, browsed, stored in decks, and viewed like flashcards. 
 
 ### Project Design Specifications and Documents
 
