@@ -6,8 +6,11 @@ This project will implement a notecard service that allows for notecards to be c
 
 ### Project Design Specifications and Documents
 
-##### Relational Data Model
-![Relational Model](https://raw.githubusercontent.com/220509-web-dev/FoundationProject-Josiah/main/Project%202/imgs/notecardERD.png)
+##### Relational Data Model (MVP Requirement)
+![Relational Model](https://raw.githubusercontent.com/220509-web-dev/FoundationProject-Josiah/main/Project%202/imgs/notecardERDmvp.png)
+
+##### Relational Data Model (Stretch Goal)
+![Relational Model](https://raw.githubusercontent.com/220509-web-dev/FoundationProject-Josiah/main/Project%202/imgs/notecardERDbonus.png)
 
 ### Technologies
 
@@ -40,15 +43,15 @@ This project will implement a notecard service that allows for notecards to be c
 ### Functional Requirements
 
 - Functional: Users can register for an account with the system
-- Functional: Users can create new decks
+- Functional: Users can login to their account
+- Functional: Admin can delete users
 - Functional: Users can view all notecards in the system
-- Functional: Users can create their own notecards
+- Functional: Users can create new notecards
+- Functional: Users can create their own decks
 - Functional: Users can add any notecard to decks they own
 - Functional: Users can view all decks alongside the deck owner
 - Functional: Users can select a deck and get flashcard functionality
-- Functional: Users can select an option to stop seeing a card 
-- Functional: Users can rate cards on a sliding scale from 0 to 10 inclusive
-- Functional: The probability of a user seeing a card they rated is a function of their ratings of it
+- Functional: Users can set their profile picture 
 
 ### Non-Functional Requirements
 
@@ -70,21 +73,30 @@ This project will implement a notecard service that allows for notecards to be c
 - Ability for users to share notecards or notecard decks with other users to be added to their own collection
 - Account setting for "light mode" or "dark mode"
 - Admin view of accounts and a validation barrier to registration where accounts can only begin adding cards upon account validation.
+- Admin can delete cards
+- Users can select an option to stop seeing a card 
+- Users can rate cards on a sliding scale from 0 to 10 inclusive
+- The probability of a user seeing a card they rated is a function of their ratings of it
+- Users can change their profile picture
 
 #### Project Presentation 
 - Jul 8 , 2022
 
 ## Minimal Viable Product Requirements (End-to-end completion)
+
 - Functional: Users can register for an account with the system
-- Functional: Users can create new decks
+- Functional: Users can login to their account
+- Functional: Admin can delete users
 - Functional: Users can view all notecards in the system
-- Functional: Users can create their own notecards
+- Functional: Users can create new notecards
+- Functional: Users can create their own decks
 - Functional: Users can add any notecard to decks they own
 - Functional: Users can view all decks alongside the deck owner
 - Functional: Users can select a deck and get flashcard functionality
-- Functional: Users can select an option to stop seeing a card 
-- Functional: Users can rate cards on a sliding scale from 0 to 10 inclusive
-- Functional: The probability of a user seeing a card they rated is a function of their ratings of it
+- Functional: Users can set their profile picture 
+
 - Non-Functional: Test coverage of the API's service layer is at least 80%
 - Non-Functional: The API's endpoints are exposed in a RESTful manner
+- Non-Functional: API provides random profile pictures for default profile picture on account creation
 - Non-Functional: User passwords are hashed or encrypted before persisting to the database
+
