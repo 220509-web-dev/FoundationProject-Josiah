@@ -172,8 +172,8 @@ public class AuthServlet extends HttpServlet {
                 login(userDAO,upDAO,userPass);  System.out.println("And Login also");
                                                       Send(204, "Registered",                              resp); return; }
             catch (InputWasNullException e) {         Send(400, "Form input was blank",                    resp); return; }
-            catch (ValueOutOfRangeException e) {      Send(400, "Username length was incorrect",           resp); return; }
             catch (UsernameFormatException e) {       Send(400, "Username must end with @revature.net",    resp); return; }
+            catch (ValueOutOfRangeException e) {      Send(400, "A field length was incorrect",            resp); return; }
             catch (IllegalCharacterException e) {     Send(400, "Username contained an illegal character", resp); return; }
             catch (UsernameNotAvailableException e) { Send(409, "Username already taken!",                 resp); return; }
             catch (UserNotFoundException e) {

@@ -2,6 +2,9 @@ window.onload = function() {
     let button = document.getElementById('register-button');
     button.addEventListener('click', register);
 
+    let button1 = document.getElementById('close-response');
+    button1.addEventListener('click', closeResponse);
+
     let areaField = document.getElementById('register-postal-code');
     areaField.addEventListener('keyup', function(e) {
         if (e.key === 'Enter') {
@@ -9,6 +12,20 @@ window.onload = function() {
         }
     });
 }
+
+function closeResponse() {
+    let responseContainer = document.getElementById('response-container');
+    responseContainer.setAttribute('hidden', true);
+}
+
+function showResponse(message) {
+    let responseContainer = document.getElementById('response-container');
+    responseContainer.removeAttribute('hidden');
+
+    let msgElem = document.getElementById('response-text');
+    msgElem.innerText = message;
+}
+
 
 function register() {
 
@@ -45,24 +62,19 @@ function register() {
                 errorContainer.setAttribute('hidden', true);
                 feedbackContainer.removeAttribute('hidden');
                 feedbackContainer.innerText = "Registration Successful! You have been logged in.";
-                return;
             }
             if (Math.floor(resp.status/100) >= 4) { // ADD CODE HANDLING
                 errorContainer.removeAttribute('hidden');
                 errorContainer.innerText = "Registration failed!";
-                return;
             }
-
-
-            return resp;
+            return resp.json();
         })
         
-//        if (respData) {
-//            respData.then(data => {
-//                // got a response!
-//                processFeedback(data);
-//            });
-//        }
+        if (respData) {
+            respData.then(data => {
+                window.showResponse(`Code ${data['code']} : ${data['message']}`);
+            });
+        }
 
     } else {
         let ar = [u,p,f,l,a1,a2,c,s,z];

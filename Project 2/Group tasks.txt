@@ -1,0 +1,51 @@
+Users can register for an account with the system
+Users can login to their account
+Admin can delete users
+Users can view all notecards in the system
+Users can create new notecards
+Users can create their own decks
+Users can add any notecard to decks they own
+Users can view all decks alongside the deck owner
+Users can select a deck and get flashcard functionality
+Users can set their profile picture
+
+Made a mistake in standup on Wednesday
+Need t be very explicit that "okay everyone that wanted to do standup did it"
+then "We're free to go. Let's focus on one issue for problem-solving"
+And people can seet up whatever time works with them and their sub-group
+
+To return error messages as the content of an element, it's a tiny step
+just get the JSON body with the promise chain. 
+
+Another challenge is using the same tech to reformat a response as a table
+	get all cards is simple
+
+Next UI tasks : grab up to 50 notecards, render in a table
+	paired with display decks by user
+none of it has to link to anything! 
+Just get the data back and render as HTML
+
+All this UI stuff is basically Week 5, not evn this week! 
+It's jsut a simple understanding of how to use the dom-demo code
+
+Thursday : We're going to walk through the code step-by-step
+What does each piece in the dom-demo do? What can WE do with it NOW? 
+How to print all key-value pairs from JSON response? 
+From there, it's programmatic. 
+
+Reiterate the importance that each person actually does it themselves. 
+Reiterate that the TestServlet can be ran by anyone without any need for DB. 
+Can run page absolute path and refresh without redeploying. 
+
+Show example of this. 
+
+And then talk through the dom-demo code. 
+overlay : div element under body with absolute pos, z-index 100. 
+Set visibility, insert content, test. 
+	Does it work? 
+	Does it look how you want it to? 
+
+Present the mapping printout code freely to everyone in cohort 
+
+Question for WS : should we build the table in the browser or package it 
+from the server?
