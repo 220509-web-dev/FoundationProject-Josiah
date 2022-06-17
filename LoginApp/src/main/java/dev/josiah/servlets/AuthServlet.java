@@ -137,12 +137,21 @@ public class AuthServlet extends HttpServlet {
             try {
                 UserPass userPass = new UserPass(input.get("u").toString(), input.get("p").toString());
                 // check for active sessions
+                //HttpSession session1 = req.getSession(false);
+                if (req.getSession(false) != null) {
+                    Send(406, "Already logged in", resp);
+                    // for this to work, has to access from localhost:8080/login-app, not abs path
+                    // from abs path, login makes new sessions but never uses any of them
+                    return;
+                }
+
+
                 System.out.println(userPass);
                 User user = login(userDAO, upDAO, userPass);
                 //resp.setStatus(204);  // logged in, no other content
-                HttpSession session = req.getSession(); // use req.getSession(false) to prevent a session from being made
-                session.setAttribute("auth-user", new Token(userPass.getUsername(), userPass.getPassword()));
-                                                    Send(204, "Logged in",                             resp); return; }
+                //HttpSession session = req.getSession(); // use req.getSession(false) to prevent a session from being made
+                req.getSession().setAttribute("auth-user", new Token(userPass.getUsername(), userPass.getPassword()));
+                                                    Send(200, "Logged in",                             resp); return; }
             catch (UserNotFoundException e) {       Send(404, "User not found",                        resp); return;}
             catch (IllegalCharacterException e) {   Send(400, "Input contained an illegal character",  resp); return; }
             catch (UsernameFormatException e) {     Send(400, "Username must end with @revature.net",  resp); return; }
@@ -170,7 +179,7 @@ public class AuthServlet extends HttpServlet {
                 System.out.println("Registration succeeded...");
                 UserPass userPass = new UserPass(userInfo.getUsername(),userInfo.getPassword());
                 login(userDAO,upDAO,userPass);  System.out.println("And Login also");
-                                                      Send(204, "Registered",                              resp); return; }
+                                                      Send(200, "Registered",                              resp); return; }
             catch (InputWasNullException e) {         Send(400, "Form input was blank",                    resp); return; }
             catch (UsernameFormatException e) {       Send(400, "Username must end with @revature.net",    resp); return; }
             catch (ValueOutOfRangeException e) {      Send(400, "A field length was incorrect",            resp); return; }
@@ -194,9 +203,13 @@ public class AuthServlet extends HttpServlet {
 
         if (session != null) {
             session.invalidate(); // Invalidate current session
+            Send(200, "Logged out", resp);
+            // for this to work, has to access from localhost:8080/login-app, not abs path
+            // from abs path, login makes new sessions but never uses any of them
         }
+        else { Send(406, "No user was logged in", resp); }
 
-        resp.setStatus(204);
+        return;
     }
 
     private static void Send(int code, String msg, HttpServletResponse resp) {

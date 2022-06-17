@@ -111,18 +111,3 @@ function register() {
         }
     }
 }
-function processFeedback(data) {
-    //let parsed = JSON.parse(data);
-    console.log(`${data['firstname']}`);
-    console.log(`${data.status}`);
-
-    console.log(JSON.stringify(data));
-
-
-
-
-    if (Math.floor(data['code']/100) == 2) {
-        feedbackContainer.removeAttribute('hidden');
-        feedbackContainer.innerText = `Registration successful! Welcome, ${data['firstname']}!`;
-    }
-}

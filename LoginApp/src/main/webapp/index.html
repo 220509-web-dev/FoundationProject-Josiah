@@ -19,9 +19,19 @@
 
     <!-- Custom styles for this template -->
     <link href="resources/floating-labels.css" rel="stylesheet">
+
+    <script defer id="app-js" src="resources/get.js"></script>
+
 </head>
 
 <body style="background-color:rgb(228,216,195);">
+<div id="response-container" hidden="true" style="z-index: 100;position:fixed;float:left; width:70%; height:80%; background-color:rgb(128,82,62); opacity: 0.8;">
+    <div id="close-response" style="z-index: 100;float:right; width:10%; height:10%; background-color:rgb(212,133,100);">
+        <p style="font-family:sans-serif;font-size:2em;text-align: center;color:rgb(128,82,62); ">x</p>
+    </div>
+    <p id="response-text" style="margin:10%; height: 100%; overflow-y: auto; text-shadow: 0 0 1px white, 0 0 2px white, 0 0 3px white, 0 0 4px white, 0 0 5px white, 0 0 6px white, 0 0 7px white;color:rgb(128,82,62);font-weight:500;font-size:2em;">Text</p>
+</div>
+
 <div class="form-signin">
     <div style="z-index: 10;position:fixed;float:left; ">
         <div>
@@ -47,27 +57,32 @@
         <h1 class="h3 mb-3 font-weight-normal" style="margin-top: 0px;"></h1>
     </div>
 
-    <form action="users" method="get" style="margin-top: -80px;">
+    <form action="users" method="get" style="margin-top: -80px;"></form>
         <div class="form-label-group">
             <input type="email" id="inputEmail" class="form-control" name="username" placeholder="Email username" required="" autofocus="" style="max-width:67%; float:left; background-color:rgb(210,176,154);color:rgb(128,82,62);font-weight:800;"/>
             <label for="inputEmail">username@revature.net</label>
+            <input class="btn btn-lg btn-primary btn-block" id="get-user-by-username" type="submit" value="Find User" style="margin-left:2%; height:49px; background-color:rgb(128,82,62);border-color:rgb(128,82,62); color:rgb(212,133,100); font-weight:500;"/>
+
         </div>
 
-        <input class="btn btn-lg btn-primary btn-block" type="submit" value="Find User" style="margin-left:2%; height:49px; background-color:rgb(128,82,62);border-color:rgb(128,82,62); color:rgb(212,133,100); font-weight:500;"/>
-    </form>
 
-    <form action="users" method="get"  >
+
+    <form action="" method="get"  ></form>
         <div class="form-label-group">
-            <input type="id" id="inputPassword" class="form-control" name="id" placeholder="User ID" required="" autofocus="" style="max-width:67%; float:left; background-color:rgb(210,176,154);color:rgb(128,82,62);font-weight:800;">
-            <label for="inputPassword">User ID</label>
+            <input type="id" id="inputId" class="form-control" name="id" placeholder="User ID" required="" autofocus="" style="max-width:67%; float:left; background-color:rgb(210,176,154);color:rgb(128,82,62);font-weight:800;">
+            <label for="inputId">User ID</label>
+            <input class="btn btn-lg btn-primary btn-block" id="get-user-by-id" type="submit" value="Find User" style="margin-left:2%; height:49px; background-color:rgb(128,82,62);border-color:rgb(128,82,62); color:rgb(212,133,100); font-weight:500;"/>
+
         </div>
 
-        <input class="btn btn-lg btn-primary btn-block" type="submit" value="Find User" style="margin-left:2%; height:49px; background-color:rgb(128,82,62);border-color:rgb(128,82,62); color:rgb(212,133,100); font-weight:500;"/>
-    </form>
-    <form action="users" method="get" >
-        &nbsp;&nbsp;
-        <input class="btn btn-lg btn-primary btn-block" type="submit" value="Get All Users" style="margin-left: auto;margin-right: auto;display: block; height:49px; background-color:rgb(128,82,62);border-color:rgb(128,82,62); color:rgb(212,133,100); font-weight:500;">
-    </form>
+
+
+
+
+    <form action="users" method="get" >&nbsp;&nbsp;</form>
+
+    <input class="btn btn-lg btn-primary btn-block" id="get-all-users" type="submit" value="Get All Users" style="margin-left: auto;margin-right: auto;display: block; height:49px; background-color:rgb(128,82,62);border-color:rgb(128,82,62); color:rgb(212,133,100); font-weight:500;">
+
     <p class="alert alert-warning" id="error-message" style="margin-top:10px;" hidden></p>
     <p class="alert alert-primary" id="feedback" style="margin-top:10px;" hidden></p>
 

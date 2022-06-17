@@ -10,6 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
@@ -45,6 +46,13 @@ public class UserServlet extends HttpServlet {
         System.out.println("[LOG] - Request method: " + req.getMethod());
         System.out.println("[LOG] - Request query string: " + req.getQueryString());
 
+        if (req.getSession(false) == null) {
+            Send(401, "You must be logged in to use this feature.", resp);
+            return;
+            // for this to work, has to access from localhost:8080/login-app, not abs path
+            // from abs path, login makes new sessions but never uses any of them
+        }
+
         String potentialId = req.getParameter("id");
         String potentialUsername = req.getParameter("username");
         HashMap<String, Object> errorMessage = new HashMap<>();
@@ -53,7 +61,7 @@ public class UserServlet extends HttpServlet {
         if (potentialId != null) {
             System.out.println(potentialId+" being sent from UserServlet to the service layer");
             try { User user = ServiceIdRequest(potentialId, userDAO);
-                                                   Send(200, mapper.writeValueAsString(user),         resp); return; }
+                  Send(200, mapper.writeValueAsString(user).replace("\"","'").replace(",'",", '"),    resp); return; }
             catch (UserNotFoundException e) {      Send(404, "User not found",                        resp); return; }
                 // ANY RESOURCE NOT FOUND IS 404
             catch (InputWasNullException e) {      Send(400, "Form input was blank",                  resp); return; }
@@ -68,7 +76,7 @@ public class UserServlet extends HttpServlet {
         if(potentialUsername != null) {
             System.out.println(potentialUsername + " being sent from UserServlet to the service layer");
             try { User user = ServiceUsernameRequest(potentialUsername, userDAO);
-                                                  Send(200, mapper.writeValueAsString(user),           resp); return; }
+                Send(200, mapper.writeValueAsString(user).replace("\"","'").replace(",'",", '"),       resp); return; }
             catch (UserNotFoundException e) {     Send(404, "User not found",                          resp); return; }
             catch (InputWasNullException e) {     Send(400, "Form input was blank",                    resp); return; }
             catch (ValueOutOfRangeException e) {  Send(400, "Username length was incorrect",           resp); return; }
@@ -81,7 +89,7 @@ public class UserServlet extends HttpServlet {
 
         System.out.println("UserServlet is forwarding to services request for all user data");
         try { List<User> users = ServiceAllUsersRequest(userDAO);
-                                              Send(200, mapper.writeValueAsString(users),        resp); return; }
+             Send(200, mapper.writeValueAsString(users).replace("\"","'").replace(",'",", '"),   resp); return; }
         catch (UserNotFoundException e) {     Send(204, "No users exist in database",            resp); return; }
         // 204 because it's a successful request, but no data to return
         catch (SQLException e) { Complain(e); Send(500, "There was a problem with the database", resp); return; }
@@ -96,7 +104,7 @@ public class UserServlet extends HttpServlet {
             message.put("code", code);
             message.put("message", msg);
             message.put("timestamp", LocalDateTime.now().toString());
-            resp.getWriter().write(mapper.writeValueAsString(message));
+            resp.getWriter().write(mapper.writeValueAsString(message) ); //.replace("\"","'"));
         } catch (Throwable t) {
             Complain(t);
             System.out.println("Error in "+name+". Can't return anything!");

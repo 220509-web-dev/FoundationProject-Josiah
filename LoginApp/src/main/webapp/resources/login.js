@@ -6,14 +6,28 @@ window.onload = function() {
     let button1 = document.getElementById('logout-btn');
     button1.addEventListener('click', logout);
 
+    let button2 = document.getElementById('close-response');
+    button2.addEventListener('click', closeResponse);
+
     let passwordField = document.getElementById('login-password');
     passwordField.addEventListener('keyup', function(e) {
         if (e.key === 'Enter') {
             login();
         }
     });
+}
 
+function closeResponse() {
+    let responseContainer = document.getElementById('response-container');
+    responseContainer.setAttribute('hidden', true);
+}
 
+function showResponse(message) {
+    let responseContainer = document.getElementById('response-container');
+    responseContainer.removeAttribute('hidden');
+
+    let msgElem = document.getElementById('response-text');
+    msgElem.innerText = message;
 }
 
 function login() {
@@ -41,27 +55,29 @@ function login() {
             console.log(`Response status: ${resp.status}`);
             console.log(`Response timestamp: ${Date.now()}`);
 
-            if(resp.status == 406) {
-                errorContainer.removeAttribute('hidden');
-                errorContainer.innerText = "Already Logged in!";
-                return;
-            }
-            if (Math.floor(resp.status/100) != 2) {
-                errorContainer.removeAttribute('hidden');
-                errorContainer.innerText = "Login failed!";
-                return;
-            }
+//            if(resp.status == 406) {
+//                errorContainer.removeAttribute('hidden');
+//                errorContainer.innerText = "Already Logged in!";
+//                return;
+//            }
+//            if (Math.floor(resp.status/100) != 2) {
+//                errorContainer.removeAttribute('hidden');
+//                errorContainer.innerText = "Login failed!";
+//                return;
+//            }
 
 
             return resp.json();
-        })
+        });
         
         if (respData) {
             respData.then(data => {
-                let successMsgContainer = document.createElement('p');
-                successMsgContainer.setAttribute('class', 'alert alert-success');
-                successMsgContainer.innerText = `Login successful! Welcome, ${data['firstName']}!`;
-                document.getElementById('login-container').appendChild(successMsgContainer);
+                window.showResponse(`Code ${data['code']} : ${data['message']}`);
+                //let successMsgContainer = document.createElement('p');
+                //successMsgContainer.setAttribute('class', 'alert alert-success');
+                //successMsgContainer.innerText = `Login successful! Welcome, ${data['firstName']}!`;
+                //document.getElementById('login-container').appendChild(successMsgContainer);
+
             });
         }
 
@@ -75,12 +91,21 @@ function login() {
 
 function logout() {
     if (true) {
-        let respData = fetch('http://localhost:8080/notecard/userauth', {
+        let respData = fetch('http://localhost:8080/login-service/userauth', {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({})
+            }//,
+            //body: JSON.stringify({})
+        }).then(resp => {
+            console.log(`Response status: ${resp.status}`);
+            console.log(`Response timestamp: ${Date.now()}`);
+            return resp.json();
         })
+        if (respData) {
+            respData.then(data => {
+                window.showResponse(`Code ${data['code']} : ${data['message']}`);
+            });
+        }
     }
 }
