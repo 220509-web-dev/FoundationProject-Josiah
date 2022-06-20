@@ -20,92 +20,217 @@ mozilla.org
 </a>)</p>
 ;;;;;;;;
 <h3>
-
+Can we run JavaScript in a web browser, on a server, or both?
 </h3>
 ;;;;
 <p>
-
+Either or both.
 </p>
 
 
 ;;;;;;;;
 <h3>
-
+What are the benefits of JS over your core language? Drawbacks?
 </h3>
 ;;;;
 <p>
-
+Benefits of JavaScript
 </p>
 
+<ul>
+<li>
+The biggest advantage to JavaScript having a ability to support all modern browsers and produce an equivalent result.
+</li>
+<li>
+Regardless of where you host JavaScript, it always gets executed on client environment to save lots of a bandwidth and make execution process fast.
+</li>
+</ul>
+
+<p>
+Disbenefits of JavaScript
+</p>
+
+<ul>
+<li>
+The main problem or disadvantage in JavaScript is that the code is always visible to everyone anyone can view JavaScript code.
+</li>
+<li>
+No matter what proportion fast JavaScript interpret, JavaScript DOM (Document Object Model) is slow and can be a never fast rendering with HTML.
+</li>
+</ul>
+
+<p>(<a target="_blank" 
+href="https://www.geeksforgeeks.org/advantages-and-disadvantages-of-javascript/">
+geeksforgeeks.org
+</a>)</p>
+;;;;;;;;
+<h3>
+What programming paradigm(s) does JS support?
+</h3>
+;;;;
+<p>
+Modern programming languages fall into two categories: imperative (also called procedural) and declarative (also called functional). JavaScript supports both.
+</p>
+<img style="max-width:500px;"
+src="images/js-multi-paradigm.png" alt="multi-paradigm-chart">
+<p>(<a target="_blank" 
+href="https://javascript.plainenglish.io/what-are-javascript-programming-paradigms-3ef0f576dfdb">
+plainenglish.io
+</a>)</p>
+;;;;;;;;
+<h3>
+What are the data types in JS?
+</h3>
+;;;;
+<p>
+The set of types in the JavaScript language consists of primitive values and objects.
+</p>
+<p>
+Objects (collections of properties)
+</p>
+<p>
+Primitive values (immutable datum represented directly at the lowest level of the language)
+</p>
+
+<ul>
+<li>
+Boolean
+</li>
+<li>
+Null
+</li>
+<li>
+Undefined
+</li>
+<li>
+Number
+</li>
+<li>
+Bigint
+</li>
+<li>
+String
+</li>
+<li>
+Symbol
+</li>
+</ul>
 
 ;;;;;;;;
 <h3>
-
+<ul>
+<li>
+What is the type of NaN? What is the isNaN function?
+</li>
+<li>
+What is the data type of a function?
+</li>
+<li>
+What about an array?
+</li>
+<li>
+What is the difference between undefined and null?
+</li>
+</ul>
 </h3>
 ;;;;
 <p>
-
+typeof(NaN) === "number"
 </p>
-
+<p>
+Unlike all other possible values in JavaScript, it is not possible to use the equality operators (== and ===) to compare a value against NaN to determine whether the value is NaN or not, because both NaN == NaN and NaN === NaN evaluate to false. The isNaN() function provides a convenient equality check against NaN.
+</p>
+<p>(<a target="_blank" 
+href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/isNaN">
+mozilla.org
+</a>)</p>
+<ul>
+<li>
+function abcd() {} ;
+</li>
+<li>
+typeof(abcd) === "function"; // true
+</li>
+<li>
+typeof(function() {}) === "function"; // true
+</li>
+<li>
+typeof([]) === "object"; // true
+</li>
+</ul>
+<p>
+When a variable is declared but not assigned to any value, the variable by default is assigned a value of undefined.
+</p>
+<p>
+On the other hand, null is an object. It can be assigned to a variable as a representation of no value. JavaScript never sets a value to null. That must be done programmatically.
+</p>
+<p>(<a target="_blank" 
+href="https://flexiple.com/undefined-vs-null-javascript/">
+flexiple.com
+</a>)</p>
+;;;;;;;;
+<h3>
+What are JS objects? what is the syntax?
+</h3>
+;;;;
+<p>
+In JavaScript, objects can be seen as a collection of properties. With the object literal syntax, a limited set of properties are initialized; then properties can be added and removed. Property values can be values of any type, including other objects, which enables building complex data structures. Properties are identified using key values. A key value is either a String value or a Symbol value.
+</p>
+<p>
+const exampleObject1 = {type:"Value1", description:"this is an object"}; 
+</p>
+<p>
+let exampleObject2 = {}; 
+</p>
+<p>(<a target="_blank" 
+href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures">
+mozilla.org
+</a>)</p>
+;;;;;;;;
+<h3>
+Use the object literal syntax to create an object with some properties
+</h3>
+;;;;
+<p>
+an object literal is a list of name-value pairs comma-separated inside of curly braces. Those values can be properties and functions.
+</p>
+<p>
+const exampleObject1 = {type:"Value1", description:"this is an object", exampleMethod: function() {return null;}}; 
+</p>
+;;;;;;;;
+<h3>
+What are arrays in JS? can you change their size?
+</h3>
+;;;;
+<p>
+In JavaScript, array is a single variable that is used to store different elements.
+</p>
+<p>
+let exampleArray1=[]; let exampleArray2=new Array();
+</p>
+<p>
+Arrays are automatically resized with .pop() or .push() 
+</p>
 
 ;;;;;;;;
 <h3>
-
+List some array methods and explain how they work.
 </h3>
 ;;;;
-<p>
+<ul>
+<li>
 
-</p>
+</li>
+<li>
 
+</li>
+<li>
 
-;;;;;;;;
-<h3>
+</li>
+<li>
 
-</h3>
-;;;;
-<p>
-
-</p>
-
-
-;;;;;;;;
-<h3>
-
-</h3>
-;;;;
-<p>
-
-</p>
-
-
-;;;;;;;;
-<h3>
-
-</h3>
-;;;;
-<p>
-
-</p>
-
-
-;;;;;;;;
-<h3>
-
-</h3>
-;;;;
-<p>
-
-</p>
-
-
-;;;;;;;;
-<h3>
-
-</h3>
-;;;;
-<p>
-
-</p>
+</li>
+</ul>
 
 
 ;;;;;;;;
